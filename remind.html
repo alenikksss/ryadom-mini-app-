@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>Рядом — напоминание</title>
+<style>
+  html,body{margin:0;min-height:100%;background:#0F0E12;color:#E8DCC8;font-family:Manrope,system-ui,-apple-system,sans-serif}
+  main{max-width:440px;margin:0 auto;padding:48px 24px;display:flex;flex-direction:column;gap:16px;min-height:100vh;box-sizing:border-box;justify-content:center}
+  h1{margin:0;font-size:27px;line-height:1.25}
+  p{margin:0;font-size:16px;line-height:1.55;color:#D9CDB9}
+  .when{font-size:15px;color:#C9A876;font-weight:700}
+  a.btn{display:flex;align-items:center;justify-content:center;min-height:58px;padding:0 20px;border-radius:29px;font-size:17px;font-weight:700;text-decoration:none;text-align:center}
+  .gold{background:#C9A876;color:#0F0E12}
+  .out{border:1px solid #4A4252;color:#E8DCC8}
+  .small{font-size:13px;color:#8F8678;line-height:1.5}
+</style>
+</head>
+<body>
+<main>
+  <h1 id="title">Напоминание</h1>
+  <p id="text"></p>
+  <div class="when" id="when"></div>
+  <a class="btn gold" id="ics" href="#">Добавить в календарь телефона</a>
+  <div id="google"></div>
+  <p class="small">В календаре событие будет называться «Рядом · минутка для себя» — без подробностей. Удалить его можно в любой момент.</p>
+</main>
+<script>
+(function () {
+  var q = new URLSearchParams(location.search);
+  var kind = q.get('k') === 'worry' ? 'worry' : 'checkin';
+  var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+  var okTime = function (t) { return /^(10|15|18|19|20|21):00$/.test(t); };
+  var stamp = function (d) { return d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()) + 'T' + pad(d.getHours()) + pad(d.getMinutes()) + '00'; };
+  var now = new Date();
+  var events = [];
+
+  if (kind === 'worry') {
+    var t = okTime(q.get('t') || '') ? q.get('t') : '19:00';
+    var d = new Date(); d.setHours(parseInt(t, 10), 0, 0, 0);
+    if (d <= now) d.setDate(d.getDate() + 1);
+    events.push({ start: d, mins: 15, rrule: '', desc: 'Вернись к мысли, которую ты отложил(а). 15 минут — и отпусти её до завтра. Открой «Рядом» в Telegram.' });
+    document.getElementById('title').textContent = 'Время вернуться к мысли';
+    document.getElementById('text').textContent = 'Поставим напоминание, чтобы мысль не крутилась весь день: у неё теперь есть своё время.';
+    document.getElementById('when').textContent = (d.getDate() === now.getDate() ? 'Сегодня' : 'Завтра') + ' в ' + t + ' · 15 минут';
+  } else {
+    var times = (q.get('t') || '21:00').split(',').filter(okTime).slice(0, 3);
+    if (!times.length) times = ['21:00'];
+    times.forEach(function (tm) {
+      var s = new Date(); s.setHours(parseInt(tm, 10), 0, 0, 0);
+      if (s <= now) s.setDate(s.getDate() + 1);
+      events.push({ start: s, mins: 5, rrule: 'FREQ=DAILY', desc: 'Как ты сейчас? Открой «Рядом» в Telegram и пройди чек-ин — это минута.' });
+    });
+    document.getElementById('title').textContent = 'Чек-ин каждый день';
+    document.getElementById('text').textContent = 'Календарь будет тихо напоминать отметить, как ты. Так проще замечать, когда становится тяжелее.';
+    document.getElementById('when').textContent = 'Каждый день в ' + times.join(', ');
+  }
+
+  // .ics for Apple / Android calendars (floating local time + alert at start)
+  var lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Ryadom//RU', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH'];
+  events.forEach(function (e, i) {
+    var end = new Date(e.start.getTime() + e.mins * 60000);
+    lines.push('BEGIN:VEVENT', 'UID:ryadom-' + kind + '-' + stamp(e.start) + '-' + i + '@ryadom', 'DTSTAMP:' + stamp(now),
+      'DTSTART:' + stamp(e.start), 'DTEND:' + stamp(end), 'SUMMARY:Рядом · минутка для себя', 'DESCRIPTION:' + e.desc);
+    if (e.rrule) lines.push('RRULE:' + e.rrule);
+    lines.push('BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:Рядом · минутка для себя', 'TRIGGER:PT0M', 'END:VALARM', 'END:VEVENT');
+  });
+  lines.push('END:VCALENDAR');
+  var ics = lines.join('\r\n');
+  var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  var a = document.getElementById('ics');
+  if (isIOS) {
+    a.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
+  } else {
+    a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar;charset=utf-8' }));
+    a.download = 'ryadom.ics';
+  }
+
+  // Google Calendar: one link per event
+  var g = document.getElementById('google');
+  events.forEach(function (e) {
+    var end = new Date(e.start.getTime() + e.mins * 60000);
+    var u = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent('Рядом · минутка для себя') +
+      '&dates=' + stamp(e.start) + '/' + stamp(end) + '&details=' + encodeURIComponent(e.desc) +
+      (e.rrule ? '&recur=' + encodeURIComponent('RRULE:' + e.rrule) : '');
+    var b = document.createElement('a');
+    b.className = 'btn out'; b.href = u; b.style.marginTop = '10px';
+    b.textContent = 'Google Календарь' + (events.length > 1 ? ' · ' + pad(e.start.getHours()) + ':00' : '');
+    g.appendChild(b);
+  });
+})();
+</script>
+</body>
+</html>

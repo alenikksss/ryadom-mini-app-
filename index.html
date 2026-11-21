@@ -1,0 +1,807 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="color-scheme" content="dark">
+<title>Рядом</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#0F0E12;--dusk:#1C1923;--deep:#17141C;--line:#2E2936;--line2:#3A3444;--line3:#4A4252;
+  --light:#E8DCC8;--soft:#D9CDB9;--muted:#A69C8E;--faint:#8F8678;
+  --gold:#C9A876;--rose:#D4A5A5;--water:#7B8FA1;--water2:#A3B2C0;
+  --safe-b:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--night);color:var(--light);font-family:Manrope,system-ui,-apple-system,sans-serif;font-weight:500}
+button,textarea,a{font-family:inherit}
+button{cursor:pointer}
+#app{max-width:480px;margin:0 auto;min-height:100vh;position:relative}
+h1{margin:0;font-size:27px;line-height:1.22;font-weight:700}
+p{margin:0}
+.col{display:flex;flex-direction:column}
+.g4{gap:4px}.g6{gap:6px}.g8{gap:8px}.g10{gap:10px}.g12{gap:12px}.g14{gap:14px}.g16{gap:16px}.g18{gap:18px}.g20{gap:20px}
+.row{display:flex;align-items:center}
+.between{justify-content:space-between}
+.muted{color:var(--muted)}.faint{color:var(--faint)}.soft{color:var(--soft)}
+.s12{font-size:12px}.s13{font-size:13px}.s14{font-size:14px}.s15{font-size:15px}.s16{font-size:16px}.s17{font-size:17px}
+.b6{font-weight:600}.b7{font-weight:700}
+.lh{line-height:1.55}
+.up{font-size:12px;letter-spacing:1px;font-weight:700;text-transform:uppercase}
+.card{background:var(--dusk);border-radius:22px;padding:18px}
+.card-dash{border:1px dashed var(--line3);border-radius:22px;padding:18px;background:transparent}
+.card-line{border:1px solid var(--line);border-radius:18px;padding:16px}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 20px;border-radius:26px;border:none;font-size:16px;font-weight:700;text-decoration:none;width:100%}
+.btn-gold{background:var(--gold);color:var(--night)}
+.btn-rose{background:var(--rose);color:var(--night)}
+.btn-out{background:transparent;border:1px solid var(--line3);color:var(--light);font-weight:500}
+.btn-out-rose{background:transparent;border:1px solid var(--rose);color:#F3E3E3;font-weight:600}
+.btn-off{background:var(--line);color:var(--muted)}
+.tile{display:flex;align-items:center;gap:14px;text-align:left;padding:16px;border-radius:22px;border:none;background:var(--dusk);color:var(--light);width:100%}
+.opt{display:flex;align-items:center;min-height:54px;padding:0 20px;border-radius:18px;font-size:16px;text-align:left;background:var(--dusk);color:var(--light);border:1px solid var(--line);width:100%}
+.opt.on{background:var(--light);color:var(--night);border-color:var(--light);font-weight:700}
+.chip{height:42px;padding:0 16px;border-radius:21px;font-size:14px;white-space:nowrap;flex-shrink:0;background:transparent;color:var(--light);border:1px solid var(--line2)}
+.chip.on{background:var(--gold);color:var(--night);border-color:var(--gold);font-weight:700}
+.chip.light.on{background:var(--light);border-color:var(--light)}
+.dots{display:flex;gap:6px}.dots i{flex:1;height:4px;border-radius:2px;background:var(--line)}
+.ta{width:100%;resize:none;border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--night);color:var(--light);font-size:16px;line-height:1.5}
+.ta::placeholder{color:#6F675C}
+.hscroll{display:flex;gap:8px;overflow-x:auto;margin:0 -20px;padding:0 20px;scrollbar-width:none}
+.hscroll::-webkit-scrollbar{display:none}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+/* header */
+.hdr{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;height:60px;padding:6px 16px 0;background:var(--night)}
+.back{display:flex;align-items:center;gap:2px;height:44px;padding:0 14px 0 8px;border-radius:22px;border:1px solid var(--line);background:var(--deep);color:var(--light);font-size:15px;font-weight:600}
+.hdr-title{position:absolute;left:110px;right:110px;text-align:center;font-size:16px;font-weight:600;color:var(--soft);top:24px}
+.content{padding:8px 20px calc(130px + var(--safe-b))}
+
+/* tab bar */
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;max-width:480px;margin:0 auto;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:end;padding:6px 6px calc(12px + var(--safe-b));border-top:1px solid #1F1C26;background:var(--night)}
+.tab{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;min-height:52px;border:none;background:transparent;color:var(--faint);font-size:11px;font-weight:600}
+.tab.on{color:var(--gold)}
+.tab-sos{display:flex;flex-direction:column;align-items:center;gap:4px;border:none;background:transparent;color:#F0CFCF;font-size:11px;font-weight:700;padding:0}
+.tab-sos span.c{margin-top:-30px;width:62px;height:62px;border-radius:31px;background:var(--rose);border:4px solid var(--night);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;letter-spacing:1px;color:var(--night)}
+
+/* sos */
+.sos-hero{display:flex;align-items:center;gap:16px;text-align:left;padding:20px 18px;border-radius:24px;border:1.5px solid var(--rose);background:#2A1F27;color:#F3E3E3;width:100%}
+.sos-dot{position:relative;width:56px;height:56px;border-radius:28px;background:var(--rose);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--night);font-size:15px;font-weight:800;letter-spacing:1px}
+.sos-dot::after{content:"";position:absolute;inset:-6px;border-radius:34px;border:2px solid var(--rose);animation:softpulse 2.4s ease-in-out infinite}
+.hot{display:flex;flex-direction:column;gap:10px;padding:16px;border-radius:22px;border:1.5px solid var(--rose);background:#2A1F27}
+.hot a{display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:16px;text-decoration:none;color:#F3E3E3;border:1px solid var(--rose)}
+.hot a.main{background:var(--rose);color:var(--night);border-color:var(--rose)}
+.hot .ic{width:40px;height:40px;border-radius:20px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid var(--rose)}
+.hot a.main .ic{background:var(--night);border-color:var(--night)}
+.hot a.dim{border-color:#4A3640}
+
+/* misc */
+.toggle{position:relative;width:52px;height:32px;flex-shrink:0;border-radius:16px;border:none;background:var(--line2)}
+.toggle::after{content:"";position:absolute;top:4px;left:4px;width:24px;height:24px;border-radius:12px;background:var(--night);transition:left .15s}
+.toggle.on{background:var(--gold)}.toggle.on::after{left:24px}
+.progress{display:block;height:5px;border-radius:3px;background:#26222E;overflow:hidden}
+.progress b{display:block;height:100%;background:var(--gold);border-radius:3px}
+.bars{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;height:130px}
+.bars>div{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px}
+.bar{width:100%;max-width:30px;border-radius:8px}
+.bar.empty{height:8px;border:1px dashed var(--line3);border-radius:6px}
+.tag{padding:4px 10px;border-radius:10px;font-size:11px;font-weight:700}
+.entry{display:flex;flex-direction:column;gap:8px;padding:14px 16px;border-radius:16px;background:var(--deep);border:1px solid #26222E}
+.entry .txt{font-size:14px;line-height:1.5;white-space:pre-line;word-wrap:break-word}
+.linkbtn{background:none;border:none;color:var(--faint);font-size:12px;padding:4px 0}
+.seg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;padding:4px;border-radius:24px;background:var(--deep);border:1px solid #26222E}
+.seg button{height:42px;border-radius:20px;border:none;background:transparent;color:var(--muted);font-size:14px;font-weight:600}
+.seg button.on{background:var(--light);color:var(--night);font-weight:700}
+.pico{width:48px;height:48px;border-radius:24px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--night);font-size:14px;font-weight:700;border:1px solid}
+.check{width:28px;height:28px;border-radius:14px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:2px solid var(--line3);font-weight:800;font-size:15px}
+.check.on{background:var(--gold);border-color:var(--gold);color:var(--night)}
+.anx-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.anx-grid button{height:48px;border-radius:14px;font-size:16px;font-weight:700;background:var(--dusk);color:var(--light);border:1px solid var(--line)}
+.pill{padding:8px 14px;border-radius:16px;font-size:14px}
+.toast{position:fixed;left:20px;right:20px;bottom:calc(110px + var(--safe-b));max-width:440px;margin:0 auto;padding:14px 16px;border-radius:16px;background:var(--light);color:var(--night);font-size:14px;font-weight:600;z-index:20;text-align:center}
+
+/* breathing */
+.stage{position:relative;width:280px;height:280px;display:flex;align-items:center;justify-content:center;margin:0 auto}
+.stage .r{position:absolute;border-radius:50%}
+.r1{width:280px;height:280px;border:1px solid var(--water)}
+.r2{width:204px;height:204px;border:1px solid var(--water2)}
+.r3{width:128px;height:128px;border:1px solid var(--gold);background:var(--dusk)}
+.calm .r{animation:breathe 9s ease-in-out infinite}
+.sighA .r{animation:sighK 9s ease-in-out infinite}
+.r2{animation-delay:.25s!important}.r3{animation-delay:.5s!important}
+.says{position:relative;height:34px;width:300px;margin:0 auto}
+.says span{position:absolute;inset:0;text-align:center;font-size:22px;font-weight:600}
+.calm-in{animation:inhale 9s linear infinite}.calm-out{animation:exhale 9s linear infinite;color:var(--water2)}
+.sg1{animation:sg1 9s linear infinite}.sg2{animation:sg2 9s linear infinite;opacity:0;color:var(--gold)}.sg3{animation:sg3 9s linear infinite;opacity:0;color:var(--water2)}
+
+/* splash */
+.splash{position:fixed;inset:0;z-index:30;background:var(--night);display:flex;flex-direction:column;align-items:center;justify-content:center;border:none;color:var(--light);width:100%;padding:0}
+.splash .st{position:relative;width:240px;height:240px;display:flex;align-items:center;justify-content:center}
+.splash .sr{position:absolute;width:200px;height:200px;border-radius:100px;animation:splashRing 3s ease-out infinite}
+.splash .sr:nth-child(2){animation-delay:1s}.splash .sr:nth-child(3){animation-delay:2s}
+.sp-logo{animation:splashIn 1s ease-out .2s both}
+.sp-word{margin-top:10px;font-size:40px;font-weight:500;letter-spacing:.5px;animation:splashIn 1s ease-out .9s both}
+.sp-cap{position:absolute;left:0;right:0;bottom:calc(84px + var(--safe-b));text-align:center;font-size:17px;line-height:1.5;color:var(--soft);animation:splashIn 1s ease-out 1.8s both}
+.sp-bar{position:absolute;bottom:calc(52px + var(--safe-b));left:50%;margin-left:-50px;width:100px;height:3px;border-radius:2px;background:#26222E;overflow:hidden}
+.sp-bar i{display:block;height:3px;background:var(--gold);animation:splashBar 5s linear both}
+
+@keyframes breathe{0%{transform:scale(.62);opacity:.35}50%{transform:scale(1);opacity:.95}100%{transform:scale(.62);opacity:.35}}
+@keyframes sighK{0%{transform:scale(.6);opacity:.4}22%{transform:scale(.88);opacity:.8}33%{transform:scale(1);opacity:1}100%{transform:scale(.6);opacity:.4}}
+@keyframes inhale{0%,46%{opacity:1}50%,96%{opacity:0}100%{opacity:1}}
+@keyframes exhale{0%,46%{opacity:0}50%,96%{opacity:1}100%{opacity:0}}
+@keyframes sg1{0%,20%{opacity:1}22%,98%{opacity:0}100%{opacity:1}}
+@keyframes sg2{0%,20%{opacity:0}22%,31%{opacity:1}33%,100%{opacity:0}}
+@keyframes sg3{0%,31%{opacity:0}33%,96%{opacity:1}98%,100%{opacity:0}}
+@keyframes softpulse{0%,100%{transform:scale(.85);opacity:.5}50%{transform:scale(1.1);opacity:1}}
+@keyframes splashRing{0%{transform:scale(.4);opacity:0}30%{opacity:.8}100%{transform:scale(1.6);opacity:0}}
+@keyframes splashIn{0%{opacity:0;transform:translateY(12px)}100%{opacity:1;transform:none}}
+@keyframes splashBar{from{width:0}to{width:100%}}
+@media (prefers-reduced-motion: reduce){*{animation:none!important}.calm-out,.sg2,.sg3{opacity:0!important}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+'use strict';
+/* =========================================================
+   «Рядом» — Telegram Mini App (MVP, без сервера)
+   Данные хранятся в Telegram CloudStorage пользователя,
+   вне Telegram — в localStorage (для проверки в браузере).
+   ========================================================= */
+
+const tg = window.Telegram && window.Telegram.WebApp;
+const inTG = !!(tg && tg.initData);
+const tgAtLeast = (v) => { try { return !!tg && tg.isVersionAtLeast(v); } catch (e) { return false; } };
+
+if (tg) {
+  try { tg.ready(); tg.expand(); } catch (e) {}
+  try { if (tgAtLeast('6.1')) { tg.setHeaderColor('#0F0E12'); tg.setBackgroundColor('#0F0E12'); } } catch (e) {}
+  try { if (tgAtLeast('7.10')) tg.setBottomBarColor('#0F0E12'); } catch (e) {}
+  try { if (tgAtLeast('7.7')) tg.disableVerticalSwipes(); } catch (e) {}
+}
+const haptic = (kind) => {
+  try {
+    if (!tgAtLeast('6.1')) return;
+    if (kind === 'select') tg.HapticFeedback.selectionChanged();
+    else if (kind === 'ok') tg.HapticFeedback.notificationOccurred('success');
+    else tg.HapticFeedback.impactOccurred(kind || 'light');
+  } catch (e) {}
+};
+
+/* ---------- хранилище ---------- */
+const useCloud = inTG && tgAtLeast('6.9') && tg.CloudStorage;
+const store = {
+  getMany(keys) {
+    if (!keys.length) return Promise.resolve({});
+    if (!useCloud) {
+      const out = {}; keys.forEach((k) => { out[k] = localStorage.getItem('ryadom_' + k) || ''; });
+      return Promise.resolve(out);
+    }
+    const chunks = []; for (let i = 0; i < keys.length; i += 20) chunks.push(keys.slice(i, i + 20));
+    return Promise.all(chunks.map((ch) => new Promise((res) => {
+      tg.CloudStorage.getItems(ch, (err, vals) => res(err ? {} : (vals || {})));
+    }))).then((parts) => Object.assign({}, ...parts));
+  },
+  set(key, val) {
+    if (!useCloud) { try { localStorage.setItem('ryadom_' + key, val); } catch (e) {} return; }
+    tg.CloudStorage.setItem(key, val, () => {});
+  },
+  remove(key) {
+    if (!useCloud) { try { localStorage.removeItem('ryadom_' + key); } catch (e) {} return; }
+    tg.CloudStorage.removeItem(key, () => {});
+  }
+};
+const parse = (s, d) => { try { return s ? JSON.parse(s) : d; } catch (e) { return d; } };
+
+/* ---------- состояние ---------- */
+const user = (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) || null;
+const S = {
+  screen: 'splash', stack: [], loaded: false, splashDone: false,
+  name: (user && user.first_name) || 'друг',
+  history: [],          // чек-ины: {t, m(0-4), a(0-10), s(0-3), tp:[...]}
+  entries: [],          // записи: {id, t, g:'free'|'q'|'worry'|'dump', x}
+  feels: [],            // {t, p, v:'better'|'bit'|'no'}
+  prefs: { remindOn: true, remindTimes: ['21:00'], done: {} },
+  ci: { step: 0, m: null, a: null, s: null, tp: [] },
+  diaryMode: 'free', draft: '', qIdx: 0, qDraft: '', qAnswers: [], justSaved: false,
+  gStep: 0, feel: null, lastPractice: '',
+  pFilter: 'all', pid: 'pmr', pStep: 0,
+  wKind: 'worry', wDraft: '', wTime: '19:00', wDone: false,
+  toast: ''
+};
+
+function saveHistory() { store.set('hist', JSON.stringify(S.history.slice(0, 50))); }
+function savePrefs() { store.set('prefs', JSON.stringify(S.prefs)); }
+function saveFeels() { store.set('feels', JSON.stringify(S.feels.slice(0, 50))); }
+function saveEntryIndex() { store.set('eidx', JSON.stringify(S.entries.slice(0, 150).map((e) => e.id))); }
+function addEntry(g, x) {
+  const e = { id: String(Date.now()), t: Date.now(), g: g, x: x.slice(0, 3500) };
+  S.entries.unshift(e);
+  store.set('e_' + e.id, JSON.stringify(e));
+  saveEntryIndex();
+  markDone('diary');
+}
+function deleteEntry(id) {
+  S.entries = S.entries.filter((e) => e.id !== id);
+  store.remove('e_' + id);
+  saveEntryIndex();
+}
+function markDone(k) { if (!S.prefs.done[k]) { S.prefs.done[k] = true; savePrefs(); } }
+
+function load() {
+  return store.getMany(['hist', 'prefs', 'feels', 'eidx']).then((v) => {
+    S.history = parse(v.hist, []);
+    S.prefs = Object.assign(S.prefs, parse(v.prefs, {}));
+    S.prefs.done = S.prefs.done || {};
+    S.feels = parse(v.feels, []);
+    const ids = parse(v.eidx, []);
+    return store.getMany(ids.map((id) => 'e_' + id)).then((ev) => {
+      S.entries = ids.map((id) => parse(ev['e_' + id], null)).filter(Boolean);
+    });
+  }).catch(() => {}).then(() => { S.loaded = true; maybeLeaveSplash(); });
+}
+
+/* ---------- справочники ---------- */
+const MOODS = ['Очень тяжело', 'Тяжело', 'Так себе', 'Нормально', 'Хорошо'];
+const SLEEPS = ['Плохо', 'С перерывами', 'Нормально', 'Хорошо'];
+const TOPICS = ['Учёба / работа', 'Отношения', 'Семья', 'Здоровье', 'Будущее', 'Деньги', 'Сам(а) не знаю'];
+const SHORT = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+const WD = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
+const QS = [
+  { q: 'Что ты сейчас чувствуешь?', h: 'Одним-двумя словами: тревога, пустота, злость, усталость…', k: 'Что чувствую' },
+  { q: 'Где в теле ты это замечаешь?', h: 'Грудь, живот, плечи, горло…', k: 'Где в теле' },
+  { q: 'Что произошло перед тем, как стало так?', h: 'Событие, мысль, разговор — или ничего особенного', k: 'Что было перед этим' },
+  { q: 'Какая мысль звучит в голове громче всего?', h: 'Запиши её как есть, без оценки', k: 'Главная мысль' },
+  { q: 'Что сказал бы тебе близкий друг, если бы был рядом?', h: 'Попробуй ответить его голосом', k: 'Слова друга' }
+];
+const GROUND = [
+  { big: '5', t: 'Назови 5 вещей, которые видишь', h: 'Можно шёпотом. Лампа, чашка, край одеяла…' },
+  { big: '4', t: 'Найди 4 звука вокруг', h: 'Холодильник, машины за окном, твоё дыхание.' },
+  { big: '3', t: 'Потрогай 3 предмета', h: 'Какие они: тёплые, гладкие, мягкие?' },
+  { big: '2', t: 'Заметь 2 запаха', h: 'Если не получается — вспомни любимые.' },
+  { big: '1', t: 'Сделай один медленный выдох', h: 'Длиннее вдоха. Плечи можно опустить.' }
+];
+const PRAC = {
+  pmr: { title: 'Расслабить мышцы', note: 'Напрягай без боли, примерно вполсилы. Если есть травма или где-то болит — пропусти этот шаг.', steps: [
+    { l: 'Кисти', t: 'Сожми кулаки.\nПодержи 5 секунд… и отпусти.', h: 'Посиди 10 секунд и заметь разницу между напряжением и расслаблением.' },
+    { l: 'Плечи', t: 'Подними плечи к ушам.\nПодержи… и опусти.', h: 'Пусть они опустятся чуть ниже, чем были.' },
+    { l: 'Лицо', t: 'Зажмурься и сожми губы.\nПодержи… и отпусти.', h: 'Разожми челюсть, язык мягко лежит во рту.' },
+    { l: 'Живот', t: 'Втяни и напряги живот.\nПодержи… и отпусти.', h: 'Дыши свободно, без задержек.' },
+    { l: 'Ноги', t: 'Потяни носки на себя.\nПодержи… и отпусти.', h: 'Почувствуй, как ноги становятся тяжелее.' },
+    { l: 'Всё тело', t: 'Сделай медленный выдох.\nГде сейчас стало мягче?', h: 'Можно повторить любой шаг ещё раз.' }
+  ] },
+  self: { title: 'Пауза самосострадания', note: 'Практика Кристин Нефф из программы Mindful Self-Compassion.', steps: [
+    { l: 'Заметь', t: 'Скажи себе:\n«Мне сейчас тяжело. Это больно».', h: 'Не спорь с чувством и не оценивай его — просто признай.' },
+    { l: 'Ты не один', t: '«Так бывает у многих людей.\nЯ не один с этим».', h: 'Трудные чувства — часть жизни любого человека.' },
+    { l: 'Поддержи себя', t: 'Положи ладонь на грудь или обними себя.\n«Пусть я буду к себе добр(а)».', h: 'Тёплое прикосновение помогает телу успокоиться.' },
+    { l: 'Как другу', t: 'Что бы ты сказал(а) близкому человеку на твоём месте?', h: 'Попробуй сказать эти слова себе — тем же тоном.' }
+  ] }
+};
+const CAT = { panic: '#D4A5A5', thoughts: '#C9A876', sleep: '#7B8FA1', self: '#E8DCC8' };
+const PRACTICES = [
+  { id: 'sigh', icon: 'Вд', cat: 'panic', title: 'Двойной вдох — длинный выдох', when: 'Сердце колотится, паника', dur: '1–5 мин', src: 'Стэнфорд, 2023', tags: ['panic'], go: ['sigh'] },
+  { id: 'calm', icon: 'Ды', cat: 'sleep', title: 'Спокойное дыхание с кольцами', when: 'Нужно просто выдохнуть', dur: '1 мин', src: 'NHS', tags: ['panic', 'sleep'], go: ['breathe'] },
+  { id: 'ground', icon: '5', cat: 'panic', title: 'Заземление 5-4-3-2-1', when: 'Накрывает, мысли несутся', dur: '2 мин', src: 'NHS', tags: ['panic', 'thoughts'], go: ['ground'] },
+  { id: 'worry', icon: 'От', cat: 'thoughts', title: 'Отложить тревогу', when: 'Одна мысль крутится весь день', dur: '2 мин', src: 'КПТ, метод Борковца', tags: ['thoughts'], go: ['write', 'worry'] },
+  { id: 'dump', icon: 'Сп', cat: 'sleep', title: 'Выгрузить мысли перед сном', when: 'Не могу уснуть, думаю о завтра', dur: '5 мин', src: 'Бейлорский университет, 2018', tags: ['sleep', 'thoughts'], go: ['write', 'dump'] },
+  { id: 'pmr', icon: 'Мы', cat: 'sleep', title: 'Расслабить мышцы', when: 'Тело зажато, не расслабиться', dur: '5 мин', src: 'Систематический обзор, 2024', tags: ['sleep', 'panic'], go: ['prac', 'pmr'] },
+  { id: 'self', icon: 'Са', cat: 'self', title: 'Пауза самосострадания', when: 'Ругаю себя, стыдно', dur: '3 мин', src: 'К. Нефф, Mindful Self-Compassion', tags: ['self'], go: ['prac', 'self'] }
+];
+const PNAMES = { sigh: 'Двойной вдох', breathe: 'Спокойное дыхание', ground: 'Заземление 5-4-3-2-1', pmr: 'Расслабление мышц', self: 'Пауза самосострадания' };
+const TITLES = { sos: 'Помощь', checkin: 'Чек-ин', state: 'Моё состояние', diary: 'Дневник', summary: 'Конспект', practices: 'Практики', breathe: 'Дыхание', sigh: 'Дыхание', ground: 'Заземление', prac: 'Практика', write: 'Практика', feel: '', onboard: 'Знакомство' };
+const ROOT = { home: 'home', practices: 'practices', breathe: 'practices', sigh: 'practices', ground: 'practices', prac: 'practices', write: 'practices', diary: 'diary', summary: 'diary', state: 'state', checkin: 'state' };
+
+/* ---------- утилиты ---------- */
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const pad = (n) => (n < 10 ? '0' : '') + n;
+const anxColor = (v) => (v >= 7 ? '#D4A5A5' : v >= 4 ? '#C9A876' : '#7B8FA1');
+const sameDay = (a, b) => a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+function whenOf(ts) {
+  const d = new Date(ts), n = new Date();
+  const diff = Math.round((new Date(n.getFullYear(), n.getMonth(), n.getDate()) - new Date(d.getFullYear(), d.getMonth(), d.getDate())) / 86400000);
+  const day = diff === 0 ? 'Сегодня' : diff === 1 ? 'Вчера' : diff < 7 ? SHORT[d.getDay()] : pad(d.getDate()) + '.' + pad(d.getMonth() + 1);
+  return day + ', ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+}
+function todayCheckin() { const h = S.history[0]; return h && sameDay(new Date(h.t), new Date()) ? h : null; }
+function nextRemind() {
+  const times = ['10:00', '15:00', '21:00'].filter((t) => S.prefs.remindTimes.indexOf(t) >= 0);
+  if (!S.prefs.remindOn || !times.length) return '';
+  const hr = new Date().getHours();
+  const later = times.find((t) => parseInt(t, 10) > hr);
+  return later ? 'сегодня в ' + later : 'завтра в ' + times[0];
+}
+
+/* ---------- иконки ---------- */
+const LOTUS = (w) => `<svg width="${w}" height="${w}" viewBox="0 0 64 64" aria-hidden="true"><g fill="#E8DCC8"><path d="M32 12c6 8 7 20 0 32-7-12-6-24 0-32z" opacity=".92"/><path d="M14 24c9 2 16 9 18 20-11-1-18-8-18-20z" opacity=".57"/><path d="M50 24c-9 2-16 9-18 20 11-1 18-8 18-20z" opacity=".57"/><path d="M6 36c10-1 19 3 26 8-10 4-20 2-26-8z" opacity=".3"/><path d="M58 36c-10-1-19 3-26 8 10 4 20 2 26-8z" opacity=".3"/></g><circle cx="32" cy="42" r="3" fill="#C9A876"/></svg>`;
+const I = {
+  chevR: (c) => `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="${c || '#8F8678'}" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>`,
+  chevL: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8DCC8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>',
+  phone: (c) => `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>`,
+  home: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-5h4v5"/></svg>',
+  rings: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="7" opacity=".6"/><circle cx="12" cy="12" r="10.5" opacity=".3"/></svg>',
+  book: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M9 9h6M9 13h4"/></svg>',
+  chart: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg>',
+  bell: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A69C8E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>',
+  lock: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#A69C8E" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>',
+  star: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A876" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg>',
+  info: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A69C8E" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>'
+};
+const dots = (n, cur, color) => `<div class="dots">${Array.from({ length: n }, (_, i) => `<i style="${i <= cur ? 'background:' + color : ''}"></i>`).join('')}</div>`;
+
+/* ---------- навигация ---------- */
+function nav(screen, arg) {
+  if (S.screen !== screen) S.stack.push(S.screen);
+  S.screen = screen; S.justSaved = false;
+  if (screen === 'sos') { markDone('sos'); haptic('medium'); }
+  if (screen === 'breathe' || screen === 'sigh') { markDone('breathe'); S.lastPractice = screen; }
+  if (screen === 'ground') { S.gStep = 0; S.lastPractice = 'ground'; }
+  if (screen === 'prac') { S.pid = arg || 'pmr'; S.pStep = 0; S.lastPractice = S.pid; }
+  if (screen === 'write') { S.wKind = arg || 'worry'; S.wDraft = ''; S.wDone = false; }
+  if (screen === 'checkin') S.ci = { step: 0, m: null, a: null, s: null, tp: [] };
+  if (screen === 'feel') S.feel = null;
+  if (screen === 'state') markDone('remind');
+  if (screen === 'diary' && arg === 'q') S.diaryMode = 'q';
+  render(true);
+}
+function tab(screen) { S.stack = screen === 'home' ? [] : ['home']; S.screen = screen; S.justSaved = false; if (screen === 'state') markDone('remind'); haptic('select'); render(true); }
+function back() {
+  if (S.screen === 'checkin' && S.ci.step > 0 && S.ci.step < 4) { S.ci.step--; return render(); }
+  if (S.screen === 'ground' && S.gStep > 0) { S.gStep--; return render(); }
+  if (S.screen === 'prac' && S.pStep > 0) { S.pStep--; return render(); }
+  if (S.screen === 'diary' && S.diaryMode === 'q' && S.qIdx > 0) { S.qIdx--; return render(); }
+  const prev = S.stack.pop() || 'home';
+  S.screen = prev === 'splash' ? 'home' : prev; S.justSaved = false;
+  render(true);
+}
+function maybeLeaveSplash() { if (S.screen === 'splash' && S.loaded && S.splashDone) { S.screen = 'home'; render(true); } }
+if (tg) { try { tg.BackButton.onClick(back); } catch (e) {} }
+
+/* ---------- экраны ---------- */
+function vHome() {
+  const now = new Date(), hr = now.getHours();
+  const greet = hr >= 5 && hr < 12 ? 'Доброе утро' : hr < 18 && hr >= 12 ? 'Добрый день' : hr >= 18 && hr < 23 ? 'Добрый вечер' : 'Доброй ночи';
+  const doneCount = ['sos', 'checkin', 'breathe', 'diary', 'remind'].filter((k) => S.prefs.done[k]).length;
+  const tc = todayCheckin();
+  const nr = nextRemind();
+  return `<div class="col g16">
+    <div class="col g6" style="padding:4px 4px 0">
+      <span class="s13 muted">${WD[now.getDay()]}, ${pad(hr)}:${pad(now.getMinutes())}</span>
+      <h1 style="font-size:30px;line-height:1.15">${greet},<br>${esc(S.name)}</h1>
+      <p class="s15 muted" style="margin-top:2px">Я рядом. С чего начнём?</p>
+    </div>
+    <button class="sos-hero" data-act="nav" data-arg="sos">
+      <span class="sos-dot">SOS</span>
+      <span class="col g4" style="flex:1"><span style="font-size:19px;font-weight:700">Мне плохо прямо сейчас</span><span class="s13" style="color:#D9B9B9">Поддержка и телефоны — в один тап</span></span>
+      ${I.chevR('#D4A5A5')}
+    </button>
+    ${doneCount < 5 ? `<button class="card-dash col g12" data-act="nav" data-arg="onboard" style="text-align:left;color:var(--light);width:100%">
+      <span class="row between" style="width:100%"><span class="row g10"><span style="width:36px;height:36px;border-radius:18px;background:var(--dusk);display:flex;align-items:center;justify-content:center">${I.star}</span><span class="s16 b7">Я здесь впервые</span></span><span class="s13 b7" style="color:var(--gold)">${doneCount} из 5</span></span>
+      <span class="s13 muted lh">Короткое знакомство: что умеет «Рядом» и куда нажать, когда тяжело</span>
+      <span class="progress" style="width:100%"><b style="width:${doneCount * 20}%"></b></span>
+    </button>` : ''}
+    ${tc ? `<button class="card col g12" data-act="nav" data-arg="state" style="text-align:left;border:none;color:var(--light);width:100%">
+        <span class="up" style="color:var(--water)">Сегодня ты отметил(а)</span>
+        <span class="row g8" style="flex-wrap:wrap"><span class="pill" style="background:#26222E">${MOODS[tc.m]}</span><span class="pill b7" style="background:${anxColor(tc.a)};color:var(--night)">Тревога ${tc.a}/10</span></span>
+        <span class="s13 b6" style="color:var(--gold)">Моё состояние →</span>
+      </button>`
+      : `<div class="card col g14">
+        <div class="col g4"><span class="up" style="color:var(--water)">Чек-ин состояния</span><span class="s17 b7" style="font-size:18px">Как ты сегодня?</span><span class="s13 muted">4 коротких вопроса · около минуты</span></div>
+        <button class="btn btn-gold" data-act="nav" data-arg="checkin">Пройти чек-ин</button>
+        ${nr ? `<span class="row g8 s13 muted">${I.bell}Твоё время для чек-ина — ${nr.replace('сегодня ', '').replace('завтра ', '')}</span>` : ''}
+      </div>`}
+    <button class="tile" data-act="nav" data-arg="summary" style="justify-content:space-between;border:1px solid #3A3226;background:var(--deep)">
+      <span class="col g4"><span class="up" style="color:var(--gold)">К следующей сессии</span><span class="s16 b7">Конспект недели</span><span class="s13 muted">${S.entries.length ? S.entries.length + ' ' + plural(S.entries.length, 'запись', 'записи', 'записей') + ' · ' : ''}${S.history.length} ${plural(S.history.length, 'чек-ин', 'чек-ина', 'чек-инов')}</span></span>
+      ${I.chevR('#C9A876')}
+    </button>
+  </div>`;
+}
+function plural(n, a, b, c) { const m10 = n % 10, m100 = n % 100; if (m10 === 1 && m100 !== 11) return a; if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return b; return c; }
+
+function vSos() {
+  return `<div class="col g18">
+    <div class="col g10">
+      <h1 style="font-size:28px">${esc(S.name)}, я рядом.</h1>
+      <p class="s16 lh soft">То, что ты сейчас чувствуешь, очень тяжело — но это состояние пройдёт. Ты не один и не обязан справляться с этим в одиночку.</p>
+      <p class="s14 muted lh">Попробуй один медленный выдох — длиннее, чем вдох.</p>
+    </div>
+    <div class="hot">
+      <span class="s13 b7" style="color:#F0CFCF">Поговорить с живым человеком — анонимно, круглосуточно</span>
+      <a class="main" href="#" data-act="call" data-arg="+7495051"><span class="ic">${I.phone('#D4A5A5')}</span><span class="col g4"><span style="font-size:22px;font-weight:800">051</span><span class="s12 b6">Неотложная психологическая помощь, Москва. С мобильного: +7 495 051</span></span></a>
+      <a href="#" data-act="call" data-arg="+74959895050"><span class="ic">${I.phone('#D4A5A5')}</span><span class="col g4"><span style="font-size:18px;font-weight:700">+7 495 989-50-50</span><span class="s12" style="color:#D9B9B9">Психологическая помощь МЧС России</span></span></a>
+      <a class="dim" href="#" data-act="call" data-arg="112"><span class="ic" style="border-color:#4A3640;font-size:13px;font-weight:700">112</span><span class="col g4"><span class="s16 b7">Если есть угроза жизни</span><span class="s12" style="color:#D9B9B9">Единый номер экстренных служб</span></span></a>
+      <div class="row g8" style="flex-wrap:wrap;margin-top:2px"><span class="s12" style="color:#D9B9B9">Скопировать номер:</span>
+        <button class="linkbtn" data-act="copyNum" data-arg="+7 495 051" style="color:#F0CFCF;text-decoration:underline">051</button>
+        <button class="linkbtn" data-act="copyNum" data-arg="+7 495 989-50-50" style="color:#F0CFCF;text-decoration:underline">МЧС</button>
+        <button class="linkbtn" data-act="copyNum" data-arg="112" style="color:#F0CFCF;text-decoration:underline">112</button></div>
+    </div>
+    <span class="s14 muted" style="padding-left:4px">Или давай побудем вместе прямо здесь:</span>
+    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
+      <button class="tile col g6" data-act="nav" data-arg="ground" style="align-items:flex-start"><span class="s15 b7">Заземление</span><span class="s12 muted">5-4-3-2-1 · 2 мин</span></button>
+      <button class="tile col g6" data-act="nav" data-arg="sigh" style="align-items:flex-start"><span class="s15 b7">Длинный выдох</span><span class="s12 muted">двойной вдох · 1 мин</span></button>
+    </div>
+    <button class="btn btn-out" data-act="nav" data-arg="diary">Выписать, что происходит</button>
+  </div>`;
+}
+
+function vCheckin() {
+  const c = S.ci;
+  const head = c.step < 4 ? `<div class="col g10"><span class="up" style="color:var(--water)">Вопрос ${c.step + 1} из 4</span>${dots(4, c.step, '#7B8FA1')}</div>` : '';
+  let body = '';
+  if (c.step === 0) body = `<h1>Как ты в целом сейчас?</h1><div class="col g10">${MOODS.map((m, i) => `<button class="opt ${c.m === i ? 'on' : ''}" data-act="ciMood" data-arg="${i}">${m}</button>`).join('')}</div>`;
+  if (c.step === 1) body = `<h1>Насколько сильная тревога прямо сейчас?</h1><div class="anx-grid">${Array.from({ length: 11 }, (_, v) => `<button data-act="ciAnx" data-arg="${v}" aria-label="Тревога ${v} из 10" style="${c.a === v ? 'background:' + anxColor(v) + ';color:#0F0E12;border-color:' + anxColor(v) : ''}">${v}</button>`).join('')}</div><div class="row between s12 muted"><span>0 — совсем нет</span><span>10 — очень сильная</span></div>`;
+  if (c.step === 2) body = `<h1>Как ты спал(а) прошлой ночью?</h1><div class="col g10">${SLEEPS.map((m, i) => `<button class="opt ${c.s === i ? 'on' : ''}" data-act="ciSleep" data-arg="${i}">${m}</button>`).join('')}</div>`;
+  if (c.step === 3) body = `<h1>Что сейчас больше всего занимает мысли?</h1><span class="s14 muted" style="margin-top:-8px">Можно выбрать несколько</span><div class="row g8" style="flex-wrap:wrap">${TOPICS.map((t, i) => `<button class="chip ${c.tp.indexOf(i) >= 0 ? 'on' : ''}" data-act="ciTopic" data-arg="${i}" aria-pressed="${c.tp.indexOf(i) >= 0}">${t}</button>`).join('')}</div><button class="btn btn-gold" data-act="ciFinish" style="margin-top:8px">Готово</button>`;
+  if (c.step === 4) {
+    const t = S.history[0];
+    const high = t.a >= 7 || t.m <= 1;
+    const nr = nextRemind();
+    body = `<h1 style="font-size:28px">Спасибо, ${esc(S.name)}</h1>
+      <div class="row g8" style="flex-wrap:wrap"><span class="pill" style="background:var(--dusk)">${MOODS[t.m]}</span><span class="pill b7" style="background:${anxColor(t.a)};color:var(--night)">Тревога ${t.a}/10</span><span class="pill" style="background:var(--dusk)">Сон: ${SLEEPS[t.s].toLowerCase()}</span></div>
+      ${high ? `<div class="hot" style="gap:12px"><span class="s17 b7">Похоже, сейчас непросто</span><span class="s14 lh soft">Давай немного снизим напряжение. Минута дыхания с длинным выдохом часто помогает телу успокоиться.</span><button class="btn btn-rose" data-act="nav" data-arg="sigh">Подышать минуту</button><button class="btn btn-out-rose" data-act="nav" data-arg="sos">Открыть SOS</button></div>`
+        : `<div class="card col g12"><span class="s17 b7">Хорошо, что ты замечаешь себя</span><span class="s14 lh soft">Можно записать, что помогло сегодня, — это пригодится на сессии.</span><button class="btn btn-gold" data-act="nav" data-arg="diary">Записать в дневник</button></div>`}
+      <p class="s13 muted lh">Сохранено в «Моё состояние».</p>
+      <button class="btn btn-out" data-act="nav" data-arg="state">Посмотреть динамику</button>`;
+  }
+  return `<div class="col g20">${head}<div class="col g16">${body}</div></div>`;
+}
+
+function vState() {
+  const now = new Date();
+  let bars = '';
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(now.getTime() - i * 86400000);
+    const hit = S.history.find((h) => sameDay(new Date(h.t), d));
+    const v = hit ? hit.a : null;
+    bars += `<div><span class="s12 b7 soft">${v == null ? '—' : v}</span>${v == null ? '<div class="bar empty"></div>' : `<div class="bar" style="height:${10 + v * 8}px;background:${anxColor(v)}"></div>`}<span class="s12" style="font-size:11px;${i === 0 ? 'color:var(--gold);font-weight:700' : 'color:var(--muted)'}">${i === 0 ? 'Сег.' : SHORT[d.getDay()]}</span></div>`;
+  }
+  const times = [['10:00', 'утро'], ['15:00', 'день'], ['21:00', 'вечер']];
+  return `<div class="col g16">
+    <div class="card col g14">
+      <div class="row between" style="align-items:baseline"><span class="s16 b7">Тревога за 7 дней</span><span class="s12 muted">по твоим чек-инам</span></div>
+      ${S.history.length ? '' : '<span class="s14 lh muted">Пока здесь пусто. Пройди первый чек-ин — и начнёт появляться твоя динамика.</span>'}
+      <div class="bars">${bars}</div>
+    </div>
+    <button class="btn btn-gold" data-act="nav" data-arg="checkin">Пройти чек-ин сейчас</button>
+    <div class="card col g14">
+      <div class="row between g12"><div class="col g4"><span class="s16 b7">Время для чек-ина</span><span class="s13 muted">Когда тебе удобнее отмечать состояние</span></div>
+      <button class="toggle ${S.prefs.remindOn ? 'on' : ''}" data-act="remindToggle" aria-label="Напоминания о чек-ине" aria-pressed="${S.prefs.remindOn}"></button></div>
+      ${S.prefs.remindOn ? `<div class="row g8">${times.map(([t, l]) => `<button class="chip ${S.prefs.remindTimes.indexOf(t) >= 0 ? 'on' : ''}" data-act="remindTime" data-arg="${t}" style="flex:1;height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px"><span class="s15 b7">${t}</span><span style="font-size:11px;opacity:.8">${l}</span></button>`).join('')}</div>
+      ${S.prefs.remindTimes.length ? `<button class="btn btn-out" data-act="calendar" data-arg="checkin" style="min-height:48px;font-size:15px">Напоминать через календарь</button>` : ''}
+      <span class="s12 faint lh">Бот пока не умеет присылать сообщения сам — поэтому напоминание поставим в календарь телефона.</span>` : ''}
+    </div>
+    ${S.history.length ? `<div class="col g10"><div class="row between" style="align-items:baseline;padding:0 4px"><span class="s15 b7">Последние чек-ины</span><span class="s12 muted">всего ${S.history.length}</span></div>
+      ${S.history.slice(0, 5).map((h) => `<div class="entry" style="flex-direction:row;align-items:center;justify-content:space-between"><span class="col g4"><span class="s14 b6">${MOODS[h.m]}</span><span class="s12 muted">${whenOf(h.t)}</span></span><span class="pill b7" style="padding:6px 12px;background:${anxColor(h.a)};color:var(--night)">${h.a}/10</span></div>`).join('')}</div>` : ''}
+  </div>`;
+}
+
+const TAGS = { q: ['Ответы на вопросы', 'background:#2C2619;color:#C9A876'], free: ['Свободная запись', 'background:#22202A;color:#D9CDB9'], worry: ['Отложенная тревога', 'background:#2A1F27;color:#E3B9B9'], dump: ['Список на завтра', 'background:#1E2329;color:#A3B2C0'] };
+function vDiary() {
+  const qi = Math.min(S.qIdx, 4);
+  const hasDraft = S.draft.trim().length > 0;
+  const editor = S.diaryMode === 'free'
+    ? `<div class="card col g10" style="padding:16px">
+        <label for="note" class="s15 b7">Что сейчас происходит?</label>
+        <span class="s13 muted" style="margin-top:-4px">Пиши как в заметках — без правил</span>
+        <textarea id="note" class="ta" rows="5" data-model="draft" data-btn="saveFree" placeholder="Например: опять не могу уснуть, прокручиваю разговор…">${esc(S.draft)}</textarea>
+        <button id="saveFree" class="btn ${hasDraft ? 'btn-gold' : 'btn-off'}" data-act="saveFree">Сохранить</button>
+      </div>`
+    : `<div class="card col g12">
+        <div class="row between"><span class="up" style="color:var(--gold)">Вопрос ${qi + 1} из 5</span><div class="row g4">${QS.map((_, i) => `<span style="width:18px;height:4px;border-radius:2px;background:${i <= qi ? '#C9A876' : '#2E2936'}"></span>`).join('')}</div></div>
+        <label for="qa" style="font-size:19px;line-height:1.35;font-weight:700">${QS[qi].q}</label>
+        <span class="s13 muted" style="margin-top:-4px">${QS[qi].h}</span>
+        <textarea id="qa" class="ta" rows="3" data-model="qDraft" placeholder="Напиши как получится">${esc(S.qDraft)}</textarea>
+        <div class="row g10"><button class="btn btn-out" data-act="qSkip">Пропустить</button><button class="btn btn-gold" data-act="qNext">${qi < 4 ? 'Дальше' : 'Сохранить'}</button></div>
+      </div>`;
+  return `<div class="col g16">
+    <div class="seg"><button class="${S.diaryMode === 'free' ? 'on' : ''}" data-act="diaryMode" data-arg="free">Свободная запись</button><button class="${S.diaryMode === 'q' ? 'on' : ''}" data-act="diaryMode" data-arg="q">Наводящие вопросы</button></div>
+    ${editor}
+    ${S.justSaved ? '<p class="s14" style="color:var(--gold);padding-left:4px;margin-top:-4px">Сохранено. Попадёт в конспект к сессии.</p>' : ''}
+    <div class="col g6" style="padding:4px 4px 0">
+      <div class="row between"><span class="s16 b7">Мои записи</span><span class="s13 muted">${S.entries.length}</span></div>
+      <span class="row g6 s12 muted">${I.lock}Хранятся в твоём облаке Telegram. Видишь только ты.</span>
+    </div>
+    ${S.entries.length ? `<div class="col g10">${S.entries.slice(0, 30).map((e) => `<div class="entry"><div class="row between"><span class="tag" style="${(TAGS[e.g] || TAGS.free)[1]}">${(TAGS[e.g] || TAGS.free)[0]}</span><span class="s12 muted">${whenOf(e.t)}</span></div><span class="txt">${esc(e.x)}</span><div><button class="linkbtn" data-act="delEntry" data-arg="${e.id}">Удалить</button></div></div>`).join('')}</div>`
+      : '<span class="s14 muted lh" style="padding:0 4px">Здесь будут твои записи. Можно начать с наводящих вопросов, если не знаешь, что писать.</span>'}
+    <button class="tile" data-act="nav" data-arg="summary" style="justify-content:space-between;border:1px solid #3A3226;background:transparent"><span class="s15 b6">Собрать конспект к сессии</span>${I.chevR('#C9A876')}</button>
+  </div>`;
+}
+
+function buildSummary() {
+  const weekAgo = Date.now() - 7 * 86400000;
+  const hs = S.history.filter((h) => h.t >= weekAgo);
+  const es = S.entries.filter((e) => e.t >= weekAgo);
+  const fs = S.feels.filter((f) => f.t >= weekAgo);
+  if (!hs.length && !es.length) return null;
+  const out = { lines: [] };
+  if (hs.length) {
+    const avg = hs.reduce((a, h) => a + h.a, 0) / hs.length;
+    const worst = hs.reduce((a, h) => (h.a > a.a ? h : a), hs[0]);
+    const evening = hs.filter((h) => new Date(h.t).getHours() >= 18 || new Date(h.t).getHours() < 5);
+    const tcount = {}; hs.forEach((h) => (h.tp || []).forEach((i) => { tcount[i] = (tcount[i] || 0) + 1; }));
+    const top = Object.keys(tcount).sort((a, b) => tcount[b] - tcount[a]).slice(0, 3).map((i) => TOPICS[i].toLowerCase());
+    out.state = `Чек-инов: ${hs.length}. Средняя тревога — ${avg.toFixed(1).replace('.', ',')} из 10. Тяжелее всего было: ${whenOf(worst.t).toLowerCase()} (${worst.a}/10).`
+      + (evening.length && hs.length > 1 ? ` Вечером и ночью — ${evening.length} из ${hs.length} отметок.` : '');
+    if (top.length) out.topics = 'Чаще всего занимало мысли: ' + top.join(', ') + '.';
+  }
+  const helped = {}; fs.filter((f) => f.v !== 'no').forEach((f) => { helped[f.p] = (helped[f.p] || 0) + 1; });
+  const hk = Object.keys(helped);
+  if (hk.length) out.helped = 'Помогло: ' + hk.map((k) => (PNAMES[k] || k) + ' (' + helped[k] + ')').join(', ') + '.';
+  if (es.length) out.notes = es.slice(0, 4).map((e) => '— ' + e.x.split('\n')[0].slice(0, 140));
+  return out;
+}
+function summaryText(sm) {
+  const parts = ['Конспект «Рядом» за 7 дней'];
+  if (sm.state) parts.push('\nСостояние\n' + sm.state);
+  if (sm.topics) parts.push(sm.topics);
+  if (sm.helped) parts.push('\nЧто помогло\n' + sm.helped);
+  if (sm.notes) parts.push('\nИз записей\n' + sm.notes.join('\n'));
+  return parts.join('\n');
+}
+function vSummary() {
+  const sm = buildSummary();
+  if (!sm) return `<div class="col g16"><h1>Конспект пока пуст</h1><p class="s15 lh soft">Он соберётся сам из твоих чек-инов и записей за неделю. Пройди пару чек-инов и сделай хотя бы одну запись — и сюда можно будет заглянуть перед сессией.</p><button class="btn btn-gold" data-act="nav" data-arg="checkin">Пройти чек-ин</button><button class="btn btn-out" data-act="nav" data-arg="diary">Сделать запись</button></div>`;
+  return `<div class="col g16">
+    <div class="col g6"><span class="up" style="color:var(--gold)">Последние 7 дней</span><h1>Твоя неделя коротко</h1></div>
+    <div class="card col g10">
+      ${sm.state ? `<span class="s15 b7">Состояние</span><span class="s14 lh soft">${esc(sm.state)}</span>` : ''}
+      ${sm.topics ? `<span class="s14 lh soft">${esc(sm.topics)}</span>` : ''}
+      ${sm.helped ? `<span class="s15 b7" style="margin-top:6px">Что помогло</span><span class="s14 lh soft">${esc(sm.helped.replace('Помогло: ', ''))}</span>` : ''}
+      ${sm.notes ? `<span class="s15 b7" style="margin-top:6px">Из записей</span><span class="s14 lh soft" style="white-space:pre-line">${esc(sm.notes.join('\n'))}</span>` : ''}
+    </div>
+    <p class="s12 muted lh">Собрано из твоих записей и чек-инов. Психолог ничего не увидит, пока ты сам не решишь поделиться.</p>
+    <button class="btn btn-gold" data-act="copySummary">Скопировать конспект</button>
+  </div>`;
+}
+
+function vPractices() {
+  const FL = [['all', 'Все'], ['panic', 'Паника сейчас'], ['thoughts', 'Мысли крутятся'], ['sleep', 'Не могу уснуть'], ['self', 'Ругаю себя']];
+  const list = PRACTICES.filter((p) => S.pFilter === 'all' || p.tags.indexOf(S.pFilter) >= 0);
+  return `<div class="col g14">
+    <p class="s15 soft" style="padding-left:4px">Что сейчас происходит? Подберу практику.</p>
+    <div class="hscroll">${FL.map(([id, l]) => `<button class="chip light ${S.pFilter === id ? 'on' : ''}" data-act="pFilter" data-arg="${id}">${l}</button>`).join('')}</div>
+    ${list.map((p) => `<button class="tile" data-act="practice" data-arg="${p.id}">
+      <span class="pico" style="border-color:${CAT[p.cat]};color:${CAT[p.cat]}">${p.icon}</span>
+      <span class="col g4" style="flex:1;min-width:0"><span class="s16 b7">${p.title}</span><span class="s13 muted">${p.when}</span><span class="faint" style="font-size:11px">${p.dur} · ${p.src}</span></span>
+      ${I.chevR()}
+    </button>`).join('')}
+    <div class="card-line row g10" style="align-items:flex-start">${I.info}<span class="s12 lh muted">Здесь только мягкие практики для самостоятельной поддержки. Если от упражнения становится хуже — остановись: это нормально. Работа с травмой и страхами — вместе с психологом.</span></div>
+  </div>`;
+}
+
+function vBreathe() {
+  return `<div class="col g20" style="align-items:center">
+    <h1 style="align-self:stretch">Дыши вместе с кольцами</h1>
+    <div class="stage calm"><div class="r r1"></div><div class="r r2"></div><div class="r r3"></div><span style="position:relative">${LOTUS(60)}</span></div>
+    <div class="says"><span class="calm-in">Вдох…</span><span class="calm-out">Выдох…</span></div>
+    <p class="s14 lh muted" style="text-align:center;max-width:290px">Кольцо растёт — вдыхай. Сжимается — выдыхай.</p>
+    <button class="btn btn-out" data-act="nav" data-arg="feel">Закончить</button>
+  </div>`;
+}
+function vSigh() {
+  return `<div class="col g20" style="align-items:center">
+    <div class="col g6" style="align-self:stretch"><h1>Двойной вдох — длинный выдох</h1><span class="s14 lh muted">Длинный выдох замедляет дыхание и сердце. Повтори 5–10 раз.</span></div>
+    <div class="stage sighA"><div class="r r1"></div><div class="r r2"></div><div class="r r3"></div><span style="position:relative">${LOTUS(56)}</span></div>
+    <div class="says"><span class="sg1">Вдох носом…</span><span class="sg2">…и ещё чуть-чуть</span><span class="sg3">Медленный выдох ртом</span></div>
+    <span class="s12 faint" style="text-align:center">Закружилась голова — просто дыши как обычно</span>
+    <button class="btn btn-out" data-act="nav" data-arg="feel">Закончить</button>
+  </div>`;
+}
+function vGround() {
+  const g = GROUND[Math.min(S.gStep, 4)];
+  return `<div class="col g20">
+    <div class="col g10"><span class="up" style="color:var(--rose)">Шаг ${Math.min(S.gStep, 4) + 1} из 5</span>${dots(5, S.gStep, '#D4A5A5')}</div>
+    <div class="col g16" style="align-items:center;padding:40px 22px;border-radius:26px;background:var(--dusk);text-align:center">
+      <span style="font-size:76px;line-height:1;font-weight:700;color:var(--gold)">${g.big}</span>
+      <span style="font-size:21px;line-height:1.35;font-weight:700">${g.t}</span>
+      <span class="s14 lh muted">${g.h}</span>
+    </div>
+    <button class="btn btn-gold" data-act="gNext">${S.gStep >= 4 ? 'Готово' : 'Дальше'}</button>
+  </div>`;
+}
+function vPrac() {
+  const pr = PRAC[S.pid] || PRAC.pmr;
+  const i = Math.min(S.pStep, pr.steps.length - 1), st = pr.steps[i];
+  return `<div class="col g18">
+    <div class="col g10"><span class="up" style="color:var(--gold)">${pr.title} · шаг ${i + 1} из ${pr.steps.length}</span>${dots(pr.steps.length, i, '#C9A876')}</div>
+    <div class="col g14" style="padding:30px 22px;border-radius:26px;background:var(--dusk)">
+      <span class="s13 b7" style="color:var(--water)">${st.l}</span>
+      <span style="font-size:22px;line-height:1.35;font-weight:700;white-space:pre-line">${st.t}</span>
+      <span class="s14 lh muted">${st.h}</span>
+    </div>
+    ${i === 0 ? `<span class="s12 lh faint" style="padding:0 4px">${pr.note}</span>` : ''}
+    <button class="btn btn-gold" data-act="pNext">${i >= pr.steps.length - 1 ? 'Готово' : 'Дальше'}</button>
+  </div>`;
+}
+function vWrite() {
+  const worry = S.wKind === 'worry';
+  const day = new Date().getHours() < 18 ? 'сегодня' : 'завтра';
+  if (S.wDone) {
+    return `<div class="col g14">
+      <h1>${worry ? 'Мысль подождёт до ' + S.wTime : 'Всё записано'}</h1>
+      <p class="s15 lh soft">${worry ? 'Если она вернётся раньше — мягко скажи ей: «Не сейчас, вернёмся в ' + S.wTime + '» — и вернись к своему делу. Часто к назначенному времени тревога уже не кажется такой срочной.' : 'Список сохранён в дневнике и никуда не денется. Можно отпустить эти мысли до утра. Спокойной ночи, ' + esc(S.name) + '.'}</p>
+      ${worry ? `<button class="btn btn-gold" data-act="calendar" data-arg="worry">Напомнить в ${S.wTime} через календарь</button>` : ''}
+      <button class="btn btn-out" data-act="nav" data-arg="diary">Открыть в дневнике</button>
+      <button class="btn ${worry ? 'btn-out' : 'btn-gold'}" data-act="home">На главную</button>
+    </div>`;
+  }
+  const has = S.wDraft.trim().length > 0;
+  return `<div class="col g16">
+    <div class="col g8"><h1>${worry ? 'Отложить тревогу' : 'Выгрузить мысли перед сном'}</h1>
+      <span class="s14 lh muted">${worry ? 'Тревожная мысль требует внимания прямо сейчас. Давай договоримся с ней: запишем и вернёмся позже, в спокойное время.' : 'Пять минут: запиши всё, что нужно сделать завтра и в ближайшие дни. Чем конкретнее, тем проще голове это отпустить.'}</span></div>
+    <div class="card col g10" style="padding:16px">
+      <label for="wt" class="s15 b7">${worry ? 'Что тревожит?' : 'Что нужно сделать?'}</label>
+      <textarea id="wt" class="ta" rows="5" data-model="wDraft" data-btn="wSave" placeholder="${worry ? 'Например: вдруг я провалю экзамен' : '— написать преподавателю&#10;— купить продукты&#10;— …'}">${esc(S.wDraft)}</textarea>
+    </div>
+    ${worry ? `<div class="col g10"><span class="s15 b7" style="padding-left:4px">Когда вернёмся к этой мысли?</span>
+      <div class="row g8">${['18:00', '19:00', '20:00'].map((t) => `<button class="chip ${S.wTime === t ? 'on' : ''}" data-act="wTime" data-arg="${t}" style="flex:1;padding:0 6px;font-size:13px">${day} ${t}</button>`).join('')}</div>
+      <span class="s12 lh faint" style="padding-left:4px">15 минут в выбранное время. Лучше не перед сном.</span></div>` : ''}
+    <button id="wSave" class="btn ${has ? 'btn-gold' : 'btn-off'}" data-act="wSave">${worry ? 'Отложить до ' + S.wTime : 'Выгрузить и отпустить'}</button>
+  </div>`;
+}
+function vFeel() {
+  if (!S.feel) {
+    return `<div class="col g14"><h1>Ты справился с этой минутой. Стало хоть немного легче?</h1>
+      <button class="btn btn-gold" data-act="feel" data-arg="better">Да, стало легче</button>
+      <button class="btn btn-out" data-act="feel" data-arg="bit">Немного</button>
+      <button class="btn btn-out" data-act="feel" data-arg="no">Нет, всё ещё плохо</button></div>`;
+  }
+  const F = { better: ['Я рад. Ты сделал это сам.', 'Запиши, что помогло, — это хороший материал для следующей сессии.'], bit: ['Немного — это уже шаг.', 'Можно повторить практику или выписать мысли, чтобы они не крутились в голове.'], no: ['Спасибо, что сказал честно.', 'Я бот и могу не всё. Если тебе очень тяжело, поговори с живым человеком — это нормально и анонимно.'] }[S.feel];
+  return `<div class="col g14"><h1>${F[0]}</h1><p class="s15 lh soft">${F[1]}</p>
+    ${S.feel === 'no' ? '<button class="btn btn-rose" data-act="nav" data-arg="sos">Телефоны поддержки</button>' : ''}
+    <button class="btn btn-out" data-act="nav" data-arg="diary">Записать, что сейчас было</button>
+    <button class="btn btn-out" data-act="home">На главную</button></div>`;
+}
+function vOnboard() {
+  const items = [
+    ['sos', 'Узнай, где SOS', 'Помощь и телефоны — в один тап', 'sos', ''],
+    ['checkin', 'Пройди первый чек-ин', '4 вопроса о том, как ты', 'checkin', ''],
+    ['breathe', 'Попробуй дыхательную практику', '1 минута', 'sigh', ''],
+    ['diary', 'Сделай первую запись', 'Можно ответить на вопросы', 'diary', 'q'],
+    ['remind', 'Настрой напоминания', 'Чтобы не забывать про себя', 'state', '']
+  ];
+  const n = items.filter((it) => S.prefs.done[it[0]]).length;
+  return `<div class="col g16">
+    <div class="col g10"><h1 style="font-size:28px">Привет, ${esc(S.name)}</h1><p class="s15 lh soft">«Рядом» — поддержка между сессиями терапии. Я не психолог и не заменяю его, но могу быть рядом вечером и ночью, когда тревожно.</p></div>
+    <div class="col g8"><div class="row between s13"><span class="b7">Знакомство</span><span class="b7" style="color:var(--gold)">${n} из 5</span></div><span class="progress"><b style="width:${n * 20}%"></b></span></div>
+    <div class="col g10">${items.map((it) => { const ok = !!S.prefs.done[it[0]]; return `<button class="tile" data-act="nav" data-arg="${it[3]}" data-arg2="${it[4]}" style="padding:16px;border-radius:18px"><span class="check ${ok ? 'on' : ''}">${ok ? '✓' : ''}</span><span class="col g4" style="flex:1"><span class="s15 b7" style="${ok ? 'color:var(--muted)' : ''}">${it[1]}</span><span class="s12 muted">${it[2]}</span></span>${I.chevR()}</button>`; }).join('')}</div>
+    <div class="card-line col g6"><span class="s14 b7">Чем я не являюсь</span><span class="s13 lh muted">Я не ставлю диагнозы и не даю советов вместо психолога. Если есть угроза жизни — звони 112.</span></div>
+  </div>`;
+}
+
+/* ---------- рендер ---------- */
+const VIEWS = { home: vHome, sos: vSos, checkin: vCheckin, state: vState, diary: vDiary, summary: vSummary, practices: vPractices, breathe: vBreathe, sigh: vSigh, ground: vGround, prac: vPrac, write: vWrite, feel: vFeel, onboard: vOnboard };
+function vSplash() {
+  return `<button class="splash" data-act="skipSplash" aria-label="Пропустить заставку">
+    <span class="st"><span class="sr" style="border:1px solid #7B8FA1"></span><span class="sr" style="border:1px solid #C9A876"></span><span class="sr" style="border:1px solid #D4A5A5"></span><span class="sp-logo">${LOTUS(104)}</span></span>
+    <span class="sp-word">Рядом</span>
+    <span class="sp-cap">Всё наладится.<br><span style="color:var(--gold)">Мы рядом</span></span>
+    <span class="sp-bar"><i></i></span>
+  </button>`;
+}
+function render(scrollTop) {
+  const app = document.getElementById('app');
+  if (S.screen === 'splash') { app.innerHTML = vSplash(); syncBack(); return; }
+  const sc = S.screen, isHome = sc === 'home', active = ROOT[sc] || '';
+  const header = isHome
+    ? `<div class="row g10" style="padding-left:4px">${LOTUS(30)}<span style="font-size:20px;font-weight:600">Рядом</span></div><span></span>`
+    : `<button class="back" data-act="back" aria-label="Назад">${I.chevL}Назад</button><span class="hdr-title">${TITLES[sc] || ''}</span><span style="width:44px"></span>`;
+  app.innerHTML = `<div class="hdr">${header}</div>
+    <main class="content">${(VIEWS[sc] || vHome)()}</main>
+    <nav class="tabs">
+      <button class="tab ${active === 'home' ? 'on' : ''}" data-act="tab" data-arg="home">${I.home}Главная</button>
+      <button class="tab ${active === 'practices' ? 'on' : ''}" data-act="tab" data-arg="practices">${I.rings}Практики</button>
+      <button class="tab-sos" data-act="nav" data-arg="sos" aria-label="SOS — мне плохо прямо сейчас"><span class="c">SOS</span>Помощь</button>
+      <button class="tab ${active === 'diary' ? 'on' : ''}" data-act="tab" data-arg="diary">${I.book}Дневник</button>
+      <button class="tab ${active === 'state' ? 'on' : ''}" data-act="tab" data-arg="state">${I.chart}Состояние</button>
+    </nav>
+    ${S.toast ? `<div class="toast" role="status">${esc(S.toast)}</div>` : ''}`;
+  if (scrollTop) window.scrollTo(0, 0);
+  syncBack();
+}
+function syncBack() {
+  if (!tg) return;
+  try { if (S.screen !== 'home' && S.screen !== 'splash') tg.BackButton.show(); else tg.BackButton.hide(); } catch (e) {}
+}
+function toast(msg) { S.toast = msg; render(); clearTimeout(toast.t); toast.t = setTimeout(() => { S.toast = ''; render(); }, 2600); }
+
+/* ---------- действия ---------- */
+const ACT = {
+  nav: (a, el) => nav(a, el.dataset.arg2 || undefined),
+  tab: (a) => tab(a),
+  back: () => back(),
+  home: () => { S.screen = 'home'; S.stack = []; render(true); },
+  skipSplash: () => { S.splashDone = true; if (S.loaded) { S.screen = 'home'; render(true); } },
+  ciMood: (a) => { S.ci.m = +a; S.ci.step = 1; haptic('select'); render(true); },
+  ciAnx: (a) => { S.ci.a = +a; S.ci.step = 2; haptic('select'); render(true); },
+  ciSleep: (a) => { S.ci.s = +a; S.ci.step = 3; haptic('select'); render(true); },
+  ciTopic: (a) => { const i = +a, tp = S.ci.tp; S.ci.tp = tp.indexOf(i) >= 0 ? tp.filter((x) => x !== i) : tp.concat([i]); haptic('select'); render(); },
+  ciFinish: () => {
+    const c = S.ci;
+    S.history.unshift({ t: Date.now(), m: c.m == null ? 2 : c.m, a: c.a == null ? 5 : c.a, s: c.s == null ? 2 : c.s, tp: c.tp });
+    saveHistory(); markDone('checkin'); c.step = 4; haptic('ok'); render(true);
+  },
+  remindToggle: () => { S.prefs.remindOn = !S.prefs.remindOn; markDone('remind'); savePrefs(); render(); },
+  remindTime: (t) => { const r = S.prefs.remindTimes; S.prefs.remindTimes = r.indexOf(t) >= 0 ? r.filter((x) => x !== t) : r.concat([t]); savePrefs(); haptic('select'); render(); },
+  diaryMode: (m) => { S.diaryMode = m; S.justSaved = false; render(); },
+  saveFree: () => { if (!S.draft.trim()) return; addEntry('free', S.draft.trim()); S.draft = ''; S.justSaved = true; haptic('ok'); render(); },
+  qSkip: () => advanceQ(''),
+  qNext: () => advanceQ(S.qDraft.trim()),
+  delEntry: (id) => {
+    const go = () => { deleteEntry(id); render(); };
+    if (tg && tgAtLeast('6.2')) tg.showConfirm('Удалить эту запись насовсем?', (ok) => { if (ok) go(); });
+    else if (window.confirm('Удалить эту запись насовсем?')) go();
+  },
+  copySummary: () => {
+    const sm = buildSummary(); if (!sm) return;
+    const text = summaryText(sm);
+    const done = () => toast('Скопировано — можно вставить в заметки или отправить психологу');
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, () => fallbackCopy(text, done));
+    else fallbackCopy(text, done);
+  },
+  call: (num) => {
+    haptic('medium');
+    if (inTG) {
+      const url = new URL('call.html', location.href); url.searchParams.set('n', num);
+      try { tg.openLink(url.href); return; } catch (e) {}
+    }
+    location.href = 'tel:' + num;
+  },
+  calendar: (kind) => {
+    const url = new URL('remind.html', location.href);
+    url.searchParams.set('k', kind);
+    url.searchParams.set('t', kind === 'worry' ? S.wTime : S.prefs.remindTimes.join(','));
+    if (kind === 'checkin') markDone('remind');
+    haptic('light');
+    if (inTG) { try { tg.openLink(url.href); return; } catch (e) {} }
+    window.open(url.href, '_blank');
+  },
+  copyNum: (num) => {
+    const done = () => toast('Номер ' + num + ' скопирован');
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(num).then(done, () => fallbackCopy(num, done));
+    else fallbackCopy(num, done);
+  },
+  pFilter: (f) => { S.pFilter = f; haptic('select'); render(); },
+  practice: (id) => { const p = PRACTICES.find((x) => x.id === id); nav(p.go[0], p.go[1]); },
+  gNext: () => { if (S.gStep >= 4) nav('feel'); else { S.gStep++; haptic('select'); render(); } },
+  pNext: () => { const pr = PRAC[S.pid]; if (S.pStep >= pr.steps.length - 1) nav('feel'); else { S.pStep++; haptic('select'); render(); } },
+  wTime: (t) => { S.wTime = t; haptic('select'); render(); },
+  wSave: () => {
+    if (!S.wDraft.trim()) return;
+    const day = new Date().getHours() < 18 ? 'сегодня' : 'завтра';
+    addEntry(S.wKind, S.wKind === 'worry' ? 'Вернусь к этому ' + day + ' в ' + S.wTime + ':\n' + S.wDraft.trim() : S.wDraft.trim());
+    S.wDone = true; haptic('ok'); render(true);
+  },
+  feel: (v) => { S.feel = v; if (S.lastPractice) { S.feels.unshift({ t: Date.now(), p: S.lastPractice, v: v }); saveFeels(); } render(true); }
+};
+function advanceQ(answer) {
+  if (answer) S.qAnswers.push(QS[Math.min(S.qIdx, 4)].k + ' — ' + answer);
+  S.qDraft = '';
+  if (S.qIdx < 4) { S.qIdx++; return render(); }
+  if (S.qAnswers.length) { addEntry('q', S.qAnswers.join('\n')); S.justSaved = true; haptic('ok'); }
+  S.qIdx = 0; S.qAnswers = []; render();
+}
+function fallbackCopy(text, cb) {
+  const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch (e) {} document.body.removeChild(ta); cb();
+}
+
+document.addEventListener('click', (e) => {
+  const el = e.target.closest('[data-act]'); if (!el) return;
+  const fn = ACT[el.dataset.act]; if (fn) { e.preventDefault(); fn(el.dataset.arg, el); }
+});
+document.addEventListener('input', (e) => {
+  const m = e.target.dataset && e.target.dataset.model; if (!m) return;
+  S[m] = e.target.value;
+  const b = e.target.dataset.btn && document.getElementById(e.target.dataset.btn);
+  if (b) { const has = e.target.value.trim().length > 0; b.classList.toggle('btn-gold', has); b.classList.toggle('btn-off', !has); }
+});
+
+/* ---------- старт ---------- */
+render();
+load();
+setTimeout(() => { S.splashDone = true; maybeLeaveSplash(); }, 5000);
+</script>
+</body>
+</html>
