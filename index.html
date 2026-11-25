@@ -13,7 +13,8 @@
   --night:#0F0E12;--dusk:#1C1923;--deep:#17141C;--line:#2E2936;--line2:#3A3444;--line3:#4A4252;
   --light:#E8DCC8;--soft:#D9CDB9;--muted:#A69C8E;--faint:#8F8678;
   --gold:#C9A876;--rose:#D4A5A5;--water:#7B8FA1;--water2:#A3B2C0;--sage:#9FB0A0;
-  --safe-b:env(safe-area-inset-bottom,0px);
+  --safe-b:max(env(safe-area-inset-bottom,0px),var(--tg-safe-area-inset-bottom,0px));
+  --safe-t:calc(var(--tg-safe-area-inset-top,0px) + var(--tg-content-safe-area-inset-top,0px));
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;background:var(--night);color:var(--light);font-family:Manrope,system-ui,-apple-system,sans-serif;font-weight:500}
@@ -54,9 +55,10 @@ p{margin:0}
 .hscroll::-webkit-scrollbar{display:none}
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 
-.hdr{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;height:60px;padding:6px 16px 0;background:var(--night)}
+.hdr{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;min-height:56px;padding:calc(6px + var(--safe-t)) 16px 6px;background:var(--night)}
 .back{display:flex;align-items:center;gap:2px;height:44px;padding:0 14px 0 8px;border-radius:22px;border:1px solid var(--line);background:var(--deep);color:var(--light);font-size:15px;font-weight:600}
-.hdr-title{position:absolute;left:110px;right:110px;text-align:center;font-size:16px;font-weight:600;color:var(--soft);top:24px}
+.hdr-title{position:absolute;left:110px;right:110px;text-align:center;font-size:16px;font-weight:600;color:var(--soft);bottom:18px}
+.hdr-title.solo{left:20px;right:20px}
 .content{padding:12px 20px calc(130px + var(--safe-b))}
 .content.bare{padding-bottom:calc(40px + var(--safe-b))}
 
@@ -67,6 +69,12 @@ p{margin:0}
 .tab-sos span.c{margin-top:-30px;width:64px;height:64px;border-radius:32px;background:var(--rose);border:4px solid var(--night);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;letter-spacing:1px;color:var(--night);position:relative}
 .tab-sos span.c::after{content:"";position:absolute;inset:-8px;border-radius:40px;border:2px solid var(--rose);opacity:.5;animation:softpulse 2.8s ease-in-out infinite}
 
+/* home */
+.hero{position:relative;padding:8px 2px 0;min-height:120px}
+.hero .decor{position:absolute;right:-6px;top:-4px;width:132px;height:132px;pointer-events:none}
+.hero .decor .r{position:absolute;inset:0;margin:auto;border-radius:50%;animation:breathe 9s ease-in-out infinite}
+.sugg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.sugg button{display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:16px;border-radius:20px;border:none;background:var(--dusk);color:var(--light);text-align:left;min-height:128px}
 /* mood grid */
 .moods{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .mood{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:16px;border-radius:20px;border:1px solid var(--line);background:var(--deep);color:var(--light);text-align:left;min-height:92px}
@@ -157,6 +165,8 @@ if (tg) {
   try { if (tgAtLeast('7.10')) tg.setBottomBarColor('#0F0E12'); } catch (e) {}
   try { if (tgAtLeast('7.7')) tg.disableVerticalSwipes(); } catch (e) {}
 }
+// внутри Telegram используем его собственную кнопку «Назад»
+const nativeBack = inTG && tgAtLeast('6.1');
 const haptic = (k) => { try { if (!tgAtLeast('6.1')) return; if (k === 'select') tg.HapticFeedback.selectionChanged(); else if (k === 'ok') tg.HapticFeedback.notificationOccurred('success'); else tg.HapticFeedback.impactOccurred(k || 'light'); } catch (e) {} };
 
 /* ---------- хранилище ---------- */
@@ -444,25 +454,42 @@ function smsContact(i) {
 }
 
 /* ---------- экраны ---------- */
+const SUGG = { anx: ['sigh', 'worry'], low: ['self', 'calm'], numb: ['ground', 'pmr'], ok: ['dump', 'calm'] };
 function vHome() {
   const now = new Date(), hr = now.getHours();
   const greet = hr >= 5 && hr < 12 ? 'Доброе утро' : hr >= 12 && hr < 18 ? 'Добрый день' : hr >= 18 && hr < 23 ? 'Добрый вечер' : 'Доброй ночи';
   const tc = todayCheckin(), care = careDays();
   const mood = tc ? MOODS[tc.q] : null;
-  const ctx = S.draft.trim() ? ['Продолжить запись', 'diary', I.book] : (S.entries.length || S.history.length > 1 ? ['Конспект к сессии', 'summary', I.doc('#C9A876')] : null);
+  const night = hr >= 21 || hr < 5;
+  const ids = tc ? SUGG[mood.k] : (night ? ['dump', 'sigh'] : ['calm', 'ground']);
+  const sug = ids.map((id) => PRACTICES.find((p) => p.id === id));
+  const why = tc ? 'когда «' + mood.label.toLowerCase() + '»' : (night ? 'для спокойного вечера' : 'на пару минут');
+  const ctx = S.draft.trim() ? ['Продолжить запись', 'diary'] : (S.entries.length || S.history.length > 1 ? ['Конспект к сессии', 'summary'] : null);
+  const nm = S.name.charAt(0).toUpperCase() + S.name.slice(1);
   return `<div class="col g24">
-    <div class="col g6" style="padding:8px 2px 0"><h1 style="font-size:30px;line-height:1.15">${greet},<br>${esc(S.name)}</h1></div>
-    ${tc ? `<button class="card col g12" data-act="nav" data-arg="progress" style="border:none;color:var(--light);text-align:left;width:100%">
+    <div class="hero">
+      <div class="decor" aria-hidden="true"><span class="r" style="width:132px;height:132px;border:1px solid rgba(123,143,161,.45)"></span><span class="r" style="width:92px;height:92px;border:1px solid rgba(201,168,118,.45);animation-delay:.3s"></span><span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">${LOTUS(40, .85)}</span></div>
+      <p class="s14 muted" style="margin-bottom:6px">${greet},</p>
+      <h1 style="font-size:32px;line-height:1.1;max-width:62%">${esc(nm)}</h1>
+      <p class="s14 muted" style="margin-top:8px;max-width:62%">Я рядом — сегодня и в любой вечер.</p>
+    </div>
+    ${tc ? `<div class="card col g12">
         <span class="s13 muted">Сегодня ты отметил(а)</span>
-        <span class="row g10"><i style="width:14px;height:14px;border-radius:7px;background:${mood.c}"></i><span class="s17 b7">${mood.label}${tc.w ? ' · ' + tc.w : ''}</span></span>
-        <span class="s13" style="color:var(--gold)">Посмотреть динамику →</span>
-      </button>
-      <button class="btn btn-ghost" data-act="nav" data-arg="checkin" style="margin-top:-16px">Отметить ещё раз</button>`
+        <span class="row g10"><i style="width:14px;height:14px;border-radius:7px;background:${mood.c}"></i><span class="s17 b7">${mood.label}${tc.w ? ' · ' + esc(tc.w) : ''}</span></span>
+        <div class="row between"><button class="linkbtn" data-act="nav" data-arg="progress" style="color:var(--gold)">Динамика →</button><button class="linkbtn" data-act="nav" data-arg="checkin">Отметить ещё раз</button></div>
+      </div>`
       : `<div class="col g12"><span class="s16 b7" style="padding-left:2px">Как ты сейчас?</span>
         <div class="moods">${MOODS.map((m, i) => `<button class="mood" data-act="nav" data-arg="checkin" data-arg2="${i}"><i style="background:${m.c}"></i><b>${m.label}</b><span>${m.hint}</span></button>`).join('')}</div></div>`}
+    <div class="col g12">
+      <div class="row between" style="padding:0 2px"><span class="s16 b7">Для тебя сейчас</span><span class="s13 muted">${why}</span></div>
+      <div class="sugg">${sug.map((p) => `<button data-act="practice" data-arg="${p.id}"><span class="pico" style="border-color:${p.c};color:${p.c}">${p.icon}</span><span class="col g4"><span class="s15 b7">${p.title}</span><span class="s12 muted">${p.dur}</span></span></button>`).join('')}</div>
+    </div>
+    ${!S.prefs.contacts.length ? `<button class="tile" data-act="nav" data-arg="contacts" style="background:transparent;border:1px dashed var(--line3);padding:14px 16px">
+      <span class="ava" style="width:36px;height:36px">${I.plus('#0F0E12')}</span>
+      <span class="col g4" style="flex:1"><span class="s15 b6">Добавь близкого человека</span><span class="s13 muted">чтобы написать ему из SOS в одно касание</span></span></button>` : ''}
     <button class="tile" data-act="nav" data-arg="progress" style="background:transparent;border:1px solid var(--line);padding:14px 16px">
       <span style="flex-shrink:0">${LOTUS(34, care ? 1 : .45)}</span>
-      <span class="col g4" style="flex:1"><span class="s15 b6">${care ? care + ' из 10 последних дней' : 'Твой лотос ждёт первого шага'}</span><span class="s13 muted">${care ? 'ты заботишься о себе — это видно' : 'отметь настроение или попробуй практику'}</span></span>
+      <span class="col g4" style="flex:1"><span class="s15 b6">${care ? care + ' из 10 последних дней' : 'Твой лотос ждёт первого шага'}</span><span class="s13 muted">${care ? 'с заботой о себе — это видно' : 'отметь настроение или попробуй практику'}</span></span>${I.chevR()}
     </button>
     ${ctx ? `<button class="tile" data-act="nav" data-arg="${ctx[1]}" style="justify-content:space-between;background:transparent;border:1px solid var(--line);padding:14px 16px"><span class="s15 b6">${ctx[0]}</span>${I.chevR()}</button>` : ''}
   </div>`;
@@ -762,7 +789,8 @@ function render(top) {
   if (S.screen === 'splash') { app.innerHTML = vSplash(); syncBack(); return; }
   const sc = S.screen, isHome = sc === 'home', isOnb = sc === 'onb', active = ROOT[sc] || '';
   const header = isHome ? `<div class="row g10" style="padding-left:4px">${LOTUS(28)}<span style="font-size:19px;font-weight:600">Рядом</span></div><span></span>`
-    : isOnb ? (S.onb !== 0 ? `<button class="back" data-act="back" aria-label="Назад">${I.chevL}Назад</button><span></span>` : `<span></span><span></span>`)
+    : isOnb ? (S.onb !== 0 && !nativeBack ? `<button class="back" data-act="back" aria-label="Назад">${I.chevL}Назад</button><span></span>` : `<span></span><span></span>`)
+    : nativeBack ? `<span class="hdr-title solo">${TITLES[sc] || ''}</span><span></span>`
     : `<button class="back" data-act="back" aria-label="Назад">${I.chevL}Назад</button><span class="hdr-title">${TITLES[sc] || ''}</span><span style="width:44px"></span>`;
   app.innerHTML = `<div class="hdr">${header}</div><main class="content ${isOnb ? 'bare' : ''}">${(VIEWS[sc] || vHome)()}</main>
     ${isOnb ? '' : `<nav class="tabs">
