@@ -12,102 +12,103 @@
 :root{
   --night:#0F0E12;--dusk:#1C1923;--deep:#17141C;--line:#2E2936;--line2:#3A3444;--line3:#4A4252;
   --light:#E8DCC8;--soft:#D9CDB9;--muted:#A69C8E;--faint:#8F8678;
-  --gold:#C9A876;--rose:#D4A5A5;--water:#7B8FA1;--water2:#A3B2C0;
+  --gold:#C9A876;--rose:#D4A5A5;--water:#7B8FA1;--water2:#A3B2C0;--sage:#9FB0A0;
   --safe-b:env(safe-area-inset-bottom,0px);
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;background:var(--night);color:var(--light);font-family:Manrope,system-ui,-apple-system,sans-serif;font-weight:500}
-button,textarea,a{font-family:inherit}
+button,textarea,input,a{font-family:inherit}
 button{cursor:pointer}
 #app{max-width:480px;margin:0 auto;min-height:100vh;position:relative}
-h1{margin:0;font-size:27px;line-height:1.22;font-weight:700}
+h1{margin:0;font-size:28px;line-height:1.2;font-weight:700}
+h2{margin:0;font-size:20px;line-height:1.3;font-weight:700}
 p{margin:0}
 .col{display:flex;flex-direction:column}
-.g4{gap:4px}.g6{gap:6px}.g8{gap:8px}.g10{gap:10px}.g12{gap:12px}.g14{gap:14px}.g16{gap:16px}.g18{gap:18px}.g20{gap:20px}
 .row{display:flex;align-items:center}
 .between{justify-content:space-between}
+.g4{gap:4px}.g6{gap:6px}.g8{gap:8px}.g10{gap:10px}.g12{gap:12px}.g16{gap:16px}.g20{gap:20px}.g24{gap:24px}.g32{gap:32px}
 .muted{color:var(--muted)}.faint{color:var(--faint)}.soft{color:var(--soft)}
 .s12{font-size:12px}.s13{font-size:13px}.s14{font-size:14px}.s15{font-size:15px}.s16{font-size:16px}.s17{font-size:17px}
 .b6{font-weight:600}.b7{font-weight:700}
 .lh{line-height:1.55}
 .up{font-size:12px;letter-spacing:1px;font-weight:700;text-transform:uppercase}
-.card{background:var(--dusk);border-radius:22px;padding:18px}
-.card-dash{border:1px dashed var(--line3);border-radius:22px;padding:18px;background:transparent}
-.card-line{border:1px solid var(--line);border-radius:18px;padding:16px}
-.btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 20px;border-radius:26px;border:none;font-size:16px;font-weight:700;text-decoration:none;width:100%}
+.card{background:var(--dusk);border-radius:24px;padding:20px}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:0 20px;border-radius:27px;border:none;font-size:16px;font-weight:700;text-decoration:none;width:100%}
 .btn-gold{background:var(--gold);color:var(--night)}
 .btn-rose{background:var(--rose);color:var(--night)}
 .btn-out{background:transparent;border:1px solid var(--line3);color:var(--light);font-weight:500}
-.btn-out-rose{background:transparent;border:1px solid var(--rose);color:#F3E3E3;font-weight:600}
+.btn-ghost{background:transparent;border:none;color:var(--muted);font-weight:500;min-height:44px}
 .btn-off{background:var(--line);color:var(--muted)}
-.tile{display:flex;align-items:center;gap:14px;text-align:left;padding:16px;border-radius:22px;border:none;background:var(--dusk);color:var(--light);width:100%}
+.tile{display:flex;align-items:center;gap:14px;text-align:left;padding:16px;border-radius:20px;border:none;background:var(--dusk);color:var(--light);width:100%}
+.listrow{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:16px 4px;border:none;border-bottom:1px solid #1F1C26;background:transparent;color:var(--light);text-align:left;font-size:16px}
+.listrow:last-child{border-bottom:none}
 .opt{display:flex;align-items:center;min-height:54px;padding:0 20px;border-radius:18px;font-size:16px;text-align:left;background:var(--dusk);color:var(--light);border:1px solid var(--line);width:100%}
 .opt.on{background:var(--light);color:var(--night);border-color:var(--light);font-weight:700}
 .chip{height:42px;padding:0 16px;border-radius:21px;font-size:14px;white-space:nowrap;flex-shrink:0;background:transparent;color:var(--light);border:1px solid var(--line2)}
-.chip.on{background:var(--gold);color:var(--night);border-color:var(--gold);font-weight:700}
-.chip.light.on{background:var(--light);border-color:var(--light)}
+.chip.on{background:var(--light);color:var(--night);border-color:var(--light);font-weight:700}
 .dots{display:flex;gap:6px}.dots i{flex:1;height:4px;border-radius:2px;background:var(--line)}
-.ta{width:100%;resize:none;border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--night);color:var(--light);font-size:16px;line-height:1.5}
-.ta::placeholder{color:#6F675C}
+.ta,.inp{width:100%;border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:var(--night);color:var(--light);font-size:16px;line-height:1.5}
+.ta{resize:none}
+.ta::placeholder,.inp::placeholder{color:#6F675C}
 .hscroll{display:flex;gap:8px;overflow-x:auto;margin:0 -20px;padding:0 20px;scrollbar-width:none}
 .hscroll::-webkit-scrollbar{display:none}
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 
-/* header */
 .hdr{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;height:60px;padding:6px 16px 0;background:var(--night)}
 .back{display:flex;align-items:center;gap:2px;height:44px;padding:0 14px 0 8px;border-radius:22px;border:1px solid var(--line);background:var(--deep);color:var(--light);font-size:15px;font-weight:600}
 .hdr-title{position:absolute;left:110px;right:110px;text-align:center;font-size:16px;font-weight:600;color:var(--soft);top:24px}
-.content{padding:8px 20px calc(130px + var(--safe-b))}
+.content{padding:12px 20px calc(130px + var(--safe-b))}
+.content.bare{padding-bottom:calc(40px + var(--safe-b))}
 
-/* tab bar */
 .tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;max-width:480px;margin:0 auto;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:end;padding:6px 6px calc(12px + var(--safe-b));border-top:1px solid #1F1C26;background:var(--night)}
 .tab{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;min-height:52px;border:none;background:transparent;color:var(--faint);font-size:11px;font-weight:600}
 .tab.on{color:var(--gold)}
 .tab-sos{display:flex;flex-direction:column;align-items:center;gap:4px;border:none;background:transparent;color:#F0CFCF;font-size:11px;font-weight:700;padding:0}
-.tab-sos span.c{margin-top:-30px;width:62px;height:62px;border-radius:31px;background:var(--rose);border:4px solid var(--night);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;letter-spacing:1px;color:var(--night)}
+.tab-sos span.c{margin-top:-30px;width:64px;height:64px;border-radius:32px;background:var(--rose);border:4px solid var(--night);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;letter-spacing:1px;color:var(--night);position:relative}
+.tab-sos span.c::after{content:"";position:absolute;inset:-8px;border-radius:40px;border:2px solid var(--rose);opacity:.5;animation:softpulse 2.8s ease-in-out infinite}
+
+/* mood grid */
+.moods{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.mood{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:16px;border-radius:20px;border:1px solid var(--line);background:var(--deep);color:var(--light);text-align:left;min-height:92px}
+.mood i{width:14px;height:14px;border-radius:7px;display:block}
+.mood b{font-size:16px}
+.mood span{font-size:12px;color:var(--muted)}
+.mood.on{border-color:var(--light)}
 
 /* sos */
-.sos-hero{display:flex;align-items:center;gap:16px;text-align:left;padding:20px 18px;border-radius:24px;border:1.5px solid var(--rose);background:#2A1F27;color:#F3E3E3;width:100%}
-.sos-dot{position:relative;width:56px;height:56px;border-radius:28px;background:var(--rose);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--night);font-size:15px;font-weight:800;letter-spacing:1px}
-.sos-dot::after{content:"";position:absolute;inset:-6px;border-radius:34px;border:2px solid var(--rose);animation:softpulse 2.4s ease-in-out infinite}
-.hot{display:flex;flex-direction:column;gap:10px;padding:16px;border-radius:22px;border:1.5px solid var(--rose);background:#2A1F27}
-.hot a{display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:16px;text-decoration:none;color:#F3E3E3;border:1px solid var(--rose)}
-.hot a.main{background:var(--rose);color:var(--night);border-color:var(--rose)}
-.hot .ic{width:40px;height:40px;border-radius:20px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid var(--rose)}
-.hot a.main .ic{background:var(--night);border-color:var(--night)}
-.hot a.dim{border-color:#4A3640}
+.hot{display:flex;flex-direction:column;border-radius:20px;border:1px solid #3A2C34;background:#1E1820;overflow:hidden}
+.hot a{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px;text-decoration:none;color:#F3E3E3;border-bottom:1px solid #3A2C34}
+.hot a:last-child{border-bottom:none}
+.callic{width:40px;height:40px;border-radius:20px;background:var(--rose);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.who{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:18px;background:#2A1F27;border:none;color:#F3E3E3;width:100%;text-align:left}
+.ava{width:40px;height:40px;border-radius:20px;background:var(--rose);color:var(--night);display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0}
 
-/* misc */
 .toggle{position:relative;width:52px;height:32px;flex-shrink:0;border-radius:16px;border:none;background:var(--line2)}
 .toggle::after{content:"";position:absolute;top:4px;left:4px;width:24px;height:24px;border-radius:12px;background:var(--night);transition:left .15s}
 .toggle.on{background:var(--gold)}.toggle.on::after{left:24px}
-.progress{display:block;height:5px;border-radius:3px;background:#26222E;overflow:hidden}
-.progress b{display:block;height:100%;background:var(--gold);border-radius:3px}
-.bars{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;height:130px}
+.bars{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;height:120px}
 .bars>div{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px}
 .bar{width:100%;max-width:30px;border-radius:8px}
 .bar.empty{height:8px;border:1px dashed var(--line3);border-radius:6px}
 .tag{padding:4px 10px;border-radius:10px;font-size:11px;font-weight:700}
 .entry{display:flex;flex-direction:column;gap:8px;padding:14px 16px;border-radius:16px;background:var(--deep);border:1px solid #26222E}
 .entry .txt{font-size:14px;line-height:1.5;white-space:pre-line;word-wrap:break-word}
-.linkbtn{background:none;border:none;color:var(--faint);font-size:12px;padding:4px 0}
+.linkbtn{background:none;border:none;color:var(--faint);font-size:13px;padding:6px 0}
 .seg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;padding:4px;border-radius:24px;background:var(--deep);border:1px solid #26222E}
 .seg button{height:42px;border-radius:20px;border:none;background:transparent;color:var(--muted);font-size:14px;font-weight:600}
 .seg button.on{background:var(--light);color:var(--night);font-weight:700}
-.pico{width:48px;height:48px;border-radius:24px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--night);font-size:14px;font-weight:700;border:1px solid}
-.check{width:28px;height:28px;border-radius:14px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:2px solid var(--line3);font-weight:800;font-size:15px}
-.check.on{background:var(--gold);border-color:var(--gold);color:var(--night)}
-.anx-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
-.anx-grid button{height:48px;border-radius:14px;font-size:16px;font-weight:700;background:var(--dusk);color:var(--light);border:1px solid var(--line)}
-.pill{padding:8px 14px;border-radius:16px;font-size:14px}
+.pico{width:44px;height:44px;border-radius:22px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--night);font-size:13px;font-weight:700;border:1px solid}
 .toast{position:fixed;left:20px;right:20px;bottom:calc(110px + var(--safe-b));max-width:440px;margin:0 auto;padding:14px 16px;border-radius:16px;background:var(--light);color:var(--night);font-size:14px;font-weight:600;z-index:20;text-align:center}
+.feature{display:flex;gap:14px;align-items:flex-start}
+.feature .fi{width:36px;height:36px;border-radius:18px;background:var(--dusk);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.preview{padding:14px 16px;border-radius:18px 18px 18px 6px;background:#2B2533;font-size:14px;line-height:1.5;color:var(--soft)}
 
 /* breathing */
-.stage{position:relative;width:280px;height:280px;display:flex;align-items:center;justify-content:center;margin:0 auto}
+.stage{position:relative;width:260px;height:260px;display:flex;align-items:center;justify-content:center;margin:0 auto}
 .stage .r{position:absolute;border-radius:50%}
-.r1{width:280px;height:280px;border:1px solid var(--water)}
-.r2{width:204px;height:204px;border:1px solid var(--water2)}
-.r3{width:128px;height:128px;border:1px solid var(--gold);background:var(--dusk)}
+.r1{width:260px;height:260px;border:1px solid var(--water)}
+.r2{width:190px;height:190px;border:1px solid var(--water2)}
+.r3{width:120px;height:120px;border:1px solid var(--gold);background:var(--dusk)}
 .calm .r{animation:breathe 9s ease-in-out infinite}
 .sighA .r{animation:sighK 9s ease-in-out infinite}
 .r2{animation-delay:.25s!important}.r3{animation-delay:.5s!important}
@@ -134,7 +135,7 @@ p{margin:0}
 @keyframes sg1{0%,20%{opacity:1}22%,98%{opacity:0}100%{opacity:1}}
 @keyframes sg2{0%,20%{opacity:0}22%,31%{opacity:1}33%,100%{opacity:0}}
 @keyframes sg3{0%,31%{opacity:0}33%,96%{opacity:1}98%,100%{opacity:0}}
-@keyframes softpulse{0%,100%{transform:scale(.85);opacity:.5}50%{transform:scale(1.1);opacity:1}}
+@keyframes softpulse{0%,100%{transform:scale(.92);opacity:.25}50%{transform:scale(1.05);opacity:.6}}
 @keyframes splashRing{0%{transform:scale(.4);opacity:0}30%{opacity:.8}100%{transform:scale(1.6);opacity:0}}
 @keyframes splashIn{0%{opacity:0;transform:translateY(12px)}100%{opacity:1;transform:none}}
 @keyframes splashBar{from{width:0}to{width:100%}}
@@ -145,110 +146,86 @@ p{margin:0}
 <div id="app"></div>
 <script>
 'use strict';
-/* =========================================================
-   «Рядом» — Telegram Mini App (MVP, без сервера)
-   Данные хранятся в Telegram CloudStorage пользователя,
-   вне Telegram — в localStorage (для проверки в браузере).
-   ========================================================= */
+/* «Рядом» — Telegram Mini App v3 (без сервера; данные в Telegram CloudStorage) */
 
 const tg = window.Telegram && window.Telegram.WebApp;
 const inTG = !!(tg && tg.initData);
 const tgAtLeast = (v) => { try { return !!tg && tg.isVersionAtLeast(v); } catch (e) { return false; } };
-
 if (tg) {
   try { tg.ready(); tg.expand(); } catch (e) {}
   try { if (tgAtLeast('6.1')) { tg.setHeaderColor('#0F0E12'); tg.setBackgroundColor('#0F0E12'); } } catch (e) {}
   try { if (tgAtLeast('7.10')) tg.setBottomBarColor('#0F0E12'); } catch (e) {}
   try { if (tgAtLeast('7.7')) tg.disableVerticalSwipes(); } catch (e) {}
 }
-const haptic = (kind) => {
-  try {
-    if (!tgAtLeast('6.1')) return;
-    if (kind === 'select') tg.HapticFeedback.selectionChanged();
-    else if (kind === 'ok') tg.HapticFeedback.notificationOccurred('success');
-    else tg.HapticFeedback.impactOccurred(kind || 'light');
-  } catch (e) {}
-};
+const haptic = (k) => { try { if (!tgAtLeast('6.1')) return; if (k === 'select') tg.HapticFeedback.selectionChanged(); else if (k === 'ok') tg.HapticFeedback.notificationOccurred('success'); else tg.HapticFeedback.impactOccurred(k || 'light'); } catch (e) {} };
 
 /* ---------- хранилище ---------- */
 const useCloud = inTG && tgAtLeast('6.9') && tg.CloudStorage;
 const store = {
   getMany(keys) {
     if (!keys.length) return Promise.resolve({});
-    if (!useCloud) {
-      const out = {}; keys.forEach((k) => { out[k] = localStorage.getItem('ryadom_' + k) || ''; });
-      return Promise.resolve(out);
-    }
-    const chunks = []; for (let i = 0; i < keys.length; i += 20) chunks.push(keys.slice(i, i + 20));
-    return Promise.all(chunks.map((ch) => new Promise((res) => {
-      tg.CloudStorage.getItems(ch, (err, vals) => res(err ? {} : (vals || {})));
-    }))).then((parts) => Object.assign({}, ...parts));
+    if (!useCloud) { const o = {}; keys.forEach((k) => { o[k] = localStorage.getItem('ryadom_' + k) || ''; }); return Promise.resolve(o); }
+    const ch = []; for (let i = 0; i < keys.length; i += 20) ch.push(keys.slice(i, i + 20));
+    return Promise.all(ch.map((c) => new Promise((res) => tg.CloudStorage.getItems(c, (err, v) => res(err ? {} : (v || {}))))))
+      .then((parts) => Object.assign({}, ...parts));
   },
-  set(key, val) {
-    if (!useCloud) { try { localStorage.setItem('ryadom_' + key, val); } catch (e) {} return; }
-    tg.CloudStorage.setItem(key, val, () => {});
-  },
-  remove(key) {
-    if (!useCloud) { try { localStorage.removeItem('ryadom_' + key); } catch (e) {} return; }
-    tg.CloudStorage.removeItem(key, () => {});
-  }
+  set(k, v) { if (!useCloud) { try { localStorage.setItem('ryadom_' + k, v); } catch (e) {} return; } tg.CloudStorage.setItem(k, v, () => {}); },
+  remove(k) { if (!useCloud) { try { localStorage.removeItem('ryadom_' + k); } catch (e) {} return; } tg.CloudStorage.removeItem(k, () => {}); }
 };
 const parse = (s, d) => { try { return s ? JSON.parse(s) : d; } catch (e) { return d; } };
 
 /* ---------- состояние ---------- */
 const user = (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) || null;
+const DEFAULT_MSG = 'Привет. Мне сейчас очень тяжело. Можешь написать или позвонить, когда увидишь?';
 const S = {
   screen: 'splash', stack: [], loaded: false, splashDone: false,
   name: (user && user.first_name) || 'друг',
-  history: [],          // чек-ины: {t, m(0-4), a(0-10), s(0-3), tp:[...]}
-  entries: [],          // записи: {id, t, g:'free'|'q'|'worry'|'dump', x}
-  feels: [],            // {t, p, v:'better'|'bit'|'no'}
-  prefs: { remindOn: true, remindTimes: ['21:00'], done: {} },
-  ci: { step: 0, m: null, a: null, s: null, tp: [] },
+  history: [], entries: [], feels: [],
+  prefs: { onboarded: false, remindTimes: ['21:00'], contacts: [], msg: DEFAULT_MSG, plan: '' },
+  onb: 0, onbMood: null,
+  ci: { q: null, i: null, w: null, done: false },
+  sosOpen: false,
+  cName: '', cHandle: '', cErr: '',
   diaryMode: 'free', draft: '', qIdx: 0, qDraft: '', qAnswers: [], justSaved: false,
-  gStep: 0, feel: null, lastPractice: '',
-  pFilter: 'all', pid: 'pmr', pStep: 0,
-  wKind: 'worry', wDraft: '', wTime: '19:00', wDone: false,
-  toast: ''
+  gStep: 0, feel: null, lastPractice: '', pFilter: 'all', pid: 'pmr', pStep: 0,
+  wKind: 'worry', wDraft: '', wTime: '19:00', wDone: false, showAll: false, toast: ''
 };
-
-function saveHistory() { store.set('hist', JSON.stringify(S.history.slice(0, 50))); }
-function savePrefs() { store.set('prefs', JSON.stringify(S.prefs)); }
-function saveFeels() { store.set('feels', JSON.stringify(S.feels.slice(0, 50))); }
-function saveEntryIndex() { store.set('eidx', JSON.stringify(S.entries.slice(0, 150).map((e) => e.id))); }
-function addEntry(g, x) {
-  const e = { id: String(Date.now()), t: Date.now(), g: g, x: x.slice(0, 3500) };
-  S.entries.unshift(e);
-  store.set('e_' + e.id, JSON.stringify(e));
-  saveEntryIndex();
-  markDone('diary');
-}
-function deleteEntry(id) {
-  S.entries = S.entries.filter((e) => e.id !== id);
-  store.remove('e_' + id);
-  saveEntryIndex();
-}
-function markDone(k) { if (!S.prefs.done[k]) { S.prefs.done[k] = true; savePrefs(); } }
+const saveHistory = () => store.set('hist', JSON.stringify(S.history.slice(0, 60)));
+const savePrefs = () => store.set('prefs', JSON.stringify(S.prefs));
+const saveFeels = () => store.set('feels', JSON.stringify(S.feels.slice(0, 60)));
+const saveEntryIndex = () => store.set('eidx', JSON.stringify(S.entries.slice(0, 150).map((e) => e.id)));
+function addEntry(g, x) { const e = { id: String(Date.now()), t: Date.now(), g: g, x: x.slice(0, 3500) }; S.entries.unshift(e); store.set('e_' + e.id, JSON.stringify(e)); saveEntryIndex(); }
+function deleteEntry(id) { S.entries = S.entries.filter((e) => e.id !== id); store.remove('e_' + id); saveEntryIndex(); }
 
 function load() {
   return store.getMany(['hist', 'prefs', 'feels', 'eidx']).then((v) => {
-    S.history = parse(v.hist, []);
-    S.prefs = Object.assign(S.prefs, parse(v.prefs, {}));
-    S.prefs.done = S.prefs.done || {};
+    S.history = parse(v.hist, []).map(normCheckin);
+    const p = parse(v.prefs, {});
+    S.prefs = Object.assign(S.prefs, p);
+    if (!Array.isArray(S.prefs.contacts)) S.prefs.contacts = [];
+    if (!S.prefs.msg) S.prefs.msg = DEFAULT_MSG;
+    // пользователи прошлой версии уже знакомы с приложением
+    if (p.done && Object.keys(p.done).length && p.onboarded === undefined) S.prefs.onboarded = true;
     S.feels = parse(v.feels, []);
     const ids = parse(v.eidx, []);
-    return store.getMany(ids.map((id) => 'e_' + id)).then((ev) => {
-      S.entries = ids.map((id) => parse(ev['e_' + id], null)).filter(Boolean);
-    });
-  }).catch(() => {}).then(() => { S.loaded = true; maybeLeaveSplash(); });
+    return store.getMany(ids.map((id) => 'e_' + id)).then((ev) => { S.entries = ids.map((id) => parse(ev['e_' + id], null)).filter(Boolean); });
+  }).catch(() => {}).then(() => { S.loaded = true; leaveSplash(); });
+}
+// старый формат чек-ина {m, a} → новый {q, i}
+function normCheckin(h) {
+  if (h.q !== undefined) return h;
+  const a = h.a == null ? 5 : h.a;
+  return { t: h.t, q: a >= 4 ? 0 : 3, i: Math.max(1, Math.min(5, Math.round(a / 2))), w: null };
 }
 
 /* ---------- справочники ---------- */
-const MOODS = ['Очень тяжело', 'Тяжело', 'Так себе', 'Нормально', 'Хорошо'];
-const SLEEPS = ['Плохо', 'С перерывами', 'Нормально', 'Хорошо'];
-const TOPICS = ['Учёба / работа', 'Отношения', 'Семья', 'Здоровье', 'Будущее', 'Деньги', 'Сам(а) не знаю'];
+const MOODS = [
+  { k: 'anx', label: 'Тревожно', hint: 'мысли несутся', c: '#D4A5A5', words: ['беспокойство', 'паника', 'напряжение', 'страх'] },
+  { k: 'low', label: 'Тяжело', hint: 'грустно, нет сил', c: '#7B8FA1', words: ['грусть', 'усталость', 'одиночество', 'вина'] },
+  { k: 'numb', label: 'Пусто', hint: 'ничего не чувствую', c: '#8F8678', words: ['апатия', 'оцепенение', 'скука', 'растерянность'] },
+  { k: 'ok', label: 'Спокойно', hint: 'в целом нормально', c: '#C9A876', words: ['спокойствие', 'облегчение', 'надежда', 'благодарность'] }
+];
 const SHORT = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
-const WD = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
 const QS = [
   { q: 'Что ты сейчас чувствуешь?', h: 'Одним-двумя словами: тревога, пустота, злость, усталость…', k: 'Что чувствую' },
   { q: 'Где в теле ты это замечаешь?', h: 'Грудь, живот, плечи, горло…', k: 'Где в теле' },
@@ -264,327 +241,418 @@ const GROUND = [
   { big: '1', t: 'Сделай один медленный выдох', h: 'Длиннее вдоха. Плечи можно опустить.' }
 ];
 const PRAC = {
-  pmr: { title: 'Расслабить мышцы', note: 'Напрягай без боли, примерно вполсилы. Если есть травма или где-то болит — пропусти этот шаг.', steps: [
-    { l: 'Кисти', t: 'Сожми кулаки.\nПодержи 5 секунд… и отпусти.', h: 'Посиди 10 секунд и заметь разницу между напряжением и расслаблением.' },
+  pmr: { title: 'Расслабить мышцы', note: 'Напрягай без боли, вполсилы. Если где-то болит — пропусти этот шаг.', steps: [
+    { l: 'Кисти', t: 'Сожми кулаки.\nПодержи 5 секунд… и отпусти.', h: 'Заметь разницу между напряжением и расслаблением.' },
     { l: 'Плечи', t: 'Подними плечи к ушам.\nПодержи… и опусти.', h: 'Пусть они опустятся чуть ниже, чем были.' },
     { l: 'Лицо', t: 'Зажмурься и сожми губы.\nПодержи… и отпусти.', h: 'Разожми челюсть, язык мягко лежит во рту.' },
     { l: 'Живот', t: 'Втяни и напряги живот.\nПодержи… и отпусти.', h: 'Дыши свободно, без задержек.' },
     { l: 'Ноги', t: 'Потяни носки на себя.\nПодержи… и отпусти.', h: 'Почувствуй, как ноги становятся тяжелее.' },
-    { l: 'Всё тело', t: 'Сделай медленный выдох.\nГде сейчас стало мягче?', h: 'Можно повторить любой шаг ещё раз.' }
-  ] },
+    { l: 'Всё тело', t: 'Медленный выдох.\nГде сейчас стало мягче?', h: 'Можно повторить любой шаг ещё раз.' }] },
   self: { title: 'Пауза самосострадания', note: 'Практика Кристин Нефф из программы Mindful Self-Compassion.', steps: [
-    { l: 'Заметь', t: 'Скажи себе:\n«Мне сейчас тяжело. Это больно».', h: 'Не спорь с чувством и не оценивай его — просто признай.' },
+    { l: 'Заметь', t: 'Скажи себе:\n«Мне сейчас тяжело. Это больно».', h: 'Не спорь с чувством — просто признай.' },
     { l: 'Ты не один', t: '«Так бывает у многих людей.\nЯ не один с этим».', h: 'Трудные чувства — часть жизни любого человека.' },
-    { l: 'Поддержи себя', t: 'Положи ладонь на грудь или обними себя.\n«Пусть я буду к себе добр(а)».', h: 'Тёплое прикосновение помогает телу успокоиться.' },
-    { l: 'Как другу', t: 'Что бы ты сказал(а) близкому человеку на твоём месте?', h: 'Попробуй сказать эти слова себе — тем же тоном.' }
-  ] }
+    { l: 'Поддержи себя', t: 'Положи ладонь на грудь.\n«Пусть я буду к себе добр(а)».', h: 'Тёплое прикосновение помогает телу успокоиться.' },
+    { l: 'Как другу', t: 'Что бы ты сказал(а) близкому человеку на твоём месте?', h: 'Скажи эти слова себе — тем же тоном.' }] }
 };
-const CAT = { panic: '#D4A5A5', thoughts: '#C9A876', sleep: '#7B8FA1', self: '#E8DCC8' };
 const PRACTICES = [
-  { id: 'sigh', icon: 'Вд', cat: 'panic', title: 'Двойной вдох — длинный выдох', when: 'Сердце колотится, паника', dur: '1–5 мин', src: 'Стэнфорд, 2023', tags: ['panic'], go: ['sigh'] },
-  { id: 'calm', icon: 'Ды', cat: 'sleep', title: 'Спокойное дыхание с кольцами', when: 'Нужно просто выдохнуть', dur: '1 мин', src: 'NHS', tags: ['panic', 'sleep'], go: ['breathe'] },
-  { id: 'ground', icon: '5', cat: 'panic', title: 'Заземление 5-4-3-2-1', when: 'Накрывает, мысли несутся', dur: '2 мин', src: 'NHS', tags: ['panic', 'thoughts'], go: ['ground'] },
-  { id: 'worry', icon: 'От', cat: 'thoughts', title: 'Отложить тревогу', when: 'Одна мысль крутится весь день', dur: '2 мин', src: 'КПТ, метод Борковца', tags: ['thoughts'], go: ['write', 'worry'] },
-  { id: 'dump', icon: 'Сп', cat: 'sleep', title: 'Выгрузить мысли перед сном', when: 'Не могу уснуть, думаю о завтра', dur: '5 мин', src: 'Бейлорский университет, 2018', tags: ['sleep', 'thoughts'], go: ['write', 'dump'] },
-  { id: 'pmr', icon: 'Мы', cat: 'sleep', title: 'Расслабить мышцы', when: 'Тело зажато, не расслабиться', dur: '5 мин', src: 'Систематический обзор, 2024', tags: ['sleep', 'panic'], go: ['prac', 'pmr'] },
-  { id: 'self', icon: 'Са', cat: 'self', title: 'Пауза самосострадания', when: 'Ругаю себя, стыдно', dur: '3 мин', src: 'К. Нефф, Mindful Self-Compassion', tags: ['self'], go: ['prac', 'self'] }
+  { id: 'sigh', icon: 'Вд', c: '#D4A5A5', title: 'Двойной вдох — длинный выдох', when: 'Сердце колотится, паника', dur: '1 мин', tags: ['anx'], go: ['sigh'] },
+  { id: 'ground', icon: '5', c: '#D4A5A5', title: 'Заземление 5-4-3-2-1', when: 'Накрывает, мысли несутся', dur: '2 мин', tags: ['anx', 'numb'], go: ['ground'] },
+  { id: 'worry', icon: 'От', c: '#C9A876', title: 'Отложить тревогу', when: 'Одна мысль крутится весь день', dur: '2 мин', tags: ['anx'], go: ['write', 'worry'] },
+  { id: 'self', icon: 'Са', c: '#E8DCC8', title: 'Пауза самосострадания', when: 'Ругаю себя, стыдно', dur: '3 мин', tags: ['low'], go: ['prac', 'self'] },
+  { id: 'calm', icon: 'Ды', c: '#7B8FA1', title: 'Спокойное дыхание', when: 'Просто выдохнуть', dur: '1 мин', tags: ['low', 'numb', 'ok'], go: ['breathe'] },
+  { id: 'pmr', icon: 'Мы', c: '#7B8FA1', title: 'Расслабить мышцы', when: 'Тело зажато, не уснуть', dur: '5 мин', tags: ['numb', 'ok'], go: ['prac', 'pmr'] },
+  { id: 'dump', icon: 'Сп', c: '#7B8FA1', title: 'Выгрузить мысли перед сном', when: 'Думаю о завтра и не сплю', dur: '5 мин', tags: ['anx', 'ok'], go: ['write', 'dump'] }
 ];
-const PNAMES = { sigh: 'Двойной вдох', breathe: 'Спокойное дыхание', ground: 'Заземление 5-4-3-2-1', pmr: 'Расслабление мышц', self: 'Пауза самосострадания' };
-const TITLES = { sos: 'Помощь', checkin: 'Чек-ин', state: 'Моё состояние', diary: 'Дневник', summary: 'Конспект', practices: 'Практики', breathe: 'Дыхание', sigh: 'Дыхание', ground: 'Заземление', prac: 'Практика', write: 'Практика', feel: '', onboard: 'Знакомство' };
-const ROOT = { home: 'home', practices: 'practices', breathe: 'practices', sigh: 'practices', ground: 'practices', prac: 'practices', write: 'practices', diary: 'diary', summary: 'diary', state: 'state', checkin: 'state' };
+const PNAMES = { sigh: 'Двойной вдох', breathe: 'Спокойное дыхание', ground: 'Заземление', pmr: 'Расслабление мышц', self: 'Пауза самосострадания' };
+const TITLES = { sos: 'Помощь', checkin: 'Чек-ин', diary: 'Дневник', summary: 'Конспект', practices: 'Практики', breathe: 'Дыхание', sigh: 'Дыхание', ground: 'Заземление', prac: 'Практика', write: 'Практика', feel: '', me: 'Я', contacts: 'Близкие люди', progress: 'Моя динамика', reminders: 'Время для себя' };
+const ROOT = { home: 'home', practices: 'practices', breathe: 'practices', sigh: 'practices', ground: 'practices', prac: 'practices', write: 'practices', diary: 'diary', summary: 'diary', me: 'me', contacts: 'me', progress: 'me', reminders: 'me', checkin: 'home' };
 
 /* ---------- утилиты ---------- */
 const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const pad = (n) => (n < 10 ? '0' : '') + n;
-const anxColor = (v) => (v >= 7 ? '#D4A5A5' : v >= 4 ? '#C9A876' : '#7B8FA1');
 const sameDay = (a, b) => a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+const plural = (n, a, b, c) => { const m = n % 10, h = n % 100; if (m === 1 && h !== 11) return a; if (m >= 2 && m <= 4 && (h < 12 || h > 14)) return b; return c; };
 function whenOf(ts) {
   const d = new Date(ts), n = new Date();
   const diff = Math.round((new Date(n.getFullYear(), n.getMonth(), n.getDate()) - new Date(d.getFullYear(), d.getMonth(), d.getDate())) / 86400000);
   const day = diff === 0 ? 'Сегодня' : diff === 1 ? 'Вчера' : diff < 7 ? SHORT[d.getDay()] : pad(d.getDate()) + '.' + pad(d.getMonth() + 1);
   return day + ', ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
 }
-function todayCheckin() { const h = S.history[0]; return h && sameDay(new Date(h.t), new Date()) ? h : null; }
-function nextRemind() {
-  const times = ['10:00', '15:00', '21:00'].filter((t) => S.prefs.remindTimes.indexOf(t) >= 0);
-  if (!S.prefs.remindOn || !times.length) return '';
-  const hr = new Date().getHours();
-  const later = times.find((t) => parseInt(t, 10) > hr);
-  return later ? 'сегодня в ' + later : 'завтра в ' + times[0];
+const todayCheckin = () => { const h = S.history[0]; return h && sameDay(new Date(h.t), new Date()) ? h : null; };
+// мягкий прогресс: сколько из последних 10 дней была хоть одна забота о себе
+function careDays() {
+  const days = new Set(); const since = Date.now() - 10 * 86400000;
+  S.history.concat(S.entries).concat(S.feels).forEach((x) => { if (x.t >= since) { const d = new Date(x.t); days.add(d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate()); } });
+  return days.size;
+}
+function parseHandle(raw) {
+  const v = (raw || '').trim();
+  const digits = v.replace(/[^\d+]/g, '');
+  if (/^\+?\d{10,15}$/.test(digits) && /\d{10,}/.test(digits.replace('+', ''))) {
+    let d = digits.replace('+', '');
+    if (d.length === 11 && d[0] === '8') d = '7' + d.slice(1);
+    if (d.length === 10) d = '7' + d;
+    return { kind: 'phone', value: '+' + d };
+  }
+  const u = v.replace(/^https?:\/\/t\.me\//i, '').replace(/^@/, '');
+  if (/^[A-Za-z][A-Za-z0-9_]{3,31}$/.test(u)) return { kind: 'tg', value: u };
+  return null;
 }
 
 /* ---------- иконки ---------- */
-const LOTUS = (w) => `<svg width="${w}" height="${w}" viewBox="0 0 64 64" aria-hidden="true"><g fill="#E8DCC8"><path d="M32 12c6 8 7 20 0 32-7-12-6-24 0-32z" opacity=".92"/><path d="M14 24c9 2 16 9 18 20-11-1-18-8-18-20z" opacity=".57"/><path d="M50 24c-9 2-16 9-18 20 11-1 18-8 18-20z" opacity=".57"/><path d="M6 36c10-1 19 3 26 8-10 4-20 2-26-8z" opacity=".3"/><path d="M58 36c-10-1-19 3-26 8 10 4 20 2 26-8z" opacity=".3"/></g><circle cx="32" cy="42" r="3" fill="#C9A876"/></svg>`;
+const LOTUS = (w, o) => `<svg width="${w}" height="${w}" viewBox="0 0 64 64" aria-hidden="true"><g fill="#E8DCC8" opacity="${o == null ? 1 : o}"><path d="M32 12c6 8 7 20 0 32-7-12-6-24 0-32z" opacity=".92"/><path d="M14 24c9 2 16 9 18 20-11-1-18-8-18-20z" opacity=".57"/><path d="M50 24c-9 2-16 9-18 20 11-1 18-8 18-20z" opacity=".57"/><path d="M6 36c10-1 19 3 26 8-10 4-20 2-26-8z" opacity=".3"/><path d="M58 36c-10-1-19 3-26 8 10 4 20 2 26-8z" opacity=".3"/></g><circle cx="32" cy="42" r="3" fill="#C9A876"/></svg>`;
+const ic = (p, c, s) => `<svg width="${s || 20}" height="${s || 20}" viewBox="0 0 24 24" fill="none" stroke="${c || 'currentColor'}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
 const I = {
-  chevR: (c) => `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="${c || '#8F8678'}" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>`,
-  chevL: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8DCC8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>',
-  phone: (c) => `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>`,
-  home: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-5h4v5"/></svg>',
-  rings: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="7" opacity=".6"/><circle cx="12" cy="12" r="10.5" opacity=".3"/></svg>',
-  book: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M9 9h6M9 13h4"/></svg>',
-  chart: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg>',
-  bell: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A69C8E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>',
-  lock: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#A69C8E" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>',
-  star: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A876" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg>',
-  info: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A69C8E" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>'
+  chevR: (c) => ic('<path d="M9 6l6 6-6 6"/>', c || '#8F8678', 18),
+  chevL: ic('<path d="M15 6l-6 6 6 6"/>', '#E8DCC8', 22),
+  phone: (c) => ic('<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/>', c, 18),
+  send: (c) => ic('<path d="M4 12l16-8-6 16-3-7z"/>', c, 20),
+  home: ic('<path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-5h4v5"/>', null, 22),
+  rings: ic('<circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="7" opacity=".6"/><circle cx="12" cy="12" r="10.5" opacity=".3"/>', null, 22),
+  book: ic('<path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M9 9h6M9 13h4"/>', null, 22),
+  me: ic('<circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/>', null, 22),
+  heart: (c) => ic('<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>', c, 18),
+  people: (c) => ic('<circle cx="9" cy="8" r="3.5"/><path d="M3 20c1-3.5 3.3-5 6-5s5 1.5 6 5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 15c1.7.6 2.7 2.2 3 5"/>', c, 18),
+  lock: (c) => ic('<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>', c, 18),
+  clock: (c) => ic('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', c, 18),
+  chart: (c) => ic('<path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/>', c, 18),
+  doc: (c) => ic('<path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h5M10 16h5"/>', c, 18),
+  x: (c) => ic('<path d="M6 6l12 12M18 6L6 18"/>', c, 18),
+  plus: (c) => ic('<path d="M12 5v14M5 12h14"/>', c, 18)
 };
 const dots = (n, cur, color) => `<div class="dots">${Array.from({ length: n }, (_, i) => `<i style="${i <= cur ? 'background:' + color : ''}"></i>`).join('')}</div>`;
 
 /* ---------- навигация ---------- */
 function nav(screen, arg) {
   if (S.screen !== screen) S.stack.push(S.screen);
-  S.screen = screen; S.justSaved = false;
-  if (screen === 'sos') { markDone('sos'); haptic('medium'); }
-  if (screen === 'breathe' || screen === 'sigh') { markDone('breathe'); S.lastPractice = screen; }
-  if (screen === 'ground') { S.gStep = 0; S.lastPractice = 'ground'; }
+  S.screen = screen; S.justSaved = false; S.sosOpen = false;
+  if (screen === 'sos') haptic('medium');
+  if (screen === 'breathe' || screen === 'sigh' || screen === 'ground') S.lastPractice = screen;
+  if (screen === 'ground') S.gStep = 0;
   if (screen === 'prac') { S.pid = arg || 'pmr'; S.pStep = 0; S.lastPractice = S.pid; }
   if (screen === 'write') { S.wKind = arg || 'worry'; S.wDraft = ''; S.wDone = false; }
-  if (screen === 'checkin') S.ci = { step: 0, m: null, a: null, s: null, tp: [] };
+  if (screen === 'checkin') S.ci = { q: arg == null ? null : +arg, i: null, w: null, done: false };
   if (screen === 'feel') S.feel = null;
-  if (screen === 'state') markDone('remind');
+  if (screen === 'contacts') { S.cName = ''; S.cHandle = ''; S.cErr = ''; }
   if (screen === 'diary' && arg === 'q') S.diaryMode = 'q';
   render(true);
 }
-function tab(screen) { S.stack = screen === 'home' ? [] : ['home']; S.screen = screen; S.justSaved = false; if (screen === 'state') markDone('remind'); haptic('select'); render(true); }
+function tab(screen) { S.stack = screen === 'home' ? [] : ['home']; S.screen = screen; S.justSaved = false; S.sosOpen = false; haptic('select'); render(true); }
 function back() {
-  if (S.screen === 'checkin' && S.ci.step > 0 && S.ci.step < 4) { S.ci.step--; return render(); }
+  if (S.screen === 'onb') { if (S.onb !== 0) { S.onb = (S.onb === 'relief' || S.onb === 1) ? 0 : S.onb - 1; render(true); } return; }
+  if (S.screen === 'checkin' && S.ci.done === false && S.ci.i !== null) { S.ci.i = null; return render(); }
   if (S.screen === 'ground' && S.gStep > 0) { S.gStep--; return render(); }
   if (S.screen === 'prac' && S.pStep > 0) { S.pStep--; return render(); }
   if (S.screen === 'diary' && S.diaryMode === 'q' && S.qIdx > 0) { S.qIdx--; return render(); }
   const prev = S.stack.pop() || 'home';
-  S.screen = prev === 'splash' ? 'home' : prev; S.justSaved = false;
+  S.screen = (prev === 'splash' || prev === 'onb') ? 'home' : prev; S.justSaved = false;
   render(true);
 }
-function maybeLeaveSplash() { if (S.screen === 'splash' && S.loaded && S.splashDone) { S.screen = 'home'; render(true); } }
+function leaveSplash() {
+  if (S.screen !== 'splash' || !S.loaded || !S.splashDone) return;
+  S.screen = S.prefs.onboarded ? 'home' : 'onb'; S.onb = 0; render(true);
+}
 if (tg) { try { tg.BackButton.onClick(back); } catch (e) {} }
+
+/* ---------- знакомство (первый вход) ---------- */
+function vOnb() {
+  const step = S.onb;
+  const prog = `<div class="dots" style="margin-bottom:4px">${[0, 1, 2, 3].map((i) => `<i style="${i <= step ? 'background:#C9A876' : ''}"></i>`).join('')}</div>`;
+  if (step === 0) {
+    return `<div class="col g24">${prog}
+      <div class="col g10"><h1>Привет, ${esc(S.name)}.<br>Как ты прямо сейчас?</h1><p class="s15 muted lh">Здесь можно честно. Любой ответ — нормальный.</p></div>
+      <div class="moods">${MOODS.map((m, i) => `<button class="mood" data-act="onbMood" data-arg="${i}"><i style="background:${m.c}"></i><b>${m.label}</b><span>${m.hint}</span></button>`).join('')}</div>
+    </div>`;
+  }
+  if (step === 'relief') {
+    return `<div class="col g20" style="align-items:center">
+      <div class="col g8" style="align-self:stretch"><h1>Давай сначала выдохнем</h1><p class="s15 muted lh">Без вопросов. Просто дыши вместе с кольцами — знакомиться будем потом.</p></div>
+      <div class="stage sighA"><div class="r r1"></div><div class="r r2"></div><div class="r r3"></div><span style="position:relative">${LOTUS(52)}</span></div>
+      <div class="says"><span class="sg1">Вдох носом…</span><span class="sg2">…и ещё чуть-чуть</span><span class="sg3">Медленный выдох ртом</span></div>
+      <button class="btn btn-gold" data-act="onbNext">Мне немного легче</button>
+      <button class="btn btn-ghost" data-act="nav" data-arg="sos">Мне всё ещё очень плохо</button>
+    </div>`;
+  }
+  if (step === 1) {
+    const f = (icon, t, s) => `<div class="feature"><span class="fi">${icon}</span><div class="col g4"><span class="s16 b7">${t}</span><span class="s14 muted lh">${s}</span></div></div>`;
+    return `<div class="col g24">${prog}
+      <div class="col g10">${LOTUS(44)}<h1>Я — «Рядом»</h1><p class="s15 muted lh">Поддержка между сессиями терапии. Особенно вечером и ночью.</p></div>
+      <div class="col g20">
+        ${f(I.heart('#D4A5A5'), 'Помогу в трудную минуту', 'Дыхание, заземление и SOS — в одно касание.')}
+        ${f(I.doc('#C9A876'), 'Соберу мысли к сессии', 'Записи и чек-ины превращаются в конспект для психолога.')}
+        ${f(I.lock('#7B8FA1'), 'Всё остаётся у тебя', 'Данные лежат в твоём Telegram. Удалить можно одной кнопкой.')}
+      </div>
+      <p class="s13 faint lh">Я не психолог и не заменяю терапию. Если есть угроза жизни — звони 112.</p>
+      <button class="btn btn-gold" data-act="onbNext">Дальше</button>
+    </div>`;
+  }
+  if (step === 2) {
+    return `<div class="col g20">${prog}
+      <div class="col g10"><h1>Кому можно написать, если станет совсем тяжело?</h1>
+        <p class="s15 muted lh">В SOS появится кнопка: одно касание — и у человека уже набрано сообщение. Отправляешь только ты — без тебя мы ничего не пишем.</p></div>
+      ${contactsBlock()}
+      <button class="btn ${S.prefs.contacts.length ? 'btn-gold' : 'btn-out'}" data-act="onbNext">${S.prefs.contacts.length ? 'Дальше' : 'Добавлю позже'}</button>
+    </div>`;
+  }
+  // step 3 — оставь меня рядом
+  const plans = ['листаю ленту', 'не могу уснуть', 'прокручиваю мысли', 'хочу кому-то написать'];
+  const canHome = tgAtLeast('8.0') && typeof tg.addToHomeScreen === 'function';
+  return `<div class="col g20">${prog}
+    <div class="col g10"><h1>Оставь меня рядом</h1><p class="s15 muted lh">В трудную минуту сложно вспомнить о приложении. Давай сделаем так, чтобы я был под рукой.</p></div>
+    <div class="card col g12">
+      <span class="s16 b7">Когда мне тяжело, обычно я…</span>
+      <div class="row g8" style="flex-wrap:wrap">${plans.map((p) => `<button class="chip ${S.prefs.plan === p ? 'on' : ''}" data-act="plan" data-arg="${p}">${p}</button>`).join('')}</div>
+      ${S.prefs.plan ? `<p class="s14 lh" style="color:var(--gold)">Договорились: когда ${S.prefs.plan.replace('хочу', 'хочется')}, я открываю «Рядом».</p>` : ''}
+    </div>
+    ${canHome ? `<button class="btn btn-out" data-act="addHome">${LOTUS(22)}Добавить иконку на экран телефона</button>` : ''}
+    <p class="s13 faint lh">Совет: закрепи чат с ботом — нажми и удерживай его в списке чатов → «Закрепить».</p>
+    <button class="btn btn-gold" data-act="onbDone">Готово</button>
+  </div>`;
+}
+
+/* ---------- близкие ---------- */
+function contactsBlock() {
+  const list = S.prefs.contacts.map((c, i) => `<div class="row between g10" style="padding:10px 0;border-bottom:1px solid #1F1C26">
+      <div class="row g12"><span class="ava">${esc(c.name[0] || '?').toUpperCase()}</span><div class="col g4"><span class="s16 b6">${esc(c.name)}</span><span class="s13 muted">${c.kind === 'tg' ? '@' + esc(c.value) : esc(c.value)}</span></div></div>
+      <button class="linkbtn" data-act="delContact" data-arg="${i}" aria-label="Удалить ${esc(c.name)}">${I.x('#8F8678')}</button></div>`).join('');
+  const full = S.prefs.contacts.length >= 3;
+  return `<div class="col g12">
+    ${list ? `<div class="col">${list}</div>` : ''}
+    ${full ? '<p class="s13 faint">Можно добавить до трёх человек.</p>' : `<div class="card col g10" style="padding:16px">
+      <label class="s13 muted" for="cn">Имя</label>
+      <input id="cn" class="inp" data-model="cName" value="${esc(S.cName)}" placeholder="Например, Маша" autocomplete="off">
+      <label class="s13 muted" for="ch">Ник в Telegram или телефон</label>
+      <input id="ch" class="inp" data-model="cHandle" value="${esc(S.cHandle)}" placeholder="@masha или +7 900 000-00-00" autocomplete="off" inputmode="text">
+      ${S.cErr ? `<p class="s13" style="color:var(--rose)">${S.cErr}</p>` : ''}
+      <button class="btn btn-out" data-act="addContact" style="min-height:48px">${I.plus('#E8DCC8')}Добавить</button>
+    </div>`}
+  </div>`;
+}
+function openContact(i) {
+  const c = S.prefs.contacts[i]; if (!c) return;
+  const text = encodeURIComponent(S.prefs.msg || DEFAULT_MSG);
+  const url = 'https://t.me/' + c.value + '?text=' + text; // @ник или +телефон — Telegram откроет чат с готовым черновиком
+  haptic('medium');
+  if (inTG) { try { tg.openTelegramLink(url); return; } catch (e) {} }
+  window.open(url, '_blank');
+}
+function smsContact(i) {
+  const c = S.prefs.contacts[i]; if (!c || c.kind !== 'phone') return;
+  const u = new URL('call.html', location.href); u.searchParams.set('sms', c.value); u.searchParams.set('body', S.prefs.msg || DEFAULT_MSG);
+  if (inTG) { try { tg.openLink(u.href); return; } catch (e) {} }
+  window.open(u.href, '_blank');
+}
 
 /* ---------- экраны ---------- */
 function vHome() {
   const now = new Date(), hr = now.getHours();
-  const greet = hr >= 5 && hr < 12 ? 'Доброе утро' : hr < 18 && hr >= 12 ? 'Добрый день' : hr >= 18 && hr < 23 ? 'Добрый вечер' : 'Доброй ночи';
-  const doneCount = ['sos', 'checkin', 'breathe', 'diary', 'remind'].filter((k) => S.prefs.done[k]).length;
-  const tc = todayCheckin();
-  const nr = nextRemind();
-  return `<div class="col g16">
-    <div class="col g6" style="padding:4px 4px 0">
-      <span class="s13 muted">${WD[now.getDay()]}, ${pad(hr)}:${pad(now.getMinutes())}</span>
-      <h1 style="font-size:30px;line-height:1.15">${greet},<br>${esc(S.name)}</h1>
-      <p class="s15 muted" style="margin-top:2px">Я рядом. С чего начнём?</p>
-    </div>
-    <button class="sos-hero" data-act="nav" data-arg="sos">
-      <span class="sos-dot">SOS</span>
-      <span class="col g4" style="flex:1"><span style="font-size:19px;font-weight:700">Мне плохо прямо сейчас</span><span class="s13" style="color:#D9B9B9">Поддержка и телефоны — в один тап</span></span>
-      ${I.chevR('#D4A5A5')}
+  const greet = hr >= 5 && hr < 12 ? 'Доброе утро' : hr >= 12 && hr < 18 ? 'Добрый день' : hr >= 18 && hr < 23 ? 'Добрый вечер' : 'Доброй ночи';
+  const tc = todayCheckin(), care = careDays();
+  const mood = tc ? MOODS[tc.q] : null;
+  const ctx = S.draft.trim() ? ['Продолжить запись', 'diary', I.book] : (S.entries.length || S.history.length > 1 ? ['Конспект к сессии', 'summary', I.doc('#C9A876')] : null);
+  return `<div class="col g24">
+    <div class="col g6" style="padding:8px 2px 0"><h1 style="font-size:30px;line-height:1.15">${greet},<br>${esc(S.name)}</h1></div>
+    ${tc ? `<button class="card col g12" data-act="nav" data-arg="progress" style="border:none;color:var(--light);text-align:left;width:100%">
+        <span class="s13 muted">Сегодня ты отметил(а)</span>
+        <span class="row g10"><i style="width:14px;height:14px;border-radius:7px;background:${mood.c}"></i><span class="s17 b7">${mood.label}${tc.w ? ' · ' + tc.w : ''}</span></span>
+        <span class="s13" style="color:var(--gold)">Посмотреть динамику →</span>
+      </button>
+      <button class="btn btn-ghost" data-act="nav" data-arg="checkin" style="margin-top:-16px">Отметить ещё раз</button>`
+      : `<div class="col g12"><span class="s16 b7" style="padding-left:2px">Как ты сейчас?</span>
+        <div class="moods">${MOODS.map((m, i) => `<button class="mood" data-act="nav" data-arg="checkin" data-arg2="${i}"><i style="background:${m.c}"></i><b>${m.label}</b><span>${m.hint}</span></button>`).join('')}</div></div>`}
+    <button class="tile" data-act="nav" data-arg="progress" style="background:transparent;border:1px solid var(--line);padding:14px 16px">
+      <span style="flex-shrink:0">${LOTUS(34, care ? 1 : .45)}</span>
+      <span class="col g4" style="flex:1"><span class="s15 b6">${care ? care + ' из 10 последних дней' : 'Твой лотос ждёт первого шага'}</span><span class="s13 muted">${care ? 'ты заботишься о себе — это видно' : 'отметь настроение или попробуй практику'}</span></span>
     </button>
-    ${doneCount < 5 ? `<button class="card-dash col g12" data-act="nav" data-arg="onboard" style="text-align:left;color:var(--light);width:100%">
-      <span class="row between" style="width:100%"><span class="row g10"><span style="width:36px;height:36px;border-radius:18px;background:var(--dusk);display:flex;align-items:center;justify-content:center">${I.star}</span><span class="s16 b7">Я здесь впервые</span></span><span class="s13 b7" style="color:var(--gold)">${doneCount} из 5</span></span>
-      <span class="s13 muted lh">Короткое знакомство: что умеет «Рядом» и куда нажать, когда тяжело</span>
-      <span class="progress" style="width:100%"><b style="width:${doneCount * 20}%"></b></span>
-    </button>` : ''}
-    ${tc ? `<button class="card col g12" data-act="nav" data-arg="state" style="text-align:left;border:none;color:var(--light);width:100%">
-        <span class="up" style="color:var(--water)">Сегодня ты отметил(а)</span>
-        <span class="row g8" style="flex-wrap:wrap"><span class="pill" style="background:#26222E">${MOODS[tc.m]}</span><span class="pill b7" style="background:${anxColor(tc.a)};color:var(--night)">Тревога ${tc.a}/10</span></span>
-        <span class="s13 b6" style="color:var(--gold)">Моё состояние →</span>
-      </button>`
-      : `<div class="card col g14">
-        <div class="col g4"><span class="up" style="color:var(--water)">Чек-ин состояния</span><span class="s17 b7" style="font-size:18px">Как ты сегодня?</span><span class="s13 muted">4 коротких вопроса · около минуты</span></div>
-        <button class="btn btn-gold" data-act="nav" data-arg="checkin">Пройти чек-ин</button>
-        ${nr ? `<span class="row g8 s13 muted">${I.bell}Твоё время для чек-ина — ${nr.replace('сегодня ', '').replace('завтра ', '')}</span>` : ''}
-      </div>`}
-    <button class="tile" data-act="nav" data-arg="summary" style="justify-content:space-between;border:1px solid #3A3226;background:var(--deep)">
-      <span class="col g4"><span class="up" style="color:var(--gold)">К следующей сессии</span><span class="s16 b7">Конспект недели</span><span class="s13 muted">${S.entries.length ? S.entries.length + ' ' + plural(S.entries.length, 'запись', 'записи', 'записей') + ' · ' : ''}${S.history.length} ${plural(S.history.length, 'чек-ин', 'чек-ина', 'чек-инов')}</span></span>
-      ${I.chevR('#C9A876')}
-    </button>
+    ${ctx ? `<button class="tile" data-act="nav" data-arg="${ctx[1]}" style="justify-content:space-between;background:transparent;border:1px solid var(--line);padding:14px 16px"><span class="s15 b6">${ctx[0]}</span>${I.chevR()}</button>` : ''}
   </div>`;
 }
-function plural(n, a, b, c) { const m10 = n % 10, m100 = n % 100; if (m10 === 1 && m100 !== 11) return a; if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return b; return c; }
 
 function vSos() {
-  return `<div class="col g18">
+  const cs = S.prefs.contacts;
+  let write;
+  if (!cs.length) {
+    write = `<button class="btn btn-rose" data-act="nav" data-arg="contacts">${I.people('#0F0E12')}Добавить близкого человека</button>
+      <p class="s13 muted lh" style="margin-top:-8px">Чтобы в такие минуты написать ему в одно касание.</p>`;
+  } else if (cs.length === 1) {
+    write = `<button class="btn btn-rose" data-act="writeContact" data-arg="0" style="min-height:64px;font-size:17px">${I.send('#0F0E12')}Написать ${esc(cs[0].name)}</button>
+      ${cs[0].kind === 'phone' ? `<button class="linkbtn" data-act="smsContact" data-arg="0" style="align-self:center;margin-top:-8px">или отправить SMS</button>` : ''}`;
+  } else {
+    write = `<button class="btn btn-rose" data-act="toggleSos" style="min-height:64px;font-size:17px">${I.send('#0F0E12')}Написать близким</button>
+      ${S.sosOpen ? `<div class="col g8">${cs.map((c, i) => `<button class="who" data-act="writeContact" data-arg="${i}"><span class="ava">${esc(c.name[0] || '?').toUpperCase()}</span><span class="col g4" style="flex:1"><span class="s16 b7">${esc(c.name)}</span><span class="s12" style="color:#D9B9B9">сообщение уже набрано</span></span>${I.send('#D4A5A5')}</button>`).join('')}</div>` : ''}`;
+  }
+  return `<div class="col g24">
+    <div class="col g10"><h1>${esc(S.name.charAt(0).toUpperCase() + S.name.slice(1))}, я рядом.</h1><p class="s16 lh soft">Это очень тяжело, но это пройдёт. Ты не один и не обязан справляться в одиночку.</p></div>
+    <div class="col g12">${write}</div>
     <div class="col g10">
-      <h1 style="font-size:28px">${esc(S.name)}, я рядом.</h1>
-      <p class="s16 lh soft">То, что ты сейчас чувствуешь, очень тяжело — но это состояние пройдёт. Ты не один и не обязан справляться с этим в одиночку.</p>
-      <p class="s14 muted lh">Попробуй один медленный выдох — длиннее, чем вдох.</p>
+      <span class="s13 muted" style="padding-left:2px">Поговорить со специалистом — анонимно, круглосуточно</span>
+      <div class="hot">
+        <a href="#" data-act="call" data-arg="+7495051"><span class="col g4"><span class="s17 b7">051</span><span class="s12" style="color:#D9B9B9">психологическая помощь, Москва</span></span><span class="callic">${I.phone('#0F0E12')}</span></a>
+        <a href="#" data-act="call" data-arg="+74959895050"><span class="col g4"><span class="s17 b7">+7 495 989-50-50</span><span class="s12" style="color:#D9B9B9">психологическая помощь МЧС</span></span><span class="callic">${I.phone('#0F0E12')}</span></a>
+        <a href="#" data-act="call" data-arg="112"><span class="col g4"><span class="s17 b7">112</span><span class="s12" style="color:#D9B9B9">если есть угроза жизни</span></span><span class="callic">${I.phone('#0F0E12')}</span></a>
+      </div>
     </div>
-    <div class="hot">
-      <span class="s13 b7" style="color:#F0CFCF">Поговорить с живым человеком — анонимно, круглосуточно</span>
-      <a class="main" href="#" data-act="call" data-arg="+7495051"><span class="ic">${I.phone('#D4A5A5')}</span><span class="col g4"><span style="font-size:22px;font-weight:800">051</span><span class="s12 b6">Неотложная психологическая помощь, Москва. С мобильного: +7 495 051</span></span></a>
-      <a href="#" data-act="call" data-arg="+74959895050"><span class="ic">${I.phone('#D4A5A5')}</span><span class="col g4"><span style="font-size:18px;font-weight:700">+7 495 989-50-50</span><span class="s12" style="color:#D9B9B9">Психологическая помощь МЧС России</span></span></a>
-      <a class="dim" href="#" data-act="call" data-arg="112"><span class="ic" style="border-color:#4A3640;font-size:13px;font-weight:700">112</span><span class="col g4"><span class="s16 b7">Если есть угроза жизни</span><span class="s12" style="color:#D9B9B9">Единый номер экстренных служб</span></span></a>
-      <div class="row g8" style="flex-wrap:wrap;margin-top:2px"><span class="s12" style="color:#D9B9B9">Скопировать номер:</span>
-        <button class="linkbtn" data-act="copyNum" data-arg="+7 495 051" style="color:#F0CFCF;text-decoration:underline">051</button>
-        <button class="linkbtn" data-act="copyNum" data-arg="+7 495 989-50-50" style="color:#F0CFCF;text-decoration:underline">МЧС</button>
-        <button class="linkbtn" data-act="copyNum" data-arg="112" style="color:#F0CFCF;text-decoration:underline">112</button></div>
+    <div class="col g10">
+      <span class="s13 muted" style="padding-left:2px">Или побудем вместе прямо здесь</span>
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
+        <button class="tile col g4" data-act="nav" data-arg="sigh" style="align-items:flex-start"><span class="s15 b7">Длинный выдох</span><span class="s12 muted">1 минута</span></button>
+        <button class="tile col g4" data-act="nav" data-arg="ground" style="align-items:flex-start"><span class="s15 b7">Заземление</span><span class="s12 muted">5-4-3-2-1</span></button>
+      </div>
     </div>
-    <span class="s14 muted" style="padding-left:4px">Или давай побудем вместе прямо здесь:</span>
-    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
-      <button class="tile col g6" data-act="nav" data-arg="ground" style="align-items:flex-start"><span class="s15 b7">Заземление</span><span class="s12 muted">5-4-3-2-1 · 2 мин</span></button>
-      <button class="tile col g6" data-act="nav" data-arg="sigh" style="align-items:flex-start"><span class="s15 b7">Длинный выдох</span><span class="s12 muted">двойной вдох · 1 мин</span></button>
-    </div>
-    <button class="btn btn-out" data-act="nav" data-arg="diary">Выписать, что происходит</button>
   </div>`;
 }
 
 function vCheckin() {
   const c = S.ci;
-  const head = c.step < 4 ? `<div class="col g10"><span class="up" style="color:var(--water)">Вопрос ${c.step + 1} из 4</span>${dots(4, c.step, '#7B8FA1')}</div>` : '';
-  let body = '';
-  if (c.step === 0) body = `<h1>Как ты в целом сейчас?</h1><div class="col g10">${MOODS.map((m, i) => `<button class="opt ${c.m === i ? 'on' : ''}" data-act="ciMood" data-arg="${i}">${m}</button>`).join('')}</div>`;
-  if (c.step === 1) body = `<h1>Насколько сильная тревога прямо сейчас?</h1><div class="anx-grid">${Array.from({ length: 11 }, (_, v) => `<button data-act="ciAnx" data-arg="${v}" aria-label="Тревога ${v} из 10" style="${c.a === v ? 'background:' + anxColor(v) + ';color:#0F0E12;border-color:' + anxColor(v) : ''}">${v}</button>`).join('')}</div><div class="row between s12 muted"><span>0 — совсем нет</span><span>10 — очень сильная</span></div>`;
-  if (c.step === 2) body = `<h1>Как ты спал(а) прошлой ночью?</h1><div class="col g10">${SLEEPS.map((m, i) => `<button class="opt ${c.s === i ? 'on' : ''}" data-act="ciSleep" data-arg="${i}">${m}</button>`).join('')}</div>`;
-  if (c.step === 3) body = `<h1>Что сейчас больше всего занимает мысли?</h1><span class="s14 muted" style="margin-top:-8px">Можно выбрать несколько</span><div class="row g8" style="flex-wrap:wrap">${TOPICS.map((t, i) => `<button class="chip ${c.tp.indexOf(i) >= 0 ? 'on' : ''}" data-act="ciTopic" data-arg="${i}" aria-pressed="${c.tp.indexOf(i) >= 0}">${t}</button>`).join('')}</div><button class="btn btn-gold" data-act="ciFinish" style="margin-top:8px">Готово</button>`;
-  if (c.step === 4) {
-    const t = S.history[0];
-    const high = t.a >= 7 || t.m <= 1;
-    const nr = nextRemind();
-    body = `<h1 style="font-size:28px">Спасибо, ${esc(S.name)}</h1>
-      <div class="row g8" style="flex-wrap:wrap"><span class="pill" style="background:var(--dusk)">${MOODS[t.m]}</span><span class="pill b7" style="background:${anxColor(t.a)};color:var(--night)">Тревога ${t.a}/10</span><span class="pill" style="background:var(--dusk)">Сон: ${SLEEPS[t.s].toLowerCase()}</span></div>
-      ${high ? `<div class="hot" style="gap:12px"><span class="s17 b7">Похоже, сейчас непросто</span><span class="s14 lh soft">Давай немного снизим напряжение. Минута дыхания с длинным выдохом часто помогает телу успокоиться.</span><button class="btn btn-rose" data-act="nav" data-arg="sigh">Подышать минуту</button><button class="btn btn-out-rose" data-act="nav" data-arg="sos">Открыть SOS</button></div>`
-        : `<div class="card col g12"><span class="s17 b7">Хорошо, что ты замечаешь себя</span><span class="s14 lh soft">Можно записать, что помогло сегодня, — это пригодится на сессии.</span><button class="btn btn-gold" data-act="nav" data-arg="diary">Записать в дневник</button></div>`}
-      <p class="s13 muted lh">Сохранено в «Моё состояние».</p>
-      <button class="btn btn-out" data-act="nav" data-arg="state">Посмотреть динамику</button>`;
+  if (c.q === null) {
+    return `<div class="col g20"><h1>Как ты сейчас?</h1><div class="moods">${MOODS.map((m, i) => `<button class="mood" data-act="ciQ" data-arg="${i}"><i style="background:${m.c}"></i><b>${m.label}</b><span>${m.hint}</span></button>`).join('')}</div></div>`;
   }
-  return `<div class="col g20">${head}<div class="col g16">${body}</div></div>`;
+  const m = MOODS[c.q];
+  if (!c.done) {
+    if (c.i === null) {
+      return `<div class="col g20">
+        <span class="row g8"><i style="width:12px;height:12px;border-radius:6px;background:${m.c}"></i><span class="s15 b7">${m.label}</span></span>
+        <h1>Насколько сильно?</h1>
+        <div class="row g8">${[1, 2, 3, 4, 5].map((v) => `<button class="chip" data-act="ciI" data-arg="${v}" style="flex:1;height:56px;font-size:18px;font-weight:700">${v}</button>`).join('')}</div>
+        <div class="row between s12 muted"><span>чуть-чуть</span><span>очень</span></div>
+      </div>`;
+    }
+    return `<div class="col g20">
+      <span class="row g8"><i style="width:12px;height:12px;border-radius:6px;background:${m.c}"></i><span class="s15 b7">${m.label} · ${c.i} из 5</span></span>
+      <h1>Какое слово подходит больше?</h1>
+      <div class="row g8" style="flex-wrap:wrap">${m.words.map((w) => `<button class="chip" data-act="ciW" data-arg="${w}">${w}</button>`).join('')}</div>
+      <button class="btn btn-ghost" data-act="ciW" data-arg="">Пропустить</button>
+    </div>`;
+  }
+  const high = (c.q === 0 || c.q === 1) && c.i >= 4;
+  const pick = PRACTICES.filter((p) => p.tags.indexOf(m.k) >= 0)[0];
+  return `<div class="col g20">
+    <h1>Спасибо, что отметил(а).</h1>
+    <p class="s15 lh soft">${c.q === 3 ? 'Хорошо, что сегодня спокойнее. Можно записать, что помогло, — пригодится на сессии.' : 'Так бывает. Ты уже сделал(а) важное — заметил(а), что с тобой.'}</p>
+    ${high ? `<div class="col g10"><button class="btn btn-rose" data-act="nav" data-arg="sigh">Подышать минуту</button><button class="btn btn-out" data-act="nav" data-arg="sos">Открыть SOS</button></div>`
+      : (c.q === 3 ? `<button class="btn btn-gold" data-act="nav" data-arg="diary">Записать, что помогло</button>`
+        : `<button class="tile" data-act="practice" data-arg="${pick.id}"><span class="pico" style="border-color:${pick.c};color:${pick.c}">${pick.icon}</span><span class="col g4" style="flex:1"><span class="s15 b7">${pick.title}</span><span class="s13 muted">подходит, когда «${m.label.toLowerCase()}» · ${pick.dur}</span></span>${I.chevR()}</button>`)}
+    <button class="btn btn-ghost" data-act="home">На главную</button>
+  </div>`;
 }
 
-function vState() {
+function vProgress() {
   const now = new Date();
   let bars = '';
   for (let i = 6; i >= 0; i--) {
     const d = new Date(now.getTime() - i * 86400000);
     const hit = S.history.find((h) => sameDay(new Date(h.t), d));
-    const v = hit ? hit.a : null;
-    bars += `<div><span class="s12 b7 soft">${v == null ? '—' : v}</span>${v == null ? '<div class="bar empty"></div>' : `<div class="bar" style="height:${10 + v * 8}px;background:${anxColor(v)}"></div>`}<span class="s12" style="font-size:11px;${i === 0 ? 'color:var(--gold);font-weight:700' : 'color:var(--muted)'}">${i === 0 ? 'Сег.' : SHORT[d.getDay()]}</span></div>`;
+    bars += `<div>${hit ? `<div class="bar" style="height:${16 + hit.i * 18}px;background:${MOODS[hit.q].c}"></div>` : '<div class="bar empty"></div>'}<span style="font-size:11px;${i === 0 ? 'color:var(--gold);font-weight:700' : 'color:var(--muted)'}">${i === 0 ? 'Сег.' : SHORT[d.getDay()]}</span></div>`;
   }
-  const times = [['10:00', 'утро'], ['15:00', 'день'], ['21:00', 'вечер']];
-  return `<div class="col g16">
+  const care = careDays();
+  return `<div class="col g20">
+    <div class="card col g16">
+      <div class="row g12">${LOTUS(48, care ? 1 : .45)}<div class="col g4"><span class="s17 b7">${care} из 10 дней</span><span class="s13 muted">${care ? 'с заботой о себе. Пропуски не обнуляют прогресс.' : 'Пока пусто — и это нормально.'}</span></div></div>
+    </div>
     <div class="card col g14">
-      <div class="row between" style="align-items:baseline"><span class="s16 b7">Тревога за 7 дней</span><span class="s12 muted">по твоим чек-инам</span></div>
-      ${S.history.length ? '' : '<span class="s14 lh muted">Пока здесь пусто. Пройди первый чек-ин — и начнёт появляться твоя динамика.</span>'}
+      <div class="row between"><span class="s16 b7">Настроение за неделю</span><span class="s12 muted">высота — сила</span></div>
       <div class="bars">${bars}</div>
+      <div class="row g12" style="flex-wrap:wrap">${MOODS.map((m) => `<span class="row g6 s12 muted"><i style="width:10px;height:10px;border-radius:5px;background:${m.c}"></i>${m.label.toLowerCase()}</span>`).join('')}</div>
     </div>
-    <button class="btn btn-gold" data-act="nav" data-arg="checkin">Пройти чек-ин сейчас</button>
-    <div class="card col g14">
-      <div class="row between g12"><div class="col g4"><span class="s16 b7">Время для чек-ина</span><span class="s13 muted">Когда тебе удобнее отмечать состояние</span></div>
-      <button class="toggle ${S.prefs.remindOn ? 'on' : ''}" data-act="remindToggle" aria-label="Напоминания о чек-ине" aria-pressed="${S.prefs.remindOn}"></button></div>
-      ${S.prefs.remindOn ? `<div class="row g8">${times.map(([t, l]) => `<button class="chip ${S.prefs.remindTimes.indexOf(t) >= 0 ? 'on' : ''}" data-act="remindTime" data-arg="${t}" style="flex:1;height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px"><span class="s15 b7">${t}</span><span style="font-size:11px;opacity:.8">${l}</span></button>`).join('')}</div>
-      ${S.prefs.remindTimes.length ? `<button class="btn btn-out" data-act="calendar" data-arg="checkin" style="min-height:48px;font-size:15px">Напоминать через календарь</button>` : ''}
-      <span class="s12 faint lh">Бот пока не умеет присылать сообщения сам — поэтому напоминание поставим в календарь телефона.</span>` : ''}
-    </div>
-    ${S.history.length ? `<div class="col g10"><div class="row between" style="align-items:baseline;padding:0 4px"><span class="s15 b7">Последние чек-ины</span><span class="s12 muted">всего ${S.history.length}</span></div>
-      ${S.history.slice(0, 5).map((h) => `<div class="entry" style="flex-direction:row;align-items:center;justify-content:space-between"><span class="col g4"><span class="s14 b6">${MOODS[h.m]}</span><span class="s12 muted">${whenOf(h.t)}</span></span><span class="pill b7" style="padding:6px 12px;background:${anxColor(h.a)};color:var(--night)">${h.a}/10</span></div>`).join('')}</div>` : ''}
+    ${S.history.length ? '' : '<button class="btn btn-gold" data-act="nav" data-arg="checkin">Отметить настроение</button>'}
   </div>`;
 }
 
-const TAGS = { q: ['Ответы на вопросы', 'background:#2C2619;color:#C9A876'], free: ['Свободная запись', 'background:#22202A;color:#D9CDB9'], worry: ['Отложенная тревога', 'background:#2A1F27;color:#E3B9B9'], dump: ['Список на завтра', 'background:#1E2329;color:#A3B2C0'] };
+const TAGS = { q: ['Ответы на вопросы', 'background:#2C2619;color:#C9A876'], free: ['Запись', 'background:#22202A;color:#D9CDB9'], worry: ['Отложенная тревога', 'background:#2A1F27;color:#E3B9B9'], dump: ['Список на завтра', 'background:#1E2329;color:#A3B2C0'] };
 function vDiary() {
-  const qi = Math.min(S.qIdx, 4);
-  const hasDraft = S.draft.trim().length > 0;
+  const qi = Math.min(S.qIdx, 4), has = S.draft.trim().length > 0;
   const editor = S.diaryMode === 'free'
-    ? `<div class="card col g10" style="padding:16px">
-        <label for="note" class="s15 b7">Что сейчас происходит?</label>
-        <span class="s13 muted" style="margin-top:-4px">Пиши как в заметках — без правил</span>
-        <textarea id="note" class="ta" rows="5" data-model="draft" data-btn="saveFree" placeholder="Например: опять не могу уснуть, прокручиваю разговор…">${esc(S.draft)}</textarea>
-        <button id="saveFree" class="btn ${hasDraft ? 'btn-gold' : 'btn-off'}" data-act="saveFree">Сохранить</button>
+    ? `<div class="col g10">
+        <textarea id="note" class="ta" rows="5" data-model="draft" data-btn="saveFree" aria-label="Что сейчас происходит?" placeholder="Что сейчас происходит? Пиши как в заметках…">${esc(S.draft)}</textarea>
+        <button id="saveFree" class="btn ${has ? 'btn-gold' : 'btn-off'}" data-act="saveFree">Сохранить</button>
       </div>`
     : `<div class="card col g12">
-        <div class="row between"><span class="up" style="color:var(--gold)">Вопрос ${qi + 1} из 5</span><div class="row g4">${QS.map((_, i) => `<span style="width:18px;height:4px;border-radius:2px;background:${i <= qi ? '#C9A876' : '#2E2936'}"></span>`).join('')}</div></div>
+        <div class="row between"><span class="up" style="color:var(--gold)">Вопрос ${qi + 1} из 5</span><div class="row g4">${QS.map((_, i) => `<span style="width:16px;height:4px;border-radius:2px;background:${i <= qi ? '#C9A876' : '#2E2936'}"></span>`).join('')}</div></div>
         <label for="qa" style="font-size:19px;line-height:1.35;font-weight:700">${QS[qi].q}</label>
         <span class="s13 muted" style="margin-top:-4px">${QS[qi].h}</span>
-        <textarea id="qa" class="ta" rows="3" data-model="qDraft" placeholder="Напиши как получится">${esc(S.qDraft)}</textarea>
+        <textarea id="qa" class="ta" rows="3" data-model="qDraft" placeholder="Как получится">${esc(S.qDraft)}</textarea>
         <div class="row g10"><button class="btn btn-out" data-act="qSkip">Пропустить</button><button class="btn btn-gold" data-act="qNext">${qi < 4 ? 'Дальше' : 'Сохранить'}</button></div>
       </div>`;
-  return `<div class="col g16">
-    <div class="seg"><button class="${S.diaryMode === 'free' ? 'on' : ''}" data-act="diaryMode" data-arg="free">Свободная запись</button><button class="${S.diaryMode === 'q' ? 'on' : ''}" data-act="diaryMode" data-arg="q">Наводящие вопросы</button></div>
+  const shown = S.showAll ? S.entries.slice(0, 40) : S.entries.slice(0, 3);
+  return `<div class="col g20">
+    <div class="seg"><button class="${S.diaryMode === 'free' ? 'on' : ''}" data-act="diaryMode" data-arg="free">Своими словами</button><button class="${S.diaryMode === 'q' ? 'on' : ''}" data-act="diaryMode" data-arg="q">По вопросам</button></div>
     ${editor}
-    ${S.justSaved ? '<p class="s14" style="color:var(--gold);padding-left:4px;margin-top:-4px">Сохранено. Попадёт в конспект к сессии.</p>' : ''}
-    <div class="col g6" style="padding:4px 4px 0">
-      <div class="row between"><span class="s16 b7">Мои записи</span><span class="s13 muted">${S.entries.length}</span></div>
-      <span class="row g6 s12 muted">${I.lock}Хранятся в твоём облаке Telegram. Видишь только ты.</span>
-    </div>
-    ${S.entries.length ? `<div class="col g10">${S.entries.slice(0, 30).map((e) => `<div class="entry"><div class="row between"><span class="tag" style="${(TAGS[e.g] || TAGS.free)[1]}">${(TAGS[e.g] || TAGS.free)[0]}</span><span class="s12 muted">${whenOf(e.t)}</span></div><span class="txt">${esc(e.x)}</span><div><button class="linkbtn" data-act="delEntry" data-arg="${e.id}">Удалить</button></div></div>`).join('')}</div>`
-      : '<span class="s14 muted lh" style="padding:0 4px">Здесь будут твои записи. Можно начать с наводящих вопросов, если не знаешь, что писать.</span>'}
-    <button class="tile" data-act="nav" data-arg="summary" style="justify-content:space-between;border:1px solid #3A3226;background:transparent"><span class="s15 b6">Собрать конспект к сессии</span>${I.chevR('#C9A876')}</button>
+    ${S.justSaved ? '<p class="s14" style="color:var(--gold);margin-top:-8px">Сохранено. Попадёт в конспект к сессии.</p>' : ''}
+    ${S.entries.length ? `<div class="col g10">
+      <div class="row between" style="padding:0 2px"><span class="s16 b7">Мои записи</span><button class="linkbtn" data-act="nav" data-arg="summary" style="color:var(--gold)">Конспект →</button></div>
+      ${shown.map((e) => `<div class="entry"><div class="row between"><span class="tag" style="${(TAGS[e.g] || TAGS.free)[1]}">${(TAGS[e.g] || TAGS.free)[0]}</span><span class="s12 muted">${whenOf(e.t)}</span></div><span class="txt">${esc(e.x)}</span><div><button class="linkbtn" data-act="delEntry" data-arg="${e.id}">Удалить</button></div></div>`).join('')}
+      ${S.entries.length > 3 && !S.showAll ? `<button class="btn btn-ghost" data-act="showAll">Показать все (${S.entries.length})</button>` : ''}
+    </div>` : '<p class="s14 muted lh" style="padding:0 2px">Если не знаешь, с чего начать, — попробуй «По вопросам».</p>'}
   </div>`;
 }
 
 function buildSummary() {
-  const weekAgo = Date.now() - 7 * 86400000;
-  const hs = S.history.filter((h) => h.t >= weekAgo);
-  const es = S.entries.filter((e) => e.t >= weekAgo);
-  const fs = S.feels.filter((f) => f.t >= weekAgo);
+  const since = Date.now() - 7 * 86400000;
+  const hs = S.history.filter((h) => h.t >= since), es = S.entries.filter((e) => e.t >= since), fs = S.feels.filter((f) => f.t >= since);
   if (!hs.length && !es.length) return null;
-  const out = { lines: [] };
+  const out = {};
   if (hs.length) {
-    const avg = hs.reduce((a, h) => a + h.a, 0) / hs.length;
-    const worst = hs.reduce((a, h) => (h.a > a.a ? h : a), hs[0]);
-    const evening = hs.filter((h) => new Date(h.t).getHours() >= 18 || new Date(h.t).getHours() < 5);
-    const tcount = {}; hs.forEach((h) => (h.tp || []).forEach((i) => { tcount[i] = (tcount[i] || 0) + 1; }));
-    const top = Object.keys(tcount).sort((a, b) => tcount[b] - tcount[a]).slice(0, 3).map((i) => TOPICS[i].toLowerCase());
-    out.state = `Чек-инов: ${hs.length}. Средняя тревога — ${avg.toFixed(1).replace('.', ',')} из 10. Тяжелее всего было: ${whenOf(worst.t).toLowerCase()} (${worst.a}/10).`
-      + (evening.length && hs.length > 1 ? ` Вечером и ночью — ${evening.length} из ${hs.length} отметок.` : '');
-    if (top.length) out.topics = 'Чаще всего занимало мысли: ' + top.join(', ') + '.';
+    const cnt = [0, 0, 0, 0]; hs.forEach((h) => cnt[h.q]++);
+    const parts = MOODS.map((m, i) => cnt[i] ? m.label.toLowerCase() + ' — ' + cnt[i] : '').filter(Boolean);
+    const strong = hs.filter((h) => (h.q === 0 || h.q === 1) && h.i >= 4);
+    const ev = hs.filter((h) => { const x = new Date(h.t).getHours(); return x >= 18 || x < 5; });
+    const words = {}; hs.forEach((h) => { if (h.w) words[h.w] = (words[h.w] || 0) + 1; });
+    const topw = Object.keys(words).sort((a, b) => words[b] - words[a]).slice(0, 3);
+    out.state = 'Отметок: ' + hs.length + ' (' + parts.join(', ') + ').' + (strong.length ? ' Сильно тяжело было ' + strong.length + ' ' + plural(strong.length, 'раз', 'раза', 'раз') + ', последний — ' + whenOf(strong[0].t).toLowerCase() + '.' : '') + (ev.length && hs.length > 1 ? ' Вечером и ночью — ' + ev.length + ' из ' + hs.length + '.' : '');
+    if (topw.length) out.words = 'Чаще всего: ' + topw.join(', ') + '.';
   }
   const helped = {}; fs.filter((f) => f.v !== 'no').forEach((f) => { helped[f.p] = (helped[f.p] || 0) + 1; });
   const hk = Object.keys(helped);
-  if (hk.length) out.helped = 'Помогло: ' + hk.map((k) => (PNAMES[k] || k) + ' (' + helped[k] + ')').join(', ') + '.';
+  if (hk.length) out.helped = hk.map((k) => (PNAMES[k] || k) + ' (' + helped[k] + ')').join(', ') + '.';
   if (es.length) out.notes = es.slice(0, 4).map((e) => '— ' + e.x.split('\n')[0].slice(0, 140));
   return out;
 }
 function summaryText(sm) {
-  const parts = ['Конспект «Рядом» за 7 дней'];
-  if (sm.state) parts.push('\nСостояние\n' + sm.state);
-  if (sm.topics) parts.push(sm.topics);
-  if (sm.helped) parts.push('\nЧто помогло\n' + sm.helped);
-  if (sm.notes) parts.push('\nИз записей\n' + sm.notes.join('\n'));
-  return parts.join('\n');
+  const p = ['Конспект «Рядом» за 7 дней'];
+  if (sm.state) p.push('\nСостояние\n' + sm.state + (sm.words ? ' ' + sm.words : ''));
+  if (sm.helped) p.push('\nЧто помогло\n' + sm.helped);
+  if (sm.notes) p.push('\nИз записей\n' + sm.notes.join('\n'));
+  return p.join('\n');
 }
 function vSummary() {
   const sm = buildSummary();
-  if (!sm) return `<div class="col g16"><h1>Конспект пока пуст</h1><p class="s15 lh soft">Он соберётся сам из твоих чек-инов и записей за неделю. Пройди пару чек-инов и сделай хотя бы одну запись — и сюда можно будет заглянуть перед сессией.</p><button class="btn btn-gold" data-act="nav" data-arg="checkin">Пройти чек-ин</button><button class="btn btn-out" data-act="nav" data-arg="diary">Сделать запись</button></div>`;
-  return `<div class="col g16">
+  if (!sm) return `<div class="col g16"><h1>Конспект пока пуст</h1><p class="s15 lh soft">Он соберётся сам из твоих отметок и записей за неделю.</p><button class="btn btn-gold" data-act="nav" data-arg="checkin">Отметить настроение</button></div>`;
+  return `<div class="col g20">
     <div class="col g6"><span class="up" style="color:var(--gold)">Последние 7 дней</span><h1>Твоя неделя коротко</h1></div>
     <div class="card col g10">
-      ${sm.state ? `<span class="s15 b7">Состояние</span><span class="s14 lh soft">${esc(sm.state)}</span>` : ''}
-      ${sm.topics ? `<span class="s14 lh soft">${esc(sm.topics)}</span>` : ''}
-      ${sm.helped ? `<span class="s15 b7" style="margin-top:6px">Что помогло</span><span class="s14 lh soft">${esc(sm.helped.replace('Помогло: ', ''))}</span>` : ''}
+      ${sm.state ? `<span class="s15 b7">Состояние</span><span class="s14 lh soft">${esc(sm.state)} ${esc(sm.words || '')}</span>` : ''}
+      ${sm.helped ? `<span class="s15 b7" style="margin-top:6px">Что помогло</span><span class="s14 lh soft">${esc(sm.helped)}</span>` : ''}
       ${sm.notes ? `<span class="s15 b7" style="margin-top:6px">Из записей</span><span class="s14 lh soft" style="white-space:pre-line">${esc(sm.notes.join('\n'))}</span>` : ''}
     </div>
-    <p class="s12 muted lh">Собрано из твоих записей и чек-инов. Психолог ничего не увидит, пока ты сам не решишь поделиться.</p>
+    <p class="s12 muted lh">Психолог ничего не увидит, пока ты сам не решишь поделиться.</p>
     <button class="btn btn-gold" data-act="copySummary">Скопировать конспект</button>
   </div>`;
 }
 
 function vPractices() {
-  const FL = [['all', 'Все'], ['panic', 'Паника сейчас'], ['thoughts', 'Мысли крутятся'], ['sleep', 'Не могу уснуть'], ['self', 'Ругаю себя']];
+  const FL = [['all', 'Все']].concat(MOODS.slice(0, 3).map((m) => [m.k, m.label]));
   const list = PRACTICES.filter((p) => S.pFilter === 'all' || p.tags.indexOf(S.pFilter) >= 0);
-  return `<div class="col g14">
-    <p class="s15 soft" style="padding-left:4px">Что сейчас происходит? Подберу практику.</p>
-    <div class="hscroll">${FL.map(([id, l]) => `<button class="chip light ${S.pFilter === id ? 'on' : ''}" data-act="pFilter" data-arg="${id}">${l}</button>`).join('')}</div>
-    ${list.map((p) => `<button class="tile" data-act="practice" data-arg="${p.id}">
-      <span class="pico" style="border-color:${CAT[p.cat]};color:${CAT[p.cat]}">${p.icon}</span>
-      <span class="col g4" style="flex:1;min-width:0"><span class="s16 b7">${p.title}</span><span class="s13 muted">${p.when}</span><span class="faint" style="font-size:11px">${p.dur} · ${p.src}</span></span>
-      ${I.chevR()}
-    </button>`).join('')}
-    <div class="card-line row g10" style="align-items:flex-start">${I.info}<span class="s12 lh muted">Здесь только мягкие практики для самостоятельной поддержки. Если от упражнения становится хуже — остановись: это нормально. Работа с травмой и страхами — вместе с психологом.</span></div>
+  return `<div class="col g16">
+    <div class="hscroll">${FL.map(([id, l]) => `<button class="chip ${S.pFilter === id ? 'on' : ''}" data-act="pFilter" data-arg="${id}">${l}</button>`).join('')}</div>
+    <div class="col g10">${list.map((p) => `<button class="tile" data-act="practice" data-arg="${p.id}">
+      <span class="pico" style="border-color:${p.c};color:${p.c}">${p.icon}</span>
+      <span class="col g4" style="flex:1;min-width:0"><span class="s16 b7">${p.title}</span><span class="s13 muted">${p.when} · ${p.dur}</span></span>${I.chevR()}</button>`).join('')}</div>
+    <p class="s12 faint lh" style="padding:0 2px">Мягкие практики для самостоятельной поддержки. Если становится хуже — остановись, это нормально.</p>
   </div>`;
 }
-
 function vBreathe() {
   return `<div class="col g20" style="align-items:center">
     <h1 style="align-self:stretch">Дыши вместе с кольцами</h1>
-    <div class="stage calm"><div class="r r1"></div><div class="r r2"></div><div class="r r3"></div><span style="position:relative">${LOTUS(60)}</span></div>
+    <div class="stage calm"><div class="r r1"></div><div class="r r2"></div><div class="r r3"></div><span style="position:relative">${LOTUS(56)}</span></div>
     <div class="says"><span class="calm-in">Вдох…</span><span class="calm-out">Выдох…</span></div>
-    <p class="s14 lh muted" style="text-align:center;max-width:290px">Кольцо растёт — вдыхай. Сжимается — выдыхай.</p>
     <button class="btn btn-out" data-act="nav" data-arg="feel">Закончить</button>
   </div>`;
 }
 function vSigh() {
   return `<div class="col g20" style="align-items:center">
-    <div class="col g6" style="align-self:stretch"><h1>Двойной вдох — длинный выдох</h1><span class="s14 lh muted">Длинный выдох замедляет дыхание и сердце. Повтори 5–10 раз.</span></div>
-    <div class="stage sighA"><div class="r r1"></div><div class="r r2"></div><div class="r r3"></div><span style="position:relative">${LOTUS(56)}</span></div>
+    <div class="col g6" style="align-self:stretch"><h1>Двойной вдох — длинный выдох</h1><span class="s14 lh muted">Повтори 5–10 раз. Закружилась голова — дыши как обычно.</span></div>
+    <div class="stage sighA"><div class="r r1"></div><div class="r r2"></div><div class="r r3"></div><span style="position:relative">${LOTUS(52)}</span></div>
     <div class="says"><span class="sg1">Вдох носом…</span><span class="sg2">…и ещё чуть-чуть</span><span class="sg3">Медленный выдох ртом</span></div>
-    <span class="s12 faint" style="text-align:center">Закружилась голова — просто дыши как обычно</span>
     <button class="btn btn-out" data-act="nav" data-arg="feel">Закончить</button>
   </div>`;
 }
@@ -594,203 +662,186 @@ function vGround() {
     <div class="col g10"><span class="up" style="color:var(--rose)">Шаг ${Math.min(S.gStep, 4) + 1} из 5</span>${dots(5, S.gStep, '#D4A5A5')}</div>
     <div class="col g16" style="align-items:center;padding:40px 22px;border-radius:26px;background:var(--dusk);text-align:center">
       <span style="font-size:76px;line-height:1;font-weight:700;color:var(--gold)">${g.big}</span>
-      <span style="font-size:21px;line-height:1.35;font-weight:700">${g.t}</span>
-      <span class="s14 lh muted">${g.h}</span>
-    </div>
+      <span style="font-size:21px;line-height:1.35;font-weight:700">${g.t}</span><span class="s14 lh muted">${g.h}</span></div>
     <button class="btn btn-gold" data-act="gNext">${S.gStep >= 4 ? 'Готово' : 'Дальше'}</button>
   </div>`;
 }
 function vPrac() {
-  const pr = PRAC[S.pid] || PRAC.pmr;
-  const i = Math.min(S.pStep, pr.steps.length - 1), st = pr.steps[i];
-  return `<div class="col g18">
-    <div class="col g10"><span class="up" style="color:var(--gold)">${pr.title} · шаг ${i + 1} из ${pr.steps.length}</span>${dots(pr.steps.length, i, '#C9A876')}</div>
+  const pr = PRAC[S.pid] || PRAC.pmr, i = Math.min(S.pStep, pr.steps.length - 1), st = pr.steps[i];
+  return `<div class="col g20">
+    <div class="col g10"><span class="up" style="color:var(--gold)">${pr.title} · ${i + 1} из ${pr.steps.length}</span>${dots(pr.steps.length, i, '#C9A876')}</div>
     <div class="col g14" style="padding:30px 22px;border-radius:26px;background:var(--dusk)">
       <span class="s13 b7" style="color:var(--water)">${st.l}</span>
-      <span style="font-size:22px;line-height:1.35;font-weight:700;white-space:pre-line">${st.t}</span>
-      <span class="s14 lh muted">${st.h}</span>
-    </div>
+      <span style="font-size:22px;line-height:1.35;font-weight:700;white-space:pre-line">${st.t}</span><span class="s14 lh muted">${st.h}</span></div>
     ${i === 0 ? `<span class="s12 lh faint" style="padding:0 4px">${pr.note}</span>` : ''}
     <button class="btn btn-gold" data-act="pNext">${i >= pr.steps.length - 1 ? 'Готово' : 'Дальше'}</button>
   </div>`;
 }
 function vWrite() {
-  const worry = S.wKind === 'worry';
-  const day = new Date().getHours() < 18 ? 'сегодня' : 'завтра';
+  const worry = S.wKind === 'worry', day = new Date().getHours() < 18 ? 'сегодня' : 'завтра';
   if (S.wDone) {
-    return `<div class="col g14">
+    return `<div class="col g16">
       <h1>${worry ? 'Мысль подождёт до ' + S.wTime : 'Всё записано'}</h1>
-      <p class="s15 lh soft">${worry ? 'Если она вернётся раньше — мягко скажи ей: «Не сейчас, вернёмся в ' + S.wTime + '» — и вернись к своему делу. Часто к назначенному времени тревога уже не кажется такой срочной.' : 'Список сохранён в дневнике и никуда не денется. Можно отпустить эти мысли до утра. Спокойной ночи, ' + esc(S.name) + '.'}</p>
-      ${worry ? `<button class="btn btn-gold" data-act="calendar" data-arg="worry">Напомнить в ${S.wTime} через календарь</button>` : ''}
-      <button class="btn btn-out" data-act="nav" data-arg="diary">Открыть в дневнике</button>
-      <button class="btn ${worry ? 'btn-out' : 'btn-gold'}" data-act="home">На главную</button>
+      <p class="s15 lh soft">${worry ? 'Если она вернётся раньше — скажи ей: «Не сейчас, в ' + S.wTime + '». Часто к этому времени она уже не кажется такой срочной.' : 'Список в дневнике и никуда не денется. Можно отпустить эти мысли до утра. Спокойной ночи, ' + esc(S.name) + '.'}</p>
+      ${worry ? `<button class="btn btn-gold" data-act="calendar" data-arg="worry">Напомнить в ${S.wTime}</button>` : ''}
+      <button class="btn btn-ghost" data-act="home">На главную</button>
     </div>`;
   }
   const has = S.wDraft.trim().length > 0;
-  return `<div class="col g16">
+  return `<div class="col g20">
     <div class="col g8"><h1>${worry ? 'Отложить тревогу' : 'Выгрузить мысли перед сном'}</h1>
-      <span class="s14 lh muted">${worry ? 'Тревожная мысль требует внимания прямо сейчас. Давай договоримся с ней: запишем и вернёмся позже, в спокойное время.' : 'Пять минут: запиши всё, что нужно сделать завтра и в ближайшие дни. Чем конкретнее, тем проще голове это отпустить.'}</span></div>
-    <div class="card col g10" style="padding:16px">
-      <label for="wt" class="s15 b7">${worry ? 'Что тревожит?' : 'Что нужно сделать?'}</label>
-      <textarea id="wt" class="ta" rows="5" data-model="wDraft" data-btn="wSave" placeholder="${worry ? 'Например: вдруг я провалю экзамен' : '— написать преподавателю&#10;— купить продукты&#10;— …'}">${esc(S.wDraft)}</textarea>
-    </div>
-    ${worry ? `<div class="col g10"><span class="s15 b7" style="padding-left:4px">Когда вернёмся к этой мысли?</span>
-      <div class="row g8">${['18:00', '19:00', '20:00'].map((t) => `<button class="chip ${S.wTime === t ? 'on' : ''}" data-act="wTime" data-arg="${t}" style="flex:1;padding:0 6px;font-size:13px">${day} ${t}</button>`).join('')}</div>
-      <span class="s12 lh faint" style="padding-left:4px">15 минут в выбранное время. Лучше не перед сном.</span></div>` : ''}
+      <span class="s14 lh muted">${worry ? 'Запишем мысль и вернёмся к ней позже, в спокойное время.' : 'Запиши всё, что нужно сделать завтра. Чем конкретнее, тем проще отпустить.'}</span></div>
+    <textarea id="wt" class="ta" rows="4" data-model="wDraft" data-btn="wSave" aria-label="${worry ? 'Что тревожит?' : 'Что нужно сделать?'}" placeholder="${worry ? 'Что тревожит? Например: вдруг я провалю экзамен' : '— написать преподавателю&#10;— купить продукты'}">${esc(S.wDraft)}</textarea>
+    ${worry ? `<div class="col g10"><span class="s14 muted" style="padding-left:2px">Вернёмся к ней ${day}:</span>
+      <div class="row g8">${['18:00', '19:00', '20:00'].map((t) => `<button class="chip ${S.wTime === t ? 'on' : ''}" data-act="wTime" data-arg="${t}" style="flex:1">${t}</button>`).join('')}</div></div>` : ''}
     <button id="wSave" class="btn ${has ? 'btn-gold' : 'btn-off'}" data-act="wSave">${worry ? 'Отложить до ' + S.wTime : 'Выгрузить и отпустить'}</button>
   </div>`;
 }
 function vFeel() {
   if (!S.feel) {
-    return `<div class="col g14"><h1>Ты справился с этой минутой. Стало хоть немного легче?</h1>
-      <button class="btn btn-gold" data-act="feel" data-arg="better">Да, стало легче</button>
+    return `<div class="col g14"><h1>Стало хоть немного легче?</h1>
+      <button class="btn btn-gold" data-act="feel" data-arg="better">Да</button>
       <button class="btn btn-out" data-act="feel" data-arg="bit">Немного</button>
       <button class="btn btn-out" data-act="feel" data-arg="no">Нет, всё ещё плохо</button></div>`;
   }
-  const F = { better: ['Я рад. Ты сделал это сам.', 'Запиши, что помогло, — это хороший материал для следующей сессии.'], bit: ['Немного — это уже шаг.', 'Можно повторить практику или выписать мысли, чтобы они не крутились в голове.'], no: ['Спасибо, что сказал честно.', 'Я бот и могу не всё. Если тебе очень тяжело, поговори с живым человеком — это нормально и анонимно.'] }[S.feel];
+  const F = { better: ['Ты сделал(а) это сам(а).', 'Если хочешь, запиши, что помогло, — это хороший материал для сессии.'], bit: ['Немного — это уже шаг.', 'Можно повторить практику или выписать мысли.'], no: ['Спасибо, что сказал(а) честно.', 'Я могу не всё. Сейчас лучше поговорить с живым человеком — это нормально.'] }[S.feel];
   return `<div class="col g14"><h1>${F[0]}</h1><p class="s15 lh soft">${F[1]}</p>
-    ${S.feel === 'no' ? '<button class="btn btn-rose" data-act="nav" data-arg="sos">Телефоны поддержки</button>' : ''}
-    <button class="btn btn-out" data-act="nav" data-arg="diary">Записать, что сейчас было</button>
-    <button class="btn btn-out" data-act="home">На главную</button></div>`;
+    ${S.feel === 'no' ? (S.prefs.contacts.length ? `<button class="btn btn-rose" data-act="writeContact" data-arg="0">${I.send('#0F0E12')}Написать ${esc(S.prefs.contacts[0].name)}</button>` : '') + '<button class="btn btn-out" data-act="nav" data-arg="sos">Телефоны поддержки</button>' : '<button class="btn btn-out" data-act="nav" data-arg="diary">Записать</button>'}
+    <button class="btn btn-ghost" data-act="home">На главную</button></div>`;
 }
-function vOnboard() {
-  const items = [
-    ['sos', 'Узнай, где SOS', 'Помощь и телефоны — в один тап', 'sos', ''],
-    ['checkin', 'Пройди первый чек-ин', '4 вопроса о том, как ты', 'checkin', ''],
-    ['breathe', 'Попробуй дыхательную практику', '1 минута', 'sigh', ''],
-    ['diary', 'Сделай первую запись', 'Можно ответить на вопросы', 'diary', 'q'],
-    ['remind', 'Настрой напоминания', 'Чтобы не забывать про себя', 'state', '']
-  ];
-  const n = items.filter((it) => S.prefs.done[it[0]]).length;
-  return `<div class="col g16">
-    <div class="col g10"><h1 style="font-size:28px">Привет, ${esc(S.name)}</h1><p class="s15 lh soft">«Рядом» — поддержка между сессиями терапии. Я не психолог и не заменяю его, но могу быть рядом вечером и ночью, когда тревожно.</p></div>
-    <div class="col g8"><div class="row between s13"><span class="b7">Знакомство</span><span class="b7" style="color:var(--gold)">${n} из 5</span></div><span class="progress"><b style="width:${n * 20}%"></b></span></div>
-    <div class="col g10">${items.map((it) => { const ok = !!S.prefs.done[it[0]]; return `<button class="tile" data-act="nav" data-arg="${it[3]}" data-arg2="${it[4]}" style="padding:16px;border-radius:18px"><span class="check ${ok ? 'on' : ''}">${ok ? '✓' : ''}</span><span class="col g4" style="flex:1"><span class="s15 b7" style="${ok ? 'color:var(--muted)' : ''}">${it[1]}</span><span class="s12 muted">${it[2]}</span></span>${I.chevR()}</button>`; }).join('')}</div>
-    <div class="card-line col g6"><span class="s14 b7">Чем я не являюсь</span><span class="s13 lh muted">Я не ставлю диагнозы и не даю советов вместо психолога. Если есть угроза жизни — звони 112.</span></div>
+function vMe() {
+  const row = (icon, t, s, arg) => `<button class="listrow" data-act="nav" data-arg="${arg}"><span class="row g12">${icon}<span class="col g4"><span class="s16 b6">${t}</span>${s ? `<span class="s13 muted">${s}</span>` : ''}</span></span>${I.chevR()}</button>`;
+  const cs = S.prefs.contacts;
+  return `<div class="col g20">
+    <div class="row g12" style="padding:4px 2px">${LOTUS(44)}<div class="col g4"><span class="s17 b7">${esc(S.name)}</span><span class="s13 muted">${careDays()} из 10 дней с заботой о себе</span></div></div>
+    <div class="card" style="padding:4px 16px">
+      ${row(I.people('#D4A5A5'), 'Близкие люди', cs.length ? cs.map((c) => c.name).join(', ') : 'не добавлены', 'contacts')}
+      ${row(I.chart('#7B8FA1'), 'Моя динамика', 'настроение за неделю', 'progress')}
+      ${row(I.doc('#C9A876'), 'Конспект к сессии', '', 'summary')}
+      ${row(I.clock('#A69C8E'), 'Время для себя', 'напоминания в календаре', 'reminders')}
+    </div>
+    <div class="card col g10">
+      <span class="row g10 s15 b6">${I.lock('#7B8FA1')}Твои данные</span>
+      <p class="s13 muted lh">Всё хранится в твоём облаке Telegram. Мы не видим твоих записей.</p>
+      <button class="linkbtn" data-act="wipe" style="align-self:flex-start;color:var(--rose)">Удалить все мои данные</button>
+    </div>
+    <p class="s12 faint lh" style="padding:0 2px">«Рядом» не заменяет психолога. Если есть угроза жизни — звони 112.</p>
+  </div>`;
+}
+function vContacts() {
+  return `<div class="col g20">
+    <div class="col g8"><h1>Близкие люди</h1><p class="s15 muted lh">Кому написать в трудную минуту. Кнопка появится первой в SOS.</p></div>
+    ${contactsBlock()}
+    <div class="col g10"><span class="s15 b7">Сообщение, которое будет набрано</span>
+      <div class="preview">${esc(S.prefs.msg)}</div>
+      <textarea class="ta" rows="3" data-model="msgDraft" aria-label="Изменить сообщение" placeholder="Изменить текст">${esc(S.prefs.msg)}</textarea>
+      <button class="btn btn-out" data-act="saveMsg" style="min-height:46px">Сохранить текст</button>
+    </div>
+  </div>`;
+}
+function vReminders() {
+  const times = [['10:00', 'утро'], ['15:00', 'день'], ['21:00', 'вечер']];
+  return `<div class="col g20">
+    <div class="col g8"><h1>Время для себя</h1><p class="s15 muted lh">Когда тебе удобно отмечать настроение? Поставим напоминание в календарь телефона.</p></div>
+    <div class="row g8">${times.map(([t, l]) => `<button class="chip ${S.prefs.remindTimes.indexOf(t) >= 0 ? 'on' : ''}" data-act="remindTime" data-arg="${t}" style="flex:1;height:60px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px"><span class="s15 b7">${t}</span><span style="font-size:11px;opacity:.8">${l}</span></button>`).join('')}</div>
+    <button class="btn ${S.prefs.remindTimes.length ? 'btn-gold' : 'btn-off'}" data-act="calendar" data-arg="checkin">Добавить в календарь</button>
+    <p class="s12 faint lh">В календаре событие называется «Рядом · минутка для себя» — без подробностей.</p>
   </div>`;
 }
 
 /* ---------- рендер ---------- */
-const VIEWS = { home: vHome, sos: vSos, checkin: vCheckin, state: vState, diary: vDiary, summary: vSummary, practices: vPractices, breathe: vBreathe, sigh: vSigh, ground: vGround, prac: vPrac, write: vWrite, feel: vFeel, onboard: vOnboard };
+const VIEWS = { home: vHome, sos: vSos, checkin: vCheckin, progress: vProgress, diary: vDiary, summary: vSummary, practices: vPractices, breathe: vBreathe, sigh: vSigh, ground: vGround, prac: vPrac, write: vWrite, feel: vFeel, me: vMe, contacts: vContacts, reminders: vReminders, onb: vOnb };
 function vSplash() {
   return `<button class="splash" data-act="skipSplash" aria-label="Пропустить заставку">
     <span class="st"><span class="sr" style="border:1px solid #7B8FA1"></span><span class="sr" style="border:1px solid #C9A876"></span><span class="sr" style="border:1px solid #D4A5A5"></span><span class="sp-logo">${LOTUS(104)}</span></span>
-    <span class="sp-word">Рядом</span>
-    <span class="sp-cap">Всё наладится.<br><span style="color:var(--gold)">Мы рядом</span></span>
-    <span class="sp-bar"><i></i></span>
-  </button>`;
+    <span class="sp-word">Рядом</span><span class="sp-cap">Всё наладится.<br><span style="color:var(--gold)">Мы рядом</span></span><span class="sp-bar"><i></i></span></button>`;
 }
-function render(scrollTop) {
+function render(top) {
   const app = document.getElementById('app');
+  const ae = document.activeElement, keep = ae && ae.dataset && ae.dataset.model ? ae.dataset.model : null;
   if (S.screen === 'splash') { app.innerHTML = vSplash(); syncBack(); return; }
-  const sc = S.screen, isHome = sc === 'home', active = ROOT[sc] || '';
-  const header = isHome
-    ? `<div class="row g10" style="padding-left:4px">${LOTUS(30)}<span style="font-size:20px;font-weight:600">Рядом</span></div><span></span>`
+  const sc = S.screen, isHome = sc === 'home', isOnb = sc === 'onb', active = ROOT[sc] || '';
+  const header = isHome ? `<div class="row g10" style="padding-left:4px">${LOTUS(28)}<span style="font-size:19px;font-weight:600">Рядом</span></div><span></span>`
+    : isOnb ? (S.onb !== 0 ? `<button class="back" data-act="back" aria-label="Назад">${I.chevL}Назад</button><span></span>` : `<span></span><span></span>`)
     : `<button class="back" data-act="back" aria-label="Назад">${I.chevL}Назад</button><span class="hdr-title">${TITLES[sc] || ''}</span><span style="width:44px"></span>`;
-  app.innerHTML = `<div class="hdr">${header}</div>
-    <main class="content">${(VIEWS[sc] || vHome)()}</main>
-    <nav class="tabs">
+  app.innerHTML = `<div class="hdr">${header}</div><main class="content ${isOnb ? 'bare' : ''}">${(VIEWS[sc] || vHome)()}</main>
+    ${isOnb ? '' : `<nav class="tabs">
       <button class="tab ${active === 'home' ? 'on' : ''}" data-act="tab" data-arg="home">${I.home}Главная</button>
       <button class="tab ${active === 'practices' ? 'on' : ''}" data-act="tab" data-arg="practices">${I.rings}Практики</button>
       <button class="tab-sos" data-act="nav" data-arg="sos" aria-label="SOS — мне плохо прямо сейчас"><span class="c">SOS</span>Помощь</button>
       <button class="tab ${active === 'diary' ? 'on' : ''}" data-act="tab" data-arg="diary">${I.book}Дневник</button>
-      <button class="tab ${active === 'state' ? 'on' : ''}" data-act="tab" data-arg="state">${I.chart}Состояние</button>
-    </nav>
+      <button class="tab ${active === 'me' ? 'on' : ''}" data-act="tab" data-arg="me">${I.me}Я</button></nav>`}
     ${S.toast ? `<div class="toast" role="status">${esc(S.toast)}</div>` : ''}`;
-  if (scrollTop) window.scrollTo(0, 0);
+  if (top) window.scrollTo(0, 0);
+  if (keep) { const el = app.querySelector('[data-model="' + keep + '"]'); if (el) { el.focus(); try { const n = el.value.length; el.setSelectionRange(n, n); } catch (e) {} } }
   syncBack();
 }
-function syncBack() {
-  if (!tg) return;
-  try { if (S.screen !== 'home' && S.screen !== 'splash') tg.BackButton.show(); else tg.BackButton.hide(); } catch (e) {}
-}
-function toast(msg) { S.toast = msg; render(); clearTimeout(toast.t); toast.t = setTimeout(() => { S.toast = ''; render(); }, 2600); }
+function syncBack() { if (!tg) return; try { const show = S.screen !== 'home' && S.screen !== 'splash' && !(S.screen === 'onb' && S.onb === 0); if (show) tg.BackButton.show(); else tg.BackButton.hide(); } catch (e) {} }
+function toast(m) { S.toast = m; render(); clearTimeout(toast.t); toast.t = setTimeout(() => { S.toast = ''; render(); }, 2600); }
+function copyText(text, msg) { const done = () => toast(msg); if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, () => fallbackCopy(text, done)); else fallbackCopy(text, done); }
+function fallbackCopy(text, cb) { const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch (e) {} document.body.removeChild(ta); cb(); }
+function confirmBox(text, fn) { if (tg && tgAtLeast('6.2')) tg.showConfirm(text, (ok) => { if (ok) fn(); }); else if (window.confirm(text)) fn(); }
 
 /* ---------- действия ---------- */
 const ACT = {
-  nav: (a, el) => nav(a, el.dataset.arg2 || undefined),
-  tab: (a) => tab(a),
-  back: () => back(),
+  nav: (a, el) => nav(a, el.dataset.arg2 !== undefined && el.dataset.arg2 !== '' ? el.dataset.arg2 : undefined),
+  tab: (a) => tab(a), back: () => back(),
   home: () => { S.screen = 'home'; S.stack = []; render(true); },
-  skipSplash: () => { S.splashDone = true; if (S.loaded) { S.screen = 'home'; render(true); } },
-  ciMood: (a) => { S.ci.m = +a; S.ci.step = 1; haptic('select'); render(true); },
-  ciAnx: (a) => { S.ci.a = +a; S.ci.step = 2; haptic('select'); render(true); },
-  ciSleep: (a) => { S.ci.s = +a; S.ci.step = 3; haptic('select'); render(true); },
-  ciTopic: (a) => { const i = +a, tp = S.ci.tp; S.ci.tp = tp.indexOf(i) >= 0 ? tp.filter((x) => x !== i) : tp.concat([i]); haptic('select'); render(); },
-  ciFinish: () => {
-    const c = S.ci;
-    S.history.unshift({ t: Date.now(), m: c.m == null ? 2 : c.m, a: c.a == null ? 5 : c.a, s: c.s == null ? 2 : c.s, tp: c.tp });
-    saveHistory(); markDone('checkin'); c.step = 4; haptic('ok'); render(true);
+  skipSplash: () => { S.splashDone = true; leaveSplash(); },
+  onbMood: (i) => { S.onbMood = +i; haptic('select'); S.history.unshift({ t: Date.now(), q: +i, i: 3, w: null }); saveHistory(); S.onb = (+i === 0 || +i === 1) ? 'relief' : 1; S.onbFrom = S.onb === 'relief' ? 'relief' : ''; S.lastPractice = S.onb === 'relief' ? 'sigh' : ''; render(true); },
+  onbNext: () => { S.onb = S.onb === 'relief' ? 1 : S.onb + 1; haptic('select'); render(true); },
+  onbDone: () => { S.prefs.onboarded = true; savePrefs(); S.screen = 'home'; S.stack = []; haptic('ok'); render(true); },
+  plan: (p) => { S.prefs.plan = p; savePrefs(); haptic('select'); render(); },
+  addHome: () => { try { tg.addToHomeScreen(); } catch (e) { toast('Не получилось — можно закрепить чат с ботом'); } },
+  addContact: () => {
+    const name = S.cName.trim(), h = parseHandle(S.cHandle);
+    if (!name) { S.cErr = 'Напиши имя'; return render(); }
+    if (!h) { S.cErr = 'Нужен ник в Telegram (@masha) или телефон (+7…)'; return render(); }
+    S.prefs.contacts.push({ name: name.slice(0, 30), kind: h.kind, value: h.value }); savePrefs();
+    S.cName = ''; S.cHandle = ''; S.cErr = ''; haptic('ok'); render();
   },
-  remindToggle: () => { S.prefs.remindOn = !S.prefs.remindOn; markDone('remind'); savePrefs(); render(); },
-  remindTime: (t) => { const r = S.prefs.remindTimes; S.prefs.remindTimes = r.indexOf(t) >= 0 ? r.filter((x) => x !== t) : r.concat([t]); savePrefs(); haptic('select'); render(); },
+  delContact: (i) => confirmBox('Убрать этого человека из близких?', () => { S.prefs.contacts.splice(+i, 1); savePrefs(); render(); }),
+  saveMsg: () => { const v = (S.msgDraft || '').trim(); if (v) { S.prefs.msg = v.slice(0, 500); savePrefs(); toast('Текст сохранён'); } },
+  toggleSos: () => { S.sosOpen = !S.sosOpen; haptic('select'); render(); },
+  writeContact: (i) => openContact(+i),
+  smsContact: (i) => smsContact(+i),
+  call: (num) => { haptic('medium'); if (inTG) { const u = new URL('call.html', location.href); u.searchParams.set('n', num); try { tg.openLink(u.href); return; } catch (e) {} } location.href = 'tel:' + num; },
+  ciQ: (i) => { S.ci.q = +i; haptic('select'); render(true); },
+  ciI: (v) => { S.ci.i = +v; haptic('select'); render(true); },
+  ciW: (w) => { const c = S.ci; c.w = w || null; c.done = true; S.history.unshift({ t: Date.now(), q: c.q, i: c.i, w: c.w }); saveHistory(); haptic('ok'); render(true); },
   diaryMode: (m) => { S.diaryMode = m; S.justSaved = false; render(); },
   saveFree: () => { if (!S.draft.trim()) return; addEntry('free', S.draft.trim()); S.draft = ''; S.justSaved = true; haptic('ok'); render(); },
-  qSkip: () => advanceQ(''),
-  qNext: () => advanceQ(S.qDraft.trim()),
-  delEntry: (id) => {
-    const go = () => { deleteEntry(id); render(); };
-    if (tg && tgAtLeast('6.2')) tg.showConfirm('Удалить эту запись насовсем?', (ok) => { if (ok) go(); });
-    else if (window.confirm('Удалить эту запись насовсем?')) go();
-  },
-  copySummary: () => {
-    const sm = buildSummary(); if (!sm) return;
-    const text = summaryText(sm);
-    const done = () => toast('Скопировано — можно вставить в заметки или отправить психологу');
-    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, () => fallbackCopy(text, done));
-    else fallbackCopy(text, done);
-  },
-  call: (num) => {
-    haptic('medium');
-    if (inTG) {
-      const url = new URL('call.html', location.href); url.searchParams.set('n', num);
-      try { tg.openLink(url.href); return; } catch (e) {}
-    }
-    location.href = 'tel:' + num;
-  },
-  calendar: (kind) => {
-    const url = new URL('remind.html', location.href);
-    url.searchParams.set('k', kind);
-    url.searchParams.set('t', kind === 'worry' ? S.wTime : S.prefs.remindTimes.join(','));
-    if (kind === 'checkin') markDone('remind');
-    haptic('light');
-    if (inTG) { try { tg.openLink(url.href); return; } catch (e) {} }
-    window.open(url.href, '_blank');
-  },
-  copyNum: (num) => {
-    const done = () => toast('Номер ' + num + ' скопирован');
-    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(num).then(done, () => fallbackCopy(num, done));
-    else fallbackCopy(num, done);
-  },
+  qSkip: () => advanceQ(''), qNext: () => advanceQ(S.qDraft.trim()),
+  showAll: () => { S.showAll = true; render(); },
+  delEntry: (id) => confirmBox('Удалить эту запись насовсем?', () => { deleteEntry(id); render(); }),
+  copySummary: () => { const sm = buildSummary(); if (sm) copyText(summaryText(sm), 'Скопировано — можно вставить в заметки или отправить психологу'); },
   pFilter: (f) => { S.pFilter = f; haptic('select'); render(); },
   practice: (id) => { const p = PRACTICES.find((x) => x.id === id); nav(p.go[0], p.go[1]); },
   gNext: () => { if (S.gStep >= 4) nav('feel'); else { S.gStep++; haptic('select'); render(); } },
   pNext: () => { const pr = PRAC[S.pid]; if (S.pStep >= pr.steps.length - 1) nav('feel'); else { S.pStep++; haptic('select'); render(); } },
   wTime: (t) => { S.wTime = t; haptic('select'); render(); },
-  wSave: () => {
-    if (!S.wDraft.trim()) return;
-    const day = new Date().getHours() < 18 ? 'сегодня' : 'завтра';
-    addEntry(S.wKind, S.wKind === 'worry' ? 'Вернусь к этому ' + day + ' в ' + S.wTime + ':\n' + S.wDraft.trim() : S.wDraft.trim());
-    S.wDone = true; haptic('ok'); render(true);
+  wSave: () => { if (!S.wDraft.trim()) return; const day = new Date().getHours() < 18 ? 'сегодня' : 'завтра'; addEntry(S.wKind, S.wKind === 'worry' ? 'Вернусь к этому ' + day + ' в ' + S.wTime + ':\n' + S.wDraft.trim() : S.wDraft.trim()); S.wDone = true; haptic('ok'); render(true); },
+  feel: (v) => { S.feel = v; if (S.lastPractice) { S.feels.unshift({ t: Date.now(), p: S.lastPractice, v: v }); saveFeels(); } render(true); },
+  remindTime: (t) => { const r = S.prefs.remindTimes; S.prefs.remindTimes = r.indexOf(t) >= 0 ? r.filter((x) => x !== t) : r.concat([t]); savePrefs(); haptic('select'); render(); },
+  calendar: (kind) => {
+    if (kind === 'checkin' && !S.prefs.remindTimes.length) return;
+    const u = new URL('remind.html', location.href); u.searchParams.set('k', kind); u.searchParams.set('t', kind === 'worry' ? S.wTime : S.prefs.remindTimes.join(','));
+    if (inTG) { try { tg.openLink(u.href); return; } catch (e) {} } window.open(u.href, '_blank');
   },
-  feel: (v) => { S.feel = v; if (S.lastPractice) { S.feels.unshift({ t: Date.now(), p: S.lastPractice, v: v }); saveFeels(); } render(true); }
+  wipe: () => confirmBox('Удалить все записи, отметки и близких? Это нельзя отменить.', () => {
+    S.entries.forEach((e) => store.remove('e_' + e.id)); ['hist', 'feels', 'eidx', 'prefs'].forEach((k) => store.remove(k));
+    S.entries = []; S.history = []; S.feels = []; S.prefs = { onboarded: false, remindTimes: ['21:00'], contacts: [], msg: DEFAULT_MSG, plan: '' };
+    S.screen = 'onb'; S.onb = 0; S.stack = []; render(true);
+  })
 };
-function advanceQ(answer) {
-  if (answer) S.qAnswers.push(QS[Math.min(S.qIdx, 4)].k + ' — ' + answer);
+function advanceQ(a) {
+  if (a) S.qAnswers.push(QS[Math.min(S.qIdx, 4)].k + ' — ' + a);
   S.qDraft = '';
   if (S.qIdx < 4) { S.qIdx++; return render(); }
   if (S.qAnswers.length) { addEntry('q', S.qAnswers.join('\n')); S.justSaved = true; haptic('ok'); }
   S.qIdx = 0; S.qAnswers = []; render();
 }
-function fallbackCopy(text, cb) {
-  const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
-  document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch (e) {} document.body.removeChild(ta); cb();
-}
-
-document.addEventListener('click', (e) => {
-  const el = e.target.closest('[data-act]'); if (!el) return;
-  const fn = ACT[el.dataset.act]; if (fn) { e.preventDefault(); fn(el.dataset.arg, el); }
-});
+document.addEventListener('click', (e) => { const el = e.target.closest('[data-act]'); if (!el) return; const fn = ACT[el.dataset.act]; if (fn) { e.preventDefault(); fn(el.dataset.arg, el); } });
 document.addEventListener('input', (e) => {
   const m = e.target.dataset && e.target.dataset.model; if (!m) return;
   S[m] = e.target.value;
@@ -798,10 +849,8 @@ document.addEventListener('input', (e) => {
   if (b) { const has = e.target.value.trim().length > 0; b.classList.toggle('btn-gold', has); b.classList.toggle('btn-off', !has); }
 });
 
-/* ---------- старт ---------- */
-render();
-load();
-setTimeout(() => { S.splashDone = true; maybeLeaveSplash(); }, 5000);
+render(); load();
+setTimeout(() => { S.splashDone = true; leaveSplash(); }, 5000);
 </script>
 </body>
 </html>

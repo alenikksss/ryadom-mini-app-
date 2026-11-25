@@ -26,13 +26,29 @@
   <p class="small">Если звонок не начался сам — нажми кнопку. После разговора можно вернуться в Telegram.</p>
 </main>
 <script>
+(function () {
   // Только эти номера: страницу нельзя использовать для звонка куда-то ещё.
   var NUMS = {
     '+7495051': ['051', 'Неотложная психологическая помощь, Москва'],
     '+74959895050': ['+7 495 989-50-50', 'Психологическая помощь МЧС России'],
     '112': ['112', 'Единый номер экстренных служб']
   };
-  var n = new URLSearchParams(location.search).get('n') || '';
+  var q = new URLSearchParams(location.search);
+  // SMS близкому человеку: номер и текст задаёт сам пользователь в приложении
+  var sms = q.get('sms');
+  if (sms && /^\+\d{10,15}$/.test(sms)) {
+    var body = (q.get('body') || '').slice(0, 500);
+    var ios = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    var href = 'sms:' + sms + (ios ? '&' : '?') + 'body=' + encodeURIComponent(body);
+    document.querySelector('h1').textContent = 'Сообщение готово';
+    document.querySelector('p').textContent = 'Сейчас откроются SMS с уже набранным текстом. Останется нажать «Отправить».';
+    document.getElementById('num').textContent = sms;
+    document.getElementById('what').textContent = body;
+    var b = document.getElementById('btn'); b.href = href; b.lastChild.textContent = 'Открыть SMS';
+    setTimeout(function () { location.href = href; }, 400);
+    return;
+  }
+  var n = q.get('n') || '';
   var info = NUMS[n] || NUMS['+7495051'];
   if (!NUMS[n]) n = '+7495051';
   document.getElementById('num').textContent = info[0];
@@ -40,6 +56,7 @@
   var btn = document.getElementById('btn');
   btn.href = 'tel:' + n;
   setTimeout(function () { location.href = 'tel:' + n; }, 400);
+})();
 </script>
 </body>
 </html>
